@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.main.NewGameFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/newGame_textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@color/colorText"
+            android:text="@string/choose_teams" />
+
+        <TextView
+            android:id="@+id/newGame_textView_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newGame_textView_title"
+            app:layout_constraintEnd_toStartOf="@id/newGame_textView_right"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@color/colorTextHighlight"
+            android:text="@string/left_player" />
+
+        <TextView
+            android:id="@+id/newGame_textView_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toEndOf="@id/newGame_textView_left"
+            app:layout_constraintTop_toBottomOf="@id/newGame_textView_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@color/colorTextHighlight"
+            android:text="@string/right_player" />
+
+        <rs.etf.ba150210d.soccer.view.util.EditTextBackEvent
+            android:id="@+id/newGame_editText_leftName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newGame_textView_left"
+            app:layout_constraintEnd_toStartOf="@id/newGame_editText_rightName"
+            android:textColor="@color/colorText"
+            android:imeOptions="flagNoExtractUi" />
+
+        <rs.etf.ba150210d.soccer.view.util.EditTextBackEvent
+            android:id="@+id/newGame_editText_rightName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toEndOf="@id/newGame_editText_leftName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_textView_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/colorText"
+            android:imeOptions="flagNoExtractUi" />
+
+        <Spinner
+            android:id="@+id/newGame_spinner_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="@id/newGame_textView_left"
+            app:layout_constraintTop_toBottomOf="@id/newGame_editText_leftName"
+            app:layout_constraintEnd_toEndOf="@id/newGame_textView_left" />
+
+        <Spinner
+            android:id="@+id/newGame_spinner_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="@id/newGame_textView_right"
+            app:layout_constraintTop_toBottomOf="@id/newGame_editText_rightName"
+            app:layout_constraintEnd_toEndOf="@id/newGame_textView_right" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/newGame_fab_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_done" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/newGame_fab_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_back" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

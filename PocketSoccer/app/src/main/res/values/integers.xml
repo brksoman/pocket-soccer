@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="speed_value_range">9</integer>
+    <integer name="max_speed_value">10</integer>
+
+    <integer name="min_goals">3</integer>
+    <integer name="max_goals">15</integer>
+    <integer name="goals_increment">1</integer>
+
+    <integer name="min_time">30</integer>
+    <integer name="max_time">300</integer>
+    <integer name="time_increment">30</integer>
+
+</resources>

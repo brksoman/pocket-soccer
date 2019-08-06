@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.settings.MainSettingsFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/settings_verticalHalf"
+            app:layout_constraintGuide_percent="0.5"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="@id/settings_seekBar_speed"
+            app:layout_constraintBottom_toTopOf="@id/settings_seekBar_speed"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/colorText"
+            android:text="@string/speed"/>
+
+        <TextView
+            android:id="@+id/settings_textView_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="@id/settings_seekBar_speed"
+            app:layout_constraintEnd_toEndOf="@id/settings_seekBar_speed"
+            app:layout_constraintBottom_toTopOf="@id/settings_seekBar_speed"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/colorText"
+            android:text="0" />
+
+        <SeekBar
+            android:id="@+id/settings_seekBar_speed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/settings_seekBar_condition"
+            app:layout_constraintEnd_toStartOf="@id/settings_verticalHalf"
+            app:layout_constraintBottom_toBottomOf="@id/settings_seekBar_condition"
+            android:max="@integer/speed_value_range"
+            android:theme="@style/Base.Widget.AppCompat.SeekBar.Discrete" />
+
+        <RadioGroup
+            android:id="@+id/settings_radioGroup_conditionChoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toEndOf="@id/settings_verticalHalf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/settings_textView_conditionType">
+
+            <RadioButton
+                android:id="@+id/settings_radioButton_goals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="@color/colorText"
+                android:text="@string/goals" />
+
+            <RadioButton
+                android:id="@+id/settings_radioButton_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="@color/colorText"
+                android:text="@string/time" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/settings_textView_conditionType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="@id/settings_seekBar_condition"
+            app:layout_constraintBottom_toTopOf="@id/settings_seekBar_condition"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/colorText"
+            android:text="Goals:" />
+
+        <TextView
+            android:id="@+id/settings_textView_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="@id/settings_seekBar_condition"
+            app:layout_constraintEnd_toEndOf="@id/settings_seekBar_condition"
+            app:layout_constraintBottom_toTopOf="@id/settings_seekBar_condition"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/colorText"
+            android:text="0" />
+
+        <SeekBar
+            android:id="@+id/settings_seekBar_condition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintStart_toEndOf="@id/settings_verticalHalf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/settings_fab_back"
+            android:theme="@style/Base.Widget.AppCompat.SeekBar.Discrete" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/settings_fab_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_back" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/settings_fab_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toStartOf="@id/settings_fab_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_save" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

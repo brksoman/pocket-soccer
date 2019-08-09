@@ -36,10 +36,9 @@ public class PlayImageView extends AppCompatImageView {
     private void init() {
         mPaint = new Paint();
 
-        Bitmap flag = BitmapFactory.decodeResource(getResources(), R.drawable.serbia_flag);
+        Bitmap flag = BitmapFactory.decodeResource(getResources(), R.drawable.cyprus);
         Bitmap ball = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
 
-        this.setBackground(getResources().getDrawable(R.drawable.field_stealth));
         mData = new PlayData(getWidth(), getHeight(), flag, flag, ball);
     }
 

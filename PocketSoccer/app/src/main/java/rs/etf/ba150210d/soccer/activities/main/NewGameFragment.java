@@ -137,8 +137,11 @@ public class NewGameFragment extends Fragment {
 
     private void initTeamPagers(View view) {
         mLeftTeamPager = view.findViewById(R.id.newGame_pager_left);
+        mLeftTeamPager.setAdapter(new TeamPagerAdapter(getContext()));
 
         mRightTeamPager = view.findViewById(R.id.newGame_pager_right);
+        mRightTeamPager.setAdapter(new TeamPagerAdapter(getContext()));
+
     }
 
     public void setPlayMetadata(PlayMetadata playMetadata) {

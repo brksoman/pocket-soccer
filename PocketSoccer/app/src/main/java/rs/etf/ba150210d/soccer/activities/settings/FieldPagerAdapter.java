@@ -14,13 +14,14 @@ public class FieldPagerAdapter extends PagerAdapter {
 
     private Context mContext;
 
+    public FieldPagerAdapter(Context context) {
+        super();
+        mContext = context;
+    }
+
     @Override
     public int getCount() {
         return FIELD_COUNT;
-    }
-
-    public void setContext(Context context) {
-        mContext = context;
     }
 
     @Override

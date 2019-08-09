@@ -26,7 +26,6 @@ public class MainSettingsFragment extends Fragment {
     private TextView mSpeedText;
     private SeekBar mSpeedSeekBar;
     private ViewPager mFieldPager;
-    private FieldPagerAdapter mFieldPagerAdapter;
 
     private TextView mConditionText;
     private TextView mConditionTypeText;
@@ -173,11 +172,7 @@ public class MainSettingsFragment extends Fragment {
 
     private void initFieldPager(View view, SharedPreferences preferences) {
         mFieldPager = view.findViewById(R.id.settings_pager_field);
-        mFieldPagerAdapter = new FieldPagerAdapter();
-
-        mFieldPagerAdapter.setContext(getContext());
-        mFieldPager.setAdapter(mFieldPagerAdapter);
-
+        mFieldPager.setAdapter(new FieldPagerAdapter(getContext()));
         mFieldPager.setCurrentItem(preferences.getInt("field", 0));
     }
 

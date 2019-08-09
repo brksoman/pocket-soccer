@@ -10,17 +10,18 @@ import android.widget.ImageView;
 import rs.etf.ba150210d.soccer.datastructures.Team;
 
 public class TeamPagerAdapter extends PagerAdapter {
-    public static final int TEAM_COUNT = 20;
+    public static final int TEAM_COUNT = 36;
 
     private Context mContext;
+
+    public TeamPagerAdapter(Context context) {
+        super();
+        mContext = context;
+    }
 
     @Override
     public int getCount() {
         return TEAM_COUNT;
-    }
-
-    public void setContext(Context context) {
-        mContext = context;
     }
 
     @Override

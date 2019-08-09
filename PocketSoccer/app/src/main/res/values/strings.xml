@@ -1,53 +1,6 @@
 <resources>
     <string name="app_name">Pocket Soccer</string>
 
-    <string-array name="country_names">
-        <item>armenia</item>
-        <item>australia</item>
-        <item>austria</item>
-        <item>canada</item>
-        <item>central-african-republic</item>
-        <item>croatia</item>
-        <item>cyprus</item>
-        <item>egypt</item>
-        <item>fiji</item>
-        <item>france</item>
-        <item>galapagos-islands</item>
-        <item>georgia</item>
-        <item>germany</item>
-        <item>ireland</item>
-        <item>italy</item>
-        <item>liechtenstein</item>
-        <item>malta</item>
-        <item>martinique</item>
-        <item>new-zealand</item>
-        <item>north-korea</item>
-        <item>poland</item>
-        <item>portugal</item>
-        <item>russia</item>
-        <item>sardinia</item>
-        <item>scotland</item>
-        <item>serbia</item>
-        <item>slovenia</item>
-        <item>spain</item>
-        <item>syria</item>
-        <item>tibet</item>
-        <item>tonga</item>
-        <item>united-kingdom</item>
-        <item>united-nations</item>
-        <item>united-states</item>
-        <item>vatican</item>
-        <item>virgin-islands</item>
-
-    </string-array>
-
-    <string-array name="field_names">
-        <item>field0</item>
-        <item>field1</item>
-        <item>field2</item>
-        <item>field3</item>
-    </string-array>
-
     // Main texts
 
     <string name="newGame">New game</string>
@@ -88,6 +41,54 @@
 
     <string name="score_format">%s scored!</string>
     <string name="win_format">%s won!</string>
+
+    // Data structures
+
+    <string-array name="country_names">
+        <item>armenia</item>
+        <item>australia</item>
+        <item>austria</item>
+        <item>canada</item>
+        <item>central_african_republic</item>
+        <item>croatia</item>
+        <item>cyprus</item>
+        <item>egypt</item>
+        <item>fiji</item>
+        <item>france</item>
+        <item>galapagos_islands</item>
+        <item>georgia</item>
+        <item>germany</item>
+        <item>ireland</item>
+        <item>italy</item>
+        <item>liechtenstein</item>
+        <item>malta</item>
+        <item>martinique</item>
+        <item>new_zealand</item>
+        <item>north_korea</item>
+        <item>poland</item>
+        <item>portugal</item>
+        <item>russia</item>
+        <item>sardinia</item>
+        <item>scotland</item>
+        <item>serbia</item>
+        <item>slovenia</item>
+        <item>spain</item>
+        <item>syria</item>
+        <item>tibet</item>
+        <item>tonga</item>
+        <item>united_kingdom</item>
+        <item>united_nations</item>
+        <item>united_states</item>
+        <item>vatican</item>
+        <item>virgin_islands</item>
+    </string-array>
+
+    <string-array name="field_names">
+        <item>field0</item>
+        <item>field1</item>
+        <item>field2</item>
+        <item>field3</item>
+    </string-array>
 
     // Shared preferences name
 

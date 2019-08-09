@@ -23,7 +23,7 @@ public class Team extends ChoiceImage {
         for (int fromIndex = 0; fromIndex < mName.length(); ) {
             sb.append(Character.toUpperCase(mName.charAt(fromIndex)));
 
-            int spaceIndex = mName.indexOf("-", fromIndex);
+            int spaceIndex = mName.indexOf("_", fromIndex);
             if (spaceIndex == -1) {
                 sb.append(mName.substring(fromIndex + 1));
                 break;

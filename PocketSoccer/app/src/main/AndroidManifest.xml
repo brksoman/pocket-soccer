@@ -10,19 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="rs.etf.ba150210d.soccer.view.play.PlayActivity"
-            android:parentActivityName="rs.etf.ba150210d.soccer.view.main.MainActivity"
+            android:name=".activities.play.PlayActivity"
+            android:parentActivityName=".activities.main.MainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="rs.etf.ba150210d.soccer.view.settings.SettingsActivity"
-            android:parentActivityName="rs.etf.ba150210d.soccer.view.main.MainActivity"
+            android:name=".activities.settings.SettingsActivity"
+            android:parentActivityName=".activities.main.MainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="rs.etf.ba150210d.soccer.view.score.ScoreActivity"
-            android:parentActivityName="rs.etf.ba150210d.soccer.view.main.MainActivity"
+            android:name=".activities.score.ScoreActivity"
+            android:parentActivityName=".activities.main.MainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="rs.etf.ba150210d.soccer.view.main.MainActivity"
+            android:name=".activities.main.MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

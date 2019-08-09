@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.play.PlayActivity">
+    tools:context=".activities.play.PlayActivity">
 
-    <rs.etf.ba150210d.soccer.view.play.PlayImageView
+    <rs.etf.ba150210d.soccer.activities.play.PlayImageView
         android:id="@+id/play_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

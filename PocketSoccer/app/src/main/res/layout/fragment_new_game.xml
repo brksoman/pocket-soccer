@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.main.NewGameFragment">
+    tools:context=".activities.main.NewGameFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             android:textColor="@color/colorTextHighlight"
             android:text="@string/right_player" />
 
-        <rs.etf.ba150210d.soccer.view.util.EditTextBackEvent
+        <rs.etf.ba150210d.soccer.util.EditTextBackEvent
             android:id="@+id/newGame_editText_leftName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             android:textColor="@color/colorText"
             android:imeOptions="flagNoExtractUi" />
 
-        <rs.etf.ba150210d.soccer.view.util.EditTextBackEvent
+        <rs.etf.ba150210d.soccer.util.EditTextBackEvent
             android:id="@+id/newGame_editText_rightName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

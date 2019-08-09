@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import rs.etf.ba150210d.soccer.R;
+import rs.etf.ba150210d.soccer.datastructures.Team;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 import rs.etf.ba150210d.soccer.datastructures.Condition;
@@ -37,10 +39,12 @@ public class NewGameFragment extends Fragment {
     private PlayMetadata mPlayMetadata;
 
     private EditTextBackEvent mEditTextLeftName;
-    private EditTextBackEvent mEditTextRightName;
-
     private ViewPager mLeftTeamPager;
+    private TextView mLeftTeamName;
+
+    private EditTextBackEvent mEditTextRightName;
     private ViewPager mRightTeamPager;
+    private TextView mRightTeamName;
 
     public NewGameFragment() { /* Required empty public constructor */ }
 
@@ -62,7 +66,7 @@ public class NewGameFragment extends Fragment {
         mTeamNames = new ArrayList<>(Arrays.asList(teamNamesResource));
 
         initTeamPagers(view);
-        initSpinners(view);
+        //initSpinners(view);
 
         return view;
     }
@@ -93,7 +97,7 @@ public class NewGameFragment extends Fragment {
         });
     }
 
-    private void initSpinners(View view) {
+    /*private void initSpinners(View view) {
         Spinner leftSpinner = view.findViewById(R.id.newGame_spinner_left);
         initSpinner(leftSpinner);
 
@@ -121,7 +125,7 @@ public class NewGameFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-    }
+    }*/
 
     private void initSpinner(Spinner spinner) {
         SpinnerAdapter adapter = new ArrayAdapter<String>(
@@ -139,9 +143,38 @@ public class NewGameFragment extends Fragment {
         mLeftTeamPager = view.findViewById(R.id.newGame_pager_left);
         mLeftTeamPager.setAdapter(new TeamPagerAdapter(getContext()));
 
+        mLeftTeamName = view.findViewById(R.id.newGame_textView_leftTeamName);
+        mLeftTeamName.setText(new Team(getContext(), mLeftTeamPager.getCurrentItem()).getName());
+        mLeftTeamPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int i) {
+                String teamName = new Team(getContext(), i).getName();
+                mLeftTeamName.setText(teamName);
+            }
+
+            @Override
+            public void onPageScrolled(int i, float v, int i1) { }
+            @Override
+            public void onPageScrollStateChanged(int i) { }
+        });
+
         mRightTeamPager = view.findViewById(R.id.newGame_pager_right);
         mRightTeamPager.setAdapter(new TeamPagerAdapter(getContext()));
 
+        mRightTeamName = view.findViewById(R.id.newGame_textView_rightTeamName);
+        mRightTeamName.setText(new Team(getContext(), mRightTeamPager.getCurrentItem()).getName());
+        mRightTeamPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int i) {
+                String teamName = new Team(getContext(), i).getName();
+                mRightTeamName.setText(teamName);
+            }
+
+            @Override
+            public void onPageScrolled(int i, float v, int i1) { }
+            @Override
+            public void onPageScrollStateChanged(int i) { }
+        });
     }
 
     public void setPlayMetadata(PlayMetadata playMetadata) {

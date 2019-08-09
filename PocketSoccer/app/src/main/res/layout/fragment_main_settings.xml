@@ -17,6 +17,8 @@
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/colorText"
             android:text="@string/field" />
 
         <android.support.v4.view.ViewPager

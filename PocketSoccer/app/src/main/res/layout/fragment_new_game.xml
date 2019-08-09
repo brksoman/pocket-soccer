@@ -68,42 +68,66 @@
             android:textColor="@color/colorText"
             android:imeOptions="flagNoExtractUi" />
 
-        <Spinner
+        <!--<Spinner
             android:id="@+id/newGame_spinner_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="@id/newGame_textView_left"
             app:layout_constraintTop_toBottomOf="@id/newGame_editText_leftName"
-            app:layout_constraintEnd_toEndOf="@id/newGame_textView_left" />
+            app:layout_constraintEnd_toEndOf="@id/newGame_textView_left" />-->
+
+        <TextView
+            android:id="@+id/newGame_textView_leftTeamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newGame_editText_leftName"
+            app:layout_constraintEnd_toEndOf="@id/newGame_editText_leftName"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@color/colorText"
+            android:text="Serbia" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/newGame_pager_left"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/medium_margin"
-            app:layout_constraintStart_toStartOf="@id/newGame_spinner_left"
-            app:layout_constraintTop_toBottomOf="@id/newGame_spinner_left"
-            app:layout_constraintEnd_toEndOf="@id/newGame_spinner_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newGame_textView_leftTeamName"
+            app:layout_constraintEnd_toEndOf="@id/newGame_editText_leftName"
             app:layout_constraintBottom_toTopOf="@id/newGame_fab_accept" />
 
-        <Spinner
+        <!--<Spinner
             android:id="@+id/newGame_spinner_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="@id/newGame_textView_right"
             app:layout_constraintTop_toBottomOf="@id/newGame_editText_rightName"
-            app:layout_constraintEnd_toEndOf="@id/newGame_textView_right" />
+            app:layout_constraintEnd_toEndOf="@id/newGame_textView_right" />-->
+
+        <TextView
+            android:id="@+id/newGame_textView_rightTeamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="@id/newGame_editText_rightName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_editText_rightName"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@color/colorText"
+            android:text="Italy" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/newGame_pager_right"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/medium_margin"
-            app:layout_constraintStart_toStartOf="@id/newGame_spinner_right"
-            app:layout_constraintTop_toBottomOf="@id/newGame_spinner_right"
-            app:layout_constraintEnd_toEndOf="@id/newGame_spinner_right"
+            app:layout_constraintStart_toStartOf="@id/newGame_editText_rightName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_textView_rightTeamName"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/newGame_fab_accept" />
 
         <android.support.design.widget.FloatingActionButton

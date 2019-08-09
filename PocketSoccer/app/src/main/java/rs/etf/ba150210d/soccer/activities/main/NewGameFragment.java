@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,10 @@ public class NewGameFragment extends Fragment {
     private EditTextBackEvent mEditTextLeftName;
     private EditTextBackEvent mEditTextRightName;
 
-    public NewGameFragment() {
-        // Required empty public constructor
-    }
+    private ViewPager mLeftTeamPager;
+    private ViewPager mRightTeamPager;
+
+    public NewGameFragment() { /* Required empty public constructor */ }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,41 +56,46 @@ public class NewGameFragment extends Fragment {
         mEditTextRightName = view.findViewById(R.id.newGame_editText_rightName);
         mFragmentOwner.avoidUiWithEditText(mEditTextRightName);
 
-        View.OnClickListener buttonListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = v.getId();
-                switch (id) {
-                    case R.id.newGame_fab_accept:
-                        String leftName = mEditTextLeftName.getText().toString();
-                        String rightName = mEditTextRightName.getText().toString();
-                        
-                        if (leftName.equals("") || rightName.equals("")) {
-                            Toast.makeText(getContext(), getString(
-                                    R.string.enter_player_name_message), Toast.LENGTH_SHORT).show();
-                        } else {
-                            startGame();
-                        }
-                        break;
-
-                    case R.id.newGame_fab_back:
-                        mFragmentOwner.goBack();
-                        break;
-                }
-            }
-        };
-
-        FloatingActionButton acceptButton = view.findViewById(R.id.newGame_fab_accept);
-        acceptButton.setOnClickListener(buttonListener);
-
-        FloatingActionButton backButton = view.findViewById(R.id.newGame_fab_back);
-        backButton.setOnClickListener(buttonListener);
+        initButtons(view);
 
         String[] teamNamesResource = getResources().getStringArray(R.array.country_names);
         mTeamNames = new ArrayList<>(Arrays.asList(teamNamesResource));
 
+        initTeamPagers(view);
+        initSpinners(view);
+
+        return view;
+    }
+
+    private void initButtons(View view) {
+        FloatingActionButton acceptButton = view.findViewById(R.id.newGame_fab_accept);
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String leftName = mEditTextLeftName.getText().toString();
+                String rightName = mEditTextRightName.getText().toString();
+
+                if (leftName.equals("") || rightName.equals("")) {
+                    Toast.makeText(getContext(), getString(
+                            R.string.enter_player_name_message), Toast.LENGTH_SHORT).show();
+                } else {
+                    startGame();
+                }
+            }
+        });
+
+        FloatingActionButton backButton = view.findViewById(R.id.newGame_fab_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFragmentOwner.goBack();
+            }
+        });
+    }
+
+    private void initSpinners(View view) {
         Spinner leftSpinner = view.findViewById(R.id.newGame_spinner_left);
-        initializeSpinner(leftSpinner);
+        initSpinner(leftSpinner);
 
         mPlayMetadata.setLeftTeamName(mTeamNames.get(0));
         leftSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -98,12 +105,11 @@ public class NewGameFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         Spinner rightSpinner = view.findViewById(R.id.newGame_spinner_right);
-        initializeSpinner(rightSpinner);
+        initSpinner(rightSpinner);
 
         mPlayMetadata.setRightTeamName(mTeamNames.get(0));
         rightSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -113,40 +119,11 @@ public class NewGameFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        return view;
-    }
-
-    public void setPlayMetadata(PlayMetadata playMetadata) {
-        mPlayMetadata = playMetadata;
-    }
-
-    private void startGame() {
-
-        mPlayMetadata.setLeftPlayerName(mEditTextLeftName.getText().toString());
-        mPlayMetadata.setRightPlayerName(mEditTextRightName.getText().toString());
-
-        SharedPreferences preferences = getActivity().getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        Condition condition = mPlayMetadata.getCondition();
-
-        mPlayMetadata.loadSettings(getContext(), preferences);
-
-        mViewModel.setNewlyInsertedPlayerPair(mPlayMetadata.getPlayerPair());
-        mViewModel.getNewlyInsertedPlayerPair().observe(this, new Observer<PlayerPair>() {
-            @Override
-            public void onChanged(@Nullable PlayerPair playerPair) {
-                mPlayMetadata.rotateMaybe(playerPair);
-                ((MainActivity) mFragmentOwner).reportNew();
-                mFragmentOwner.switchActivity(FragmentOwnerInterface.PLAY_ACTIVITY);
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 
-    private void initializeSpinner(Spinner spinner) {
+    private void initSpinner(Spinner spinner) {
         SpinnerAdapter adapter = new ArrayAdapter<String>(
                 getContext(),
                 android.R.layout.simple_spinner_item,
@@ -156,6 +133,35 @@ public class NewGameFragment extends Fragment {
 
         spinner.setAdapter(adapter);
         mFragmentOwner.avoidUiWithSpinner(spinner);
+    }
+
+    private void initTeamPagers(View view) {
+        mLeftTeamPager = view.findViewById(R.id.newGame_pager_left);
+
+        mRightTeamPager = view.findViewById(R.id.newGame_pager_right);
+    }
+
+    public void setPlayMetadata(PlayMetadata playMetadata) {
+        mPlayMetadata = playMetadata;
+    }
+
+    private void startGame() {
+        mPlayMetadata.setLeftPlayerName(mEditTextLeftName.getText().toString());
+        mPlayMetadata.setRightPlayerName(mEditTextRightName.getText().toString());
+
+        SharedPreferences preferences = getActivity().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        mPlayMetadata.loadSettings(getContext(), preferences);
+
+        mViewModel.setNewlyInsertedPlayerPair(mPlayMetadata.getPlayerPair());
+        mViewModel.getNewlyInsertedPlayerPair().observe(this, new Observer<PlayerPair>() {
+            @Override
+            public void onChanged(@Nullable PlayerPair playerPair) {
+                mPlayMetadata.rotateMaybe(playerPair);
+                ((MainActivity)mFragmentOwner).reportNew();
+                mFragmentOwner.switchActivity(FragmentOwnerInterface.PLAY_ACTIVITY);
+            }
+        });
     }
 
     @Override

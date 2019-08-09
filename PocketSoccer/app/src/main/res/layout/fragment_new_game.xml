@@ -77,6 +77,16 @@
             app:layout_constraintTop_toBottomOf="@id/newGame_editText_leftName"
             app:layout_constraintEnd_toEndOf="@id/newGame_textView_left" />
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/newGame_pager_left"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="@id/newGame_spinner_left"
+            app:layout_constraintTop_toBottomOf="@id/newGame_spinner_left"
+            app:layout_constraintEnd_toEndOf="@id/newGame_spinner_left"
+            app:layout_constraintBottom_toTopOf="@id/newGame_fab_accept" />
+
         <Spinner
             android:id="@+id/newGame_spinner_right"
             android:layout_width="wrap_content"
@@ -85,6 +95,16 @@
             app:layout_constraintStart_toStartOf="@id/newGame_textView_right"
             app:layout_constraintTop_toBottomOf="@id/newGame_editText_rightName"
             app:layout_constraintEnd_toEndOf="@id/newGame_textView_right" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/newGame_pager_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="@id/newGame_spinner_right"
+            app:layout_constraintTop_toBottomOf="@id/newGame_spinner_right"
+            app:layout_constraintEnd_toEndOf="@id/newGame_spinner_right"
+            app:layout_constraintBottom_toTopOf="@id/newGame_fab_accept" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/newGame_fab_accept"

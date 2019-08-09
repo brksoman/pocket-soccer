@@ -172,7 +172,7 @@ public class MainSettingsFragment extends Fragment {
     }
 
     private void initFieldPager(View view, SharedPreferences preferences) {
-        mFieldPager = view.findViewById(R.id.settings_viewPager_field);
+        mFieldPager = view.findViewById(R.id.settings_pager_field);
         mFieldPagerAdapter = new FieldPagerAdapter();
 
         mFieldPagerAdapter.setContext(getContext());

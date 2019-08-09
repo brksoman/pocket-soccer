@@ -15,4 +15,24 @@ public class Team extends ChoiceImage {
     protected int getResourceId() {
         return R.array.country_names;
     }
+
+    @Override
+    public String getName() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int fromIndex = 0; fromIndex < mName.length(); ) {
+            sb.append(Character.toUpperCase(mName.charAt(fromIndex)));
+
+            int spaceIndex = mName.indexOf("-", fromIndex);
+            if (spaceIndex == -1) {
+                sb.append(mName.substring(fromIndex + 1));
+                break;
+            } else {
+                sb.append(mName.substring(fromIndex + 1, spaceIndex - 1) + " ");
+            }
+            fromIndex = spaceIndex + 1;
+        }
+
+        return sb.toString();
+    }
 }

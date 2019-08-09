@@ -1,4 +1,4 @@
-package rs.etf.ba150210d.soccer.activities.settings;
+package rs.etf.ba150210d.soccer.activities.main;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import rs.etf.ba150210d.soccer.datastructures.Field;
+import rs.etf.ba150210d.soccer.datastructures.Team;
 
-public class FieldPagerAdapter extends PagerAdapter {
-    public static final int FIELD_COUNT = 4;
+public class TeamPagerAdapter extends PagerAdapter {
+    public static final int TEAM_COUNT = 20;
 
     private Context mContext;
 
     @Override
     public int getCount() {
-        return FIELD_COUNT;
+        return TEAM_COUNT;
     }
 
     public void setContext(Context context) {
@@ -31,10 +31,10 @@ public class FieldPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        Field field = new Field(mContext, position);
+        Team team = new Team(mContext, position);
         ImageView image = new ImageView(mContext);
 
-        image.setImageResource(field.getId());
+        image.setImageResource(team.getId());
         container.addView(image);
         return image;
     }
@@ -43,5 +43,6 @@ public class FieldPagerAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((ImageView)object);
     }
+
 
 }

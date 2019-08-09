@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
 import rs.etf.ba150210d.soccer.model.entities.Score;
 import rs.etf.ba150210d.soccer.view.settings.Condition;
+import rs.etf.ba150210d.soccer.view.settings.Field;
 
 /*
     Class containing info such as player names, team names, win condition, elapsed time, whose turn
@@ -32,13 +34,13 @@ public class PlayMetadata {
 
     private Condition mCondition;
     private int mSpeed;
+    private Field mField;
 
     private int mNextPlayer = LEFT_PLAYER;
 
     public PlayMetadata(Context context) {
         mPlayerPair = new PlayerPair("", "");
         mScore = new Score(-1, -1, 0, 0, 0);
-
         mCondition = new Condition(context);
     }
 
@@ -70,10 +72,12 @@ public class PlayMetadata {
                 intent.getIntExtra("conditionValue", 0));
         mSpeed = intent.getIntExtra("speed", 0);
         mNextPlayer = intent.getIntExtra("nextPlayer", LEFT_PLAYER);
+
+        int fieldIndex = intent.getIntExtra("field", 0);
+        mField = new Field(context, fieldIndex);
     }
 
     public PlayMetadata(Context context, SharedPreferences preferences) {
-
         mPlayerPair = new PlayerPair(
                 preferences.getString("save_player1Name", ""),
                 preferences.getString("save_player2Name", ""));
@@ -101,6 +105,9 @@ public class PlayMetadata {
                 preferences.getInt("save_conditionValue", 0));
         mSpeed = preferences.getInt("speed", 0);
         mNextPlayer = preferences.getInt("save_nextPlayer", LEFT_PLAYER);
+
+        int fieldIndex = preferences.getInt("field", 0);
+        mField = new Field(context, fieldIndex);
     }
 
     public void rotateMaybe(PlayerPair playerPair) {
@@ -130,6 +137,7 @@ public class PlayMetadata {
         intent.putExtra("conditionType", mCondition.getType());
         intent.putExtra("conditionValue", mCondition.getValue());
         intent.putExtra("speed", mSpeed);
+        intent.putExtra("field", mField.getIndex());
 
         intent.putExtra("nextPlayer", mNextPlayer);
     }
@@ -212,6 +220,19 @@ public class PlayMetadata {
         editor.putInt("save_nextPlayer", mNextPlayer);
 
         editor.apply();
+    }
+
+    public void loadSettings(Context context, SharedPreferences preferences) {
+        mCondition.setType(
+                preferences.getInt("conditionType", Condition.CONDITION_GOALS));
+
+        if (mCondition.getType() == Condition.CONDITION_GOALS) {
+            mCondition.setValue(preferences.getInt("conditionGoals", 0));
+        } else {
+            mCondition.setValue(preferences.getInt("conditionTime", 0));
+        }
+        mSpeed = preferences.getInt("speed", 0);
+        mField = new Field(context, preferences.getInt("field", 0));
     }
 
     public PlayerPair getPlayerPair() {
@@ -360,5 +381,13 @@ public class PlayMetadata {
 
     public void switchNextPlayer() {
         mNextPlayer = (mNextPlayer == LEFT_PLAYER) ? RIGHT_PLAYER : LEFT_PLAYER;
+    }
+
+    public Field getField() {
+        return mField;
+    }
+
+    public void setField(Field field) {
+        mField = field;
     }
 }

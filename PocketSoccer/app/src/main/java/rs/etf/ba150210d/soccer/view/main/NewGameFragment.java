@@ -134,15 +134,7 @@ public class NewGameFragment extends Fragment {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         Condition condition = mPlayMetadata.getCondition();
 
-        condition.setType(
-                preferences.getInt("conditionType", Condition.CONDITION_GOALS));
-
-        if (condition.getType() == Condition.CONDITION_GOALS) {
-            condition.setValue(preferences.getInt("conditionGoals", 0));
-        } else {
-            condition.setValue(preferences.getInt("conditionTime", 0));
-        }
-        mPlayMetadata.setSpeed(preferences.getInt("speed", 0));
+        mPlayMetadata.loadSettings(getContext(), preferences);
 
         mViewModel.setNewlyInsertedPlayerPair(mPlayMetadata.getPlayerPair());
         mViewModel.getNewlyInsertedPlayerPair().observe(this, new Observer<PlayerPair>() {

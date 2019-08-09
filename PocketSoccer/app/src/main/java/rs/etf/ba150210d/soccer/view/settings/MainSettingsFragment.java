@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +24,14 @@ public class MainSettingsFragment extends Fragment {
 
     private TextView mSpeedText;
     private SeekBar mSpeedSeekBar;
-    private int mSpeed;
+    private ViewPager mFieldPager;
+    private FieldPagerAdapter mFieldPagerAdapter;
 
     private TextView mConditionText;
     private TextView mConditionTypeText;
     private SeekBar mConditionSeekBar;
 
+    private int mSpeed;
     private Condition mCondition;
     private int mConditionGoals;
     private int mConditionTime;
@@ -51,12 +54,9 @@ public class MainSettingsFragment extends Fragment {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         initSpeed(view, preferences);
-
         initCondition(view, preferences);
-
         initRadioButtons(view, preferences);
-
-
+        initFieldPager(view, preferences);
 
         return view;
     }
@@ -104,12 +104,9 @@ public class MainSettingsFragment extends Fragment {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar) { }
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
     }
 
@@ -142,12 +139,9 @@ public class MainSettingsFragment extends Fragment {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar) { }
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
     }
 
@@ -176,6 +170,16 @@ public class MainSettingsFragment extends Fragment {
         });
     }
 
+    private void initFieldPager(View view, SharedPreferences preferences) {
+        mFieldPager = view.findViewById(R.id.settings_viewPager_field);
+        mFieldPagerAdapter = new FieldPagerAdapter();
+
+        mFieldPagerAdapter.setContext(getContext());
+        mFieldPager.setAdapter(mFieldPagerAdapter);
+
+        mFieldPager.setCurrentItem(preferences.getInt("field", 0));
+    }
+
     private void updateConditionType(int conditionType) {
         mCondition.setType(conditionType);
 
@@ -202,6 +206,7 @@ public class MainSettingsFragment extends Fragment {
         editor.putInt("conditionType", mCondition.getType());
         editor.putInt("conditionGoals", mConditionGoals);
         editor.putInt("conditionTime", mConditionTime);
+        editor.putInt("field", mFieldPager.getCurrentItem());
 
         editor.apply();
     }

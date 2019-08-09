@@ -44,6 +44,8 @@ public class PlayActivity extends ImmersiveAppCompatActivity implements ScreenRe
         mViewModel.setData(mImageView.getData());
         mViewModel.getData().setSpeed(mViewModel.getMetadata().getSpeed());
 
+        mImageView.setBackground(mViewModel.getMetadata().getField().getImage());
+
         int leftPlayerPoints = mViewModel.getMetadata().getLeftPlayerPoints();
         mLeftScoreView.setText(Integer.toString(leftPlayerPoints));
         int rightPlayerPoints = mViewModel.getMetadata().getRightPlayerPoints();

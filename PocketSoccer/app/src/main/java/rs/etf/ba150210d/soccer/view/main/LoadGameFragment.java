@@ -13,6 +13,7 @@ import android.widget.TextView;
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.view.play.PlayMetadata;
 import rs.etf.ba150210d.soccer.view.settings.Condition;
+import rs.etf.ba150210d.soccer.view.settings.Field;
 import rs.etf.ba150210d.soccer.view.util.FragmentOwnerInterface;
 import rs.etf.ba150210d.soccer.view_model.MainViewModel;
 
@@ -113,6 +114,7 @@ public class LoadGameFragment extends Fragment {
                     SharedPreferences preferences = getActivity().getSharedPreferences(
                             getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                     mPlayMetadata.setSpeed(preferences.getInt("speed", mPlayMetadata.getSpeed()));
+                    mPlayMetadata.setField(new Field(getContext(), preferences.getInt("field", 0)));
                     mFragmentOwner.switchActivity(FragmentOwnerInterface.PLAY_ACTIVITY);
                     break;
 

@@ -125,7 +125,7 @@ public class NewGameFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-    }*/
+    }
 
     private void initSpinner(Spinner spinner) {
         SpinnerAdapter adapter = new ArrayAdapter<String>(
@@ -137,7 +137,7 @@ public class NewGameFragment extends Fragment {
 
         spinner.setAdapter(adapter);
         mFragmentOwner.avoidUiWithSpinner(spinner);
-    }
+    }*/
 
     private void initTeamPagers(View view) {
         mLeftTeamPager = view.findViewById(R.id.newGame_pager_left);
@@ -148,8 +148,9 @@ public class NewGameFragment extends Fragment {
         mLeftTeamPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {
-                String teamName = new Team(getContext(), i).getName();
-                mLeftTeamName.setText(teamName);
+                Team team = new Team(getContext(), i);
+                mLeftTeamName.setText(team.getName());
+                mPlayMetadata.setLeftTeam(team);
             }
 
             @Override
@@ -166,8 +167,9 @@ public class NewGameFragment extends Fragment {
         mRightTeamPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {
-                String teamName = new Team(getContext(), i).getName();
-                mRightTeamName.setText(teamName);
+                Team team = new Team(getContext(), i);
+                mRightTeamName.setText(team.getName());
+                mPlayMetadata.setRightTeam(team);
             }
 
             @Override

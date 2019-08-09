@@ -47,10 +47,10 @@ public class LoadGameFragment extends Fragment {
             rightPoints.setText(Integer.toString(mPlayMetadata.getRightPlayerPoints()));
 
             TextView leftTeam = view.findViewById(R.id.loadGame_leftTeamName);
-            leftTeam.setText(mPlayMetadata.getLeftTeamName());
+            leftTeam.setText(mPlayMetadata.getLeftTeam().getName());
 
             TextView rightTeam = view.findViewById(R.id.loadGame_rightTeamName);
-            rightTeam.setText(mPlayMetadata.getRightTeamName());
+            rightTeam.setText(mPlayMetadata.getRightTeam().getName());
 
             TextView elapsedTime = view.findViewById(R.id.loadGame_elapsedTime);
             String elapsedTimeString = getString(R.string.time_format,

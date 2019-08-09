@@ -23,8 +23,8 @@ public class PlayMetadata {
     private Score mScore;
     private boolean mIsSameOrder = true;
 
-    private String mLeftTeamName;
-    private String mRightTeamName;
+    private Team mLeftTeam;
+    private Team mRightTeam;
 
     private long mCurrentTime = 0;
     private long mElapsedTime = 0;
@@ -57,8 +57,8 @@ public class PlayMetadata {
                 intent.getLongExtra("scoreId", 0));
 
         mIsSameOrder = intent.getBooleanExtra("isSameOrder", true);
-        mLeftTeamName = intent.getStringExtra("leftTeamName");
-        mRightTeamName = intent.getStringExtra("rightTeamName");
+        mLeftTeam = new Team(context, intent.getIntExtra("leftTeam", 0));
+        mRightTeam = new Team(context, intent.getIntExtra("rightTeam", 0));
 
         mElapsedTime = intent.getLongExtra("elapsedTime", 0);
 
@@ -90,8 +90,8 @@ public class PlayMetadata {
                 preferences.getLong("save_scoreId", 0));
 
         mIsSameOrder = preferences.getBoolean("save_isSameOrder", true);
-        mLeftTeamName = preferences.getString("save_leftTeamName", "");
-        mRightTeamName = preferences.getString("save_rightTeamName", "");
+        mLeftTeam = new Team(context, preferences.getInt("save_leftTeam", 0));
+        mRightTeam = new Team(context, preferences.getInt("save_rightTeam", 0));
 
         mElapsedTime = preferences.getLong("save_elapsedTime", 0);
 
@@ -126,8 +126,8 @@ public class PlayMetadata {
         intent.putExtra("date", mScore.getDate());
 
         intent.putExtra("isSameOrder", mIsSameOrder);
-        intent.putExtra("leftTeamName", mLeftTeamName);
-        intent.putExtra("rightTeamName", mRightTeamName);
+        intent.putExtra("leftTeam", mLeftTeam.getIndex());
+        intent.putExtra("rightTeam", mRightTeam.getIndex());
 
         intent.putExtra("elapsedTime", mElapsedTime);
 
@@ -206,8 +206,8 @@ public class PlayMetadata {
         editor.putLong("save_date", mScore.getDate());
 
         editor.putBoolean("save_isSameOrder", mIsSameOrder);
-        editor.putString("save_leftTeamName", mLeftTeamName);
-        editor.putString("save_rightTeamName", mRightTeamName);
+        editor.putInt("save_leftTeam", mLeftTeam.getIndex());
+        editor.putInt("save_rightTeam", mRightTeam.getIndex());
 
         editor.putLong("save_elapsedTime", mElapsedTime);
 
@@ -318,20 +318,20 @@ public class PlayMetadata {
         mIsSameOrder = isSameOrder;
     }
 
-    public String getLeftTeamName() {
-        return mLeftTeamName;
+    public Team getLeftTeam() {
+        return mLeftTeam;
     }
 
-    public void setLeftTeamName(String leftTeamName) {
-        mLeftTeamName = leftTeamName;
+    public void setLeftTeam(Team leftTeam) {
+        mLeftTeam = leftTeam;
     }
 
-    public String getRightTeamName() {
-        return mRightTeamName;
+    public Team getRightTeam() {
+        return mRightTeam;
     }
 
-    public void setRightTeamName(String rightTeamName) {
-        mRightTeamName = rightTeamName;
+    public void setRightTeam(Team rightTeam) {
+        mRightTeam = rightTeam;
     }
 
     public int getElapsedTime() {

@@ -60,14 +60,9 @@ public class PlayActivity extends ImmersiveAppCompatActivity implements ScreenRe
     }
 
     @Override
-    public void switchActivity(int activityId) {
-
-    }
-
+    public void switchActivity(int activityId) { }
     @Override
-    public void switchFragment(int fragmentId) {
-
-    }
+    public void switchFragment(int fragmentId) { }
 
     @Override
     public void goBack() {

@@ -16,7 +16,6 @@ public class PlayImageView extends AppCompatImageView {
 
     private Paint mPaint;
     private PlayData mData = null;
-    private int mScoredPlayer = PlayMetadata.NO_PLAYER;
 
     public PlayImageView(Context context) {
         super(context);
@@ -44,10 +43,6 @@ public class PlayImageView extends AppCompatImageView {
 
     public PlayData getData() {
         return mData;
-    }
-
-    public void setScoredPlayer(int scoredPlayer) {
-        mScoredPlayer = scoredPlayer;
     }
 
     @Override

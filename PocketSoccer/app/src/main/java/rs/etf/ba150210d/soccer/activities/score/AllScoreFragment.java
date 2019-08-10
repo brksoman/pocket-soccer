@@ -39,7 +39,6 @@ public class AllScoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_score, container, false);
-        view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
 
         RecyclerView recyclerView = view.findViewById(R.id.allScore_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

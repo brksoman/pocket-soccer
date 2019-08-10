@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import rs.etf.ba150210d.soccer.R;
@@ -31,7 +32,6 @@ public class LoadGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_load_game, container, false);
-        view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
 
         if (mPlayMetadata != null) {
             TextView leftPlayer = view.findViewById(R.id.loadGame_leftPlayer);
@@ -51,6 +51,12 @@ public class LoadGameFragment extends Fragment {
 
             TextView rightTeam = view.findViewById(R.id.loadGame_rightTeamName);
             rightTeam.setText(mPlayMetadata.getRightTeam().getName());
+
+            ImageView leftTeamFlag = view.findViewById(R.id.loadGame_leftTeamFlag);
+            leftTeamFlag.setImageResource(mPlayMetadata.getLeftTeam().getId());
+
+            ImageView rightTeamFlag = view.findViewById(R.id.loadGame_rightTeamFlag);
+            rightTeamFlag.setImageResource(mPlayMetadata.getRightTeam().getId());
 
             TextView elapsedTime = view.findViewById(R.id.loadGame_elapsedTime);
             String elapsedTimeString = getString(R.string.time_format,

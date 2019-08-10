@@ -35,7 +35,6 @@ public class PairScoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pair_score, container, false);
-        view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
 
         mViewModel.setSelectedPair(mSelectedPlayerPair);
 

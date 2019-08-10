@@ -12,14 +12,10 @@
 
         <TextView
             android:id="@+id/allScore_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
+            style="@style/PlayerNameText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textColor="@color/colorText"
             android:text="@string/scores" />
 
         <android.support.v7.widget.RecyclerView

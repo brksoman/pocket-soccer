@@ -45,7 +45,6 @@ public class MainSettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main_settings, container, false);
-        view.setBackgroundColor(Color.rgb(50, 150, 50));
 
         initButtons(view);
 

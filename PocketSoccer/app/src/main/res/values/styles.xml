@@ -3,9 +3,62 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="RegularText" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/medium_margin</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="NegativeText" parent="RegularText">
+        <item name="android:textColor">@color/colorNegative</item>
+    </style>
+
+    <style name="SmallText" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/medium_margin</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="SmallNegativeText" parent="SmallText">
+        <item name="android:textColor">@color/colorNegative</item>
+    </style>
+
+    <style name="BigText" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/medium_margin</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="HighlightBigText" parent="BigText">
+        <item name="android:textColor">@color/colorTextHighlight</item>
+    </style>
+
+    <style name="PlayerNameText" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/medium_margin</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="HighlightPlayerNameText" parent="PlayerNameText">
+        <item name="android:textColor">@color/colorTextHighlight</item>
+    </style>
+
+    <style name="TeamNameText" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/medium_margin</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
 
 </resources>

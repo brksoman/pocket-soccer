@@ -52,7 +52,6 @@ public class NewGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_game, container, false);
-        view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
 
         mEditTextLeftName = view.findViewById(R.id.newGame_editText_leftName);
         mFragmentOwner.avoidUiWithEditText(mEditTextLeftName);

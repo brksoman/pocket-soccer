@@ -20,38 +20,26 @@
 
         <TextView
             android:id="@+id/pairScoreHolder_points1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
+            style="@style/NegativeText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/pairScoreHolder_guideline"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@color/colorNegative"
             android:text="Points1" />
 
         <TextView
             android:id="@+id/pairScoreHolder_points2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
+            style="@style/NegativeText"
             app:layout_constraintStart_toEndOf="@id/pairScoreHolder_guideline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@color/colorNegative"
             android:text="Points2" />
 
         <TextView
             android:id="@+id/pairScoreHolder_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
+            style="@style/SmallNegativeText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            android:textColor="@color/colorNegative"
             android:text="12.12.1995." />
 
     </android.support.constraint.ConstraintLayout>

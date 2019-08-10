@@ -12,37 +12,25 @@
 
         <TextView
             android:id="@+id/pairScore_vs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
+            style="@style/HighlightPlayerNameText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textColor="@color/colorTextHighlight"
             android:text="@string/vs" />
 
         <TextView
             android:id="@+id/pairScore_name1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
+            style="@style/PlayerNameText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/pairScore_vs"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textColor="@color/colorText" />
+            app:layout_constraintEnd_toStartOf="@id/pairScore_vs" />
 
         <TextView
             android:id="@+id/pairScore_name2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
+            style="@style/HighlightPlayerNameText"
             app:layout_constraintStart_toEndOf="@id/pairScore_vs"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textColor="@color/colorText" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/pairScore_recyclerView"

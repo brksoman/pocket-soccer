@@ -5,12 +5,15 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import rs.etf.ba150210d.soccer.R;
+import rs.etf.ba150210d.soccer.datastructures.PlayData;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.datastructures.Team;
 import rs.etf.ba150210d.soccer.util.ImmersiveAppCompatActivity;
 
 public class PlayActivity extends ImmersiveAppCompatActivity implements ScreenRefreshController.ViewOwner {
@@ -37,13 +40,18 @@ public class PlayActivity extends ImmersiveAppCompatActivity implements ScreenRe
         mMessageView = findViewById(R.id.play_message);
 
         mViewModel = ViewModelProviders.of(this).get(PlayViewModel.class);
-
-        mImageView = findViewById(R.id.play_imageView);
-
         mViewModel.setMetadata(new PlayMetadata(this, getIntent()));
-        mViewModel.setData(mImageView.getData());
+
+        Team leftTeam = mViewModel.getMetadata().getLeftTeam();
+        Team rightTeam = mViewModel.getMetadata().getRightTeam();
+        mViewModel.setData(new PlayData(0, 0,
+                BitmapFactory.decodeResource(getResources(), leftTeam.getId()),
+                BitmapFactory.decodeResource(getResources(), rightTeam.getId()),
+                BitmapFactory.decodeResource(getResources(), R.drawable.ball)));
         mViewModel.getData().setSpeed(mViewModel.getMetadata().getSpeed());
 
+        mImageView = findViewById(R.id.play_imageView);
+        mImageView.setData(mViewModel.getData());
         mImageView.setBackground(mViewModel.getMetadata().getField().getImage());
 
         int leftPlayerPoints = mViewModel.getMetadata().getLeftPlayerPoints();

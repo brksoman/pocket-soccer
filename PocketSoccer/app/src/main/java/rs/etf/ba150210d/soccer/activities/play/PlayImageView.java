@@ -34,15 +34,15 @@ public class PlayImageView extends AppCompatImageView {
 
     private void init() {
         mPaint = new Paint();
-
-        Bitmap flag = BitmapFactory.decodeResource(getResources(), R.drawable.cyprus);
-        Bitmap ball = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
-
-        mData = new PlayData(getWidth(), getHeight(), flag, flag, ball);
     }
 
     public PlayData getData() {
         return mData;
+    }
+
+    public void setData(PlayData data) {
+        mData = data;
+        mData.updateDims(getWidth(), getHeight());
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PlayImageView extends AppCompatImageView {
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
 
-        if (w > 0 && h > 0) {
+        if (w > 0 && h > 0 && mData != null) {
             mData.updateDims(w, h);
         }
     }

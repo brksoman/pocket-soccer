@@ -24,7 +24,7 @@ public class LoadGameFragment extends Fragment {
     private PlayMetadata mPlayMetadata = null;
 
     public LoadGameFragment() {
-        // Required empty public constructor
+        /* Required empty public constructor */
     }
 
     @Override

@@ -21,10 +21,13 @@ public class PlayMetadata {
 
     private PlayerPair mPlayerPair;
     private Score mScore;
-    private boolean mIsSameOrder = true;
+
+    private boolean mIsLeftBot = false;
+    private boolean mIsRightBot = false;
 
     private Team mLeftTeam;
     private Team mRightTeam;
+    private boolean mIsSameOrder = true;
 
     private long mCurrentTime = 0;
     private long mElapsedTime = 0;
@@ -37,7 +40,7 @@ public class PlayMetadata {
 
     public PlayMetadata(Context context) {
         mPlayerPair = new PlayerPair("", "");
-        mScore = new Score(-1, -1, 0, 0, 0);
+        mScore = new Score(-1, NO_PLAYER, 0, 0, 0);
         mCondition = new Condition(context);
     }
 
@@ -56,9 +59,12 @@ public class PlayMetadata {
         mScore.setId(
                 intent.getLongExtra("scoreId", 0));
 
-        mIsSameOrder = intent.getBooleanExtra("isSameOrder", true);
+        mIsLeftBot = intent.getBooleanExtra("isLeftBot", false);
+        mIsRightBot = intent.getBooleanExtra("isRightBot", false);
+
         mLeftTeam = new Team(context, intent.getIntExtra("leftTeam", 0));
         mRightTeam = new Team(context, intent.getIntExtra("rightTeam", 0));
+        mIsSameOrder = intent.getBooleanExtra("isSameOrder", true);
 
         mElapsedTime = intent.getLongExtra("elapsedTime", 0);
 
@@ -68,10 +74,10 @@ public class PlayMetadata {
         mCondition.setValue(
                 intent.getIntExtra("conditionValue", 0));
         mSpeed = intent.getIntExtra("speed", 0);
+
         mNextPlayer = intent.getIntExtra("nextPlayer", LEFT_PLAYER);
 
-        int fieldIndex = intent.getIntExtra("field", 0);
-        mField = new Field(context, fieldIndex);
+        mField = new Field(context, intent.getIntExtra("field", 0));
     }
 
     public PlayMetadata(Context context, SharedPreferences preferences) {
@@ -89,9 +95,12 @@ public class PlayMetadata {
         mScore.setId(
                 preferences.getLong("save_scoreId", 0));
 
-        mIsSameOrder = preferences.getBoolean("save_isSameOrder", true);
+        mIsLeftBot = preferences.getBoolean("isLeftBot", false);
+        mIsRightBot = preferences.getBoolean("isRightBot", false);
+
         mLeftTeam = new Team(context, preferences.getInt("save_leftTeam", 0));
         mRightTeam = new Team(context, preferences.getInt("save_rightTeam", 0));
+        mIsSameOrder = preferences.getBoolean("save_isSameOrder", true);
 
         mElapsedTime = preferences.getLong("save_elapsedTime", 0);
 
@@ -107,14 +116,6 @@ public class PlayMetadata {
         mField = new Field(context, fieldIndex);
     }
 
-    public void rotateMaybe(PlayerPair playerPair) {
-        if (mPlayerPair.getName1().equals(playerPair.getName2()) &&
-                mPlayerPair.getName2().equals(playerPair.getName1())) {
-            mIsSameOrder = !mIsSameOrder;
-        }
-        mPlayerPair = playerPair;
-    }
-
     public void pack(Intent intent) {
         intent.putExtra("playerPairId", mPlayerPair.getId());
         intent.putExtra("player1Name", mPlayerPair.getName1());
@@ -125,9 +126,13 @@ public class PlayMetadata {
         intent.putExtra("player2Points", mScore.getPlayer2Points());
         intent.putExtra("date", mScore.getDate());
 
-        intent.putExtra("isSameOrder", mIsSameOrder);
+        intent.putExtra("isLeftBot", mIsLeftBot);
+        intent.putExtra("isRightBot", mIsRightBot);
+
         intent.putExtra("leftTeam", mLeftTeam.getIndex());
         intent.putExtra("rightTeam", mRightTeam.getIndex());
+        intent.putExtra("isSameOrder", mIsSameOrder);
+
 
         intent.putExtra("elapsedTime", mElapsedTime);
 
@@ -137,6 +142,85 @@ public class PlayMetadata {
         intent.putExtra("field", mField.getIndex());
 
         intent.putExtra("nextPlayer", mNextPlayer);
+    }
+
+    public void save(SharedPreferences preferences) {
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putLong("save_playerPairId", mPlayerPair.getId());
+        editor.putString("save_player1Name", mPlayerPair.getName1());
+        editor.putString("save_player2Name", mPlayerPair.getName2());
+
+        editor.putLong("save_scoreId", mScore.getId());
+        editor.putInt("save_player1Points", mScore.getPlayer1Points());
+        editor.putInt("save_player2Points", mScore.getPlayer2Points());
+        editor.putLong("save_date", mScore.getDate());
+
+        editor.putBoolean("save_isLeftBot", mIsLeftBot);
+        editor.putBoolean("save_isRightBot", mIsRightBot);
+
+        editor.putInt("save_leftTeam", mLeftTeam.getIndex());
+        editor.putInt("save_rightTeam", mRightTeam.getIndex());
+        editor.putBoolean("save_isSameOrder", mIsSameOrder);
+
+        editor.putLong("save_elapsedTime", mElapsedTime);
+
+        editor.putInt("save_conditionType", mCondition.getType());
+        editor.putInt("save_conditionValue", mCondition.getValue());
+
+        editor.putInt("save_nextPlayer", mNextPlayer);
+
+        editor.apply();
+    }
+
+    public static void deleteSave(SharedPreferences preferences) {
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.remove("save_playerPairId");
+        editor.remove("save_player1Name");
+        editor.remove("save_player2Name");
+
+        editor.remove("save_scoreId");
+        editor.remove("save_player1Points");
+        editor.remove("save_player2Points");
+        editor.remove("save_date");
+
+        editor.remove("save_isLeftBot");
+        editor.remove("save_isRightBot");
+
+        editor.remove("save_leftTeamName");
+        editor.remove("save_rightTeamName");
+        editor.remove("save_isSameOrder");
+
+        editor.remove("save_elapsedTime");
+
+        editor.remove("save_conditionType");
+        editor.remove("save_conditionValue");
+
+        editor.remove("save_nextPlayer");
+
+        editor.apply();
+    }
+
+    public void loadSettings(Context context, SharedPreferences preferences) {
+        mCondition.setType(
+                preferences.getInt("conditionType", Condition.CONDITION_GOALS));
+
+        if (mCondition.getType() == Condition.CONDITION_GOALS) {
+            mCondition.setValue(preferences.getInt("conditionGoals", 0));
+        } else {
+            mCondition.setValue(preferences.getInt("conditionTime", 0));
+        }
+        mSpeed = preferences.getInt("speed", 0);
+        mField = new Field(context, preferences.getInt("field", 0));
+    }
+
+    public void rotateMaybe(PlayerPair playerPair) {
+        if (mPlayerPair.getName1().equals(playerPair.getName2()) &&
+                mPlayerPair.getName2().equals(playerPair.getName1())) {
+            mIsSameOrder = !mIsSameOrder;
+        }
+        mPlayerPair = playerPair;
     }
 
     public int checkWin() {
@@ -165,71 +249,6 @@ public class PlayMetadata {
                 return NO_PLAYER;
             }
         }
-    }
-
-    public static void deleteSave(SharedPreferences preferences) {
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.remove("save_playerPairId");
-        editor.remove("save_player1Name");
-        editor.remove("save_player2Name");
-
-        editor.remove("save_scoreId");
-        editor.remove("save_player1Points");
-        editor.remove("save_player2Points");
-        editor.remove("save_date");
-
-        editor.remove("save_isSameOrder");
-        editor.remove("save_leftTeamName");
-        editor.remove("save_rightTeamName");
-
-        editor.remove("save_elapsedTime");
-
-        editor.remove("save_conditionType");
-        editor.remove("save_conditionValue");
-
-        editor.remove("save_nextPlayer");
-
-        editor.apply();
-    }
-
-    public void save(SharedPreferences preferences) {
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putLong("save_playerPairId", mPlayerPair.getId());
-        editor.putString("save_player1Name", mPlayerPair.getName1());
-        editor.putString("save_player2Name", mPlayerPair.getName2());
-
-        editor.putLong("save_scoreId", mScore.getId());
-        editor.putInt("save_player1Points", mScore.getPlayer1Points());
-        editor.putInt("save_player2Points", mScore.getPlayer2Points());
-        editor.putLong("save_date", mScore.getDate());
-
-        editor.putBoolean("save_isSameOrder", mIsSameOrder);
-        editor.putInt("save_leftTeam", mLeftTeam.getIndex());
-        editor.putInt("save_rightTeam", mRightTeam.getIndex());
-
-        editor.putLong("save_elapsedTime", mElapsedTime);
-
-        editor.putInt("save_conditionType", mCondition.getType());
-        editor.putInt("save_conditionValue", mCondition.getValue());
-
-        editor.putInt("save_nextPlayer", mNextPlayer);
-
-        editor.apply();
-    }
-
-    public void loadSettings(Context context, SharedPreferences preferences) {
-        mCondition.setType(
-                preferences.getInt("conditionType", Condition.CONDITION_GOALS));
-
-        if (mCondition.getType() == Condition.CONDITION_GOALS) {
-            mCondition.setValue(preferences.getInt("conditionGoals", 0));
-        } else {
-            mCondition.setValue(preferences.getInt("conditionTime", 0));
-        }
-        mSpeed = preferences.getInt("speed", 0);
-        mField = new Field(context, preferences.getInt("field", 0));
     }
 
     public PlayerPair getPlayerPair() {
@@ -310,12 +329,48 @@ public class PlayMetadata {
         mNextPlayer = LEFT_PLAYER;
     }
 
-    public boolean isSameOrder() {
-        return mIsSameOrder;
+    public void scorePlayer(int side) {
+        if (side == LEFT_PLAYER) {
+            scoreLeftPlayer();
+        } else if (side == RIGHT_PLAYER) {
+            scoreRightPlayer();
+        }
     }
 
-    public void setIsSameOrder(boolean isSameOrder) {
-        mIsSameOrder = isSameOrder;
+    public boolean isLeftBot() {
+        return mIsLeftBot;
+    }
+
+    public void setIsLeftBot(boolean isBot) {
+        mIsLeftBot = isBot;
+    }
+
+    public boolean isRightBot() {
+        return mIsRightBot;
+    }
+
+    public void setIsRightBot(boolean isBot) {
+        mIsRightBot = isBot;
+    }
+
+    public boolean isCurrentBot() {
+        if (mNextPlayer == LEFT_PLAYER) {
+            return mIsLeftBot;
+        } else if (mNextPlayer == RIGHT_PLAYER) {
+            return mIsRightBot;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isBot(int side) {
+        if (side == LEFT_PLAYER) {
+            return mIsLeftBot;
+        } else if (side == RIGHT_PLAYER) {
+            return mIsRightBot;
+        } else {
+            return false;
+        }
     }
 
     public Team getLeftTeam() {
@@ -338,30 +393,15 @@ public class PlayMetadata {
         return (int) (mElapsedTime / 1000);
     }
 
-    public void setElapsedTime(int elapsedTime) {
-        mElapsedTime = elapsedTime;
-    }
-
-    public boolean elapseTime() {
+    public void elapseTime() {
         if (mCurrentTime == 0) { mCurrentTime = System.currentTimeMillis(); }
         long oldTime = mCurrentTime;
         mCurrentTime = System.currentTimeMillis();
         mElapsedTime += mCurrentTime - oldTime;
-
-        if (mCondition.getType() == Condition.CONDITION_TIME
-                && mElapsedTime + (mCurrentTime - oldTime) >= mCondition.getValue()) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     public Condition getCondition() {
         return mCondition;
-    }
-
-    public void setCondition(Condition condition) {
-        mCondition = condition;
     }
 
     public int getSpeed() {

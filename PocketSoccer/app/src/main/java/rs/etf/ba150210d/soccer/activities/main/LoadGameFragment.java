@@ -34,48 +34,7 @@ public class LoadGameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_load_game, container, false);
 
         if (mPlayMetadata != null) {
-            TextView leftPlayer = view.findViewById(R.id.loadGame_leftPlayer);
-            leftPlayer.setText(mPlayMetadata.getLeftPlayerName());
-
-            TextView rightPlayer = view.findViewById(R.id.loadGame_rightPlayer);
-            rightPlayer.setText(mPlayMetadata.getRightPlayerName());
-
-            TextView leftPoints = view.findViewById(R.id.loadGame_leftPoints);
-            leftPoints.setText(Integer.toString(mPlayMetadata.getLeftPlayerPoints()));
-
-            TextView rightPoints = view.findViewById(R.id.loadGame_rightPoints);
-            rightPoints.setText(Integer.toString(mPlayMetadata.getRightPlayerPoints()));
-
-            TextView leftTeam = view.findViewById(R.id.loadGame_leftTeamName);
-            leftTeam.setText(mPlayMetadata.getLeftTeam().getName());
-
-            TextView rightTeam = view.findViewById(R.id.loadGame_rightTeamName);
-            rightTeam.setText(mPlayMetadata.getRightTeam().getName());
-
-            ImageView leftTeamFlag = view.findViewById(R.id.loadGame_leftTeamFlag);
-            leftTeamFlag.setImageResource(mPlayMetadata.getLeftTeam().getId());
-
-            ImageView rightTeamFlag = view.findViewById(R.id.loadGame_rightTeamFlag);
-            rightTeamFlag.setImageResource(mPlayMetadata.getRightTeam().getId());
-
-            TextView elapsedTime = view.findViewById(R.id.loadGame_elapsedTime);
-            String elapsedTimeString = getString(R.string.time_format,
-                    mPlayMetadata.getElapsedTime() / 60,
-                    mPlayMetadata.getElapsedTime() % 60);
-            elapsedTime.setText(elapsedTimeString);
-
-            TextView conditionTextView = view.findViewById(R.id.loadGame_condition);
-            Condition condition = mPlayMetadata.getCondition();
-
-            if (condition.getType() == Condition.CONDITION_GOALS) {
-                String conditionString = getString(
-                        R.string.condition_goals_format, condition.getValue());
-                conditionTextView.setText(conditionString);
-            } else {
-                String conditionString = getString(R.string.condition_time_format,
-                        condition.getValue() / 60, condition.getValue() % 60);
-                conditionTextView.setText(conditionString);
-            }
+            displayMetadata(view);
         }
 
         initButtons(view);
@@ -107,8 +66,56 @@ public class LoadGameFragment extends Fragment {
         });
     }
 
+    private void displayMetadata(View view) {
+        TextView leftPlayer = view.findViewById(R.id.loadGame_leftPlayer);
+        leftPlayer.setText(mPlayMetadata.getLeftPlayerName());
+
+        TextView rightPlayer = view.findViewById(R.id.loadGame_rightPlayer);
+        rightPlayer.setText(mPlayMetadata.getRightPlayerName());
+
+        TextView leftPoints = view.findViewById(R.id.loadGame_leftPoints);
+        leftPoints.setText(Integer.toString(mPlayMetadata.getLeftPlayerPoints()));
+
+        TextView rightPoints = view.findViewById(R.id.loadGame_rightPoints);
+        rightPoints.setText(Integer.toString(mPlayMetadata.getRightPlayerPoints()));
+
+        TextView leftTeam = view.findViewById(R.id.loadGame_leftTeamName);
+        leftTeam.setText(mPlayMetadata.getLeftTeam().getName());
+
+        TextView rightTeam = view.findViewById(R.id.loadGame_rightTeamName);
+        rightTeam.setText(mPlayMetadata.getRightTeam().getName());
+
+        ImageView leftTeamFlag = view.findViewById(R.id.loadGame_leftTeamFlag);
+        leftTeamFlag.setImageResource(mPlayMetadata.getLeftTeam().getId());
+
+        ImageView rightTeamFlag = view.findViewById(R.id.loadGame_rightTeamFlag);
+        rightTeamFlag.setImageResource(mPlayMetadata.getRightTeam().getId());
+
+        TextView elapsedTime = view.findViewById(R.id.loadGame_elapsedTime);
+        String elapsedTimeString = getString(R.string.time_format,
+                mPlayMetadata.getElapsedTime() / 60,
+                mPlayMetadata.getElapsedTime() % 60);
+        elapsedTime.setText(elapsedTimeString);
+
+        TextView conditionTextView = view.findViewById(R.id.loadGame_condition);
+        Condition condition = mPlayMetadata.getCondition();
+
+        if (condition.getType() == Condition.CONDITION_GOALS) {
+            String conditionString = getString(
+                    R.string.condition_goals_format, condition.getValue());
+            conditionTextView.setText(conditionString);
+        } else {
+            String conditionString = getString(R.string.condition_time_format,
+                    condition.getValue() / 60, condition.getValue() % 60);
+            conditionTextView.setText(conditionString);
+        }
+    }
+
     public void setPlayMetadata(PlayMetadata playMetadata) {
         mPlayMetadata = playMetadata;
+        if (mPlayMetadata != null && isAdded()) {
+            displayMetadata(getView());
+        }
     }
 
     @Override

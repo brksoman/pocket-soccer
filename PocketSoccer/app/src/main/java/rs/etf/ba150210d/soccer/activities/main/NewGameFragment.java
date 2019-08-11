@@ -11,6 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +90,22 @@ public class NewGameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mOwner.goBack();
+            }
+        });
+
+        CheckBox isLeftBot = view.findViewById(R.id.newGame_choice_leftBot);
+        isLeftBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mPlayMetadata.setIsLeftBot(isChecked);
+            }
+        });
+
+        CheckBox isRightBot = view.findViewById(R.id.newGame_choice_rightBot);
+        isRightBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mPlayMetadata.setIsRightBot(isChecked);
             }
         });
     }

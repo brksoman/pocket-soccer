@@ -23,9 +23,6 @@ public class SoundPlayer {
 
         try {
             mAsset = assets.openFd(uri);
-            mPlayer = new MediaPlayer();
-            mPlayer.setDataSource(mAsset.getFileDescriptor(), mAsset.getStartOffset(),
-                    mAsset.getLength());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,12 +30,18 @@ public class SoundPlayer {
 
     public void play() {
         try {
+            mPlayer = new MediaPlayer();
+            mPlayer.setDataSource(mAsset.getFileDescriptor(), mAsset.getStartOffset(),
+                    mAsset.getLength());
+
             mPlayer.prepare();
             mPlayer.start();
+
             mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     mp.release();
+                    mPlayer = null;
                 }
             });
         } catch (IOException e) {

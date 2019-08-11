@@ -131,10 +131,11 @@ public class PlayData {
         mSpeed = speed;
     }
 
-    public void updateData() {
+    public boolean updateData() {
         mLeftTeam.clear();
         mRightTeam.clear();
         EventRegister hitRegister = new EventRegister();
+        EventRegister globalRegister = new EventRegister();
 
         do {
             List<Puck> newState = new ArrayList<>(TEAM_SIZE * 2 + 1);
@@ -143,12 +144,15 @@ public class PlayData {
             for (Puck puck: mAllPucks) {
                 Puck newPuck = puck.handleCollisions(mAllPucks, hitRegister);
                 newPuck.handleWallHits(mViewDims, hitRegister);
-                //newPuck.handleGoalpostHits(mLeftGoalposts, mRightGoalposts, hitRegister);
                 newPuck.handleGoalpostHits(new RectF[] { mLeftGoal, mRightGoal }, hitRegister);
 
                 newState.add(newPuck);
             }
             mAllPucks = newState;
+
+            if (hitRegister.check()) {
+                globalRegister.register();
+            }
 
         } while (hitRegister.check());
 
@@ -162,6 +166,7 @@ public class PlayData {
             puck.move();
             puck.decelerate(mSpeed);
         }
+        return globalRegister.check();
     }
 
     public void draw(Canvas canvas, Paint paint) {

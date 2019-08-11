@@ -45,7 +45,7 @@
     // Asset uri-s
 
     <string name="bounce_sound">sounds/bounce.mp3</string>
-    <string name="score_sound">sounds/score.mp3</string>
+    <string name="score_sound">sounds/crowd.mp3</string>
 
     // Data structures
 

@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.util.SoundPlayer;
 
 public class ScreenRefreshController {
 
@@ -24,6 +25,9 @@ public class ScreenRefreshController {
     private static final Handler THREAD_HANDLER = new Handler(Looper.getMainLooper());
 
     private PlayActivity mActivity;
+    private SoundPlayer mBouncePlayer;
+    private SoundPlayer mScorePlayer;
+
     private PlayViewModel mViewModel;
     private PlayMetadata mMetadata;
     private PlayData mData;
@@ -33,6 +37,9 @@ public class ScreenRefreshController {
 
     public ScreenRefreshController(final Activity activity, PlayViewModel viewModel) {
         mActivity = (PlayActivity) activity;
+        mBouncePlayer = new SoundPlayer(mActivity, "bounce");
+        mScorePlayer = new SoundPlayer(mActivity, "score");
+
         mViewModel = viewModel;
         mData = mViewModel.getData();
         mMetadata = mViewModel.getMetadata();
@@ -41,16 +48,15 @@ public class ScreenRefreshController {
     }
 
     private void regularRefresh() {
-        mData.updateData();
+        if (mData.updateData()) {
+            mBouncePlayer.play();
+        }
         mMetadata.elapseTime();
 
         int scorer = mData.checkScoring();
         if (scorer != PlayMetadata.NO_PLAYER) {
-            if (scorer == PlayMetadata.LEFT_PLAYER) {
-                mMetadata.scoreLeftPlayer();
-            } else {
-                mMetadata.scoreRightPlayer();
-            }
+            mScorePlayer.play();
+            mMetadata.scorePlayer(scorer);
 
             int winner = mMetadata.checkWin();
             if (winner != PlayMetadata.NO_PLAYER) {

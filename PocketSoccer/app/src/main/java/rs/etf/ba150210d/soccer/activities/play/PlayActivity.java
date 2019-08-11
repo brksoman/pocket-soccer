@@ -1,12 +1,8 @@
 package rs.etf.ba150210d.soccer.activities.play;
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -15,7 +11,6 @@ import rs.etf.ba150210d.soccer.datastructures.PlayData;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 import rs.etf.ba150210d.soccer.datastructures.Team;
 import rs.etf.ba150210d.soccer.util.FragmentOwner;
-import rs.etf.ba150210d.soccer.util.ImmersiveAppCompatActivity;
 
 public class PlayActivity extends FragmentOwner implements ScreenRefreshController.ViewOwner {
 
@@ -23,7 +18,7 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
 
     private PlayImageView mImageView;
     private ScreenRefreshController mScreenRefreshController;
-    private GestureController mGestureController;
+    private PlayController mPlayController;
 
     private TextView mLeftScoreView;
     private TextView mRightScoreView;
@@ -60,8 +55,8 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
         int rightPlayerPoints = mViewModel.getMetadata().getRightPlayerPoints();
         mRightScoreView.setText(Integer.toString(rightPlayerPoints));
 
-        mGestureController = new GestureController(mViewModel);
-        mImageView.setOnTouchListener(mGestureController);
+        mPlayController = new PlayController(mViewModel);
+        mImageView.setOnTouchListener(mPlayController);
 
         mScreenRefreshController = new ScreenRefreshController(
                 this, mViewModel);

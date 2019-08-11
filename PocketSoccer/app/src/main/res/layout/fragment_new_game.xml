@@ -28,6 +28,35 @@
             app:layout_constraintEnd_toStartOf="@id/newGame_textView_right"
             android:text="@string/left_player" />
 
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/newGame_textView_left"
+            app:layout_constraintEnd_toStartOf="@id/newGame_textView_left"
+            app:layout_constraintBottom_toBottomOf="@id/newGame_textView_left">
+
+            <CheckBox
+                android:id="@+id/newGame_choice_leftBot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                app:layout_constraintStart_toEndOf="@id/newGame_choice_leftBot"
+                app:layout_constraintTop_toTopOf="@id/newGame_choice_leftBot"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/newGame_choice_leftBot"
+                android:src="@drawable/ic_bot" />
+
+        </android.support.constraint.ConstraintLayout>
+
         <TextView
             android:id="@+id/newGame_textView_right"
             style="@style/HighlightBigText"
@@ -36,6 +65,35 @@
             app:layout_constraintTop_toBottomOf="@id/newGame_textView_title"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/right_player" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/newGame_textView_right"
+            app:layout_constraintTop_toTopOf="@id/newGame_textView_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/newGame_textView_right">
+
+            <CheckBox
+                android:id="@+id/newGame_choice_rightBot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/newGame_choice_rightBot"
+                app:layout_constraintEnd_toStartOf="@id/newGame_choice_rightBot"
+                app:layout_constraintBottom_toBottomOf="@id/newGame_choice_rightBot"
+                android:src="@drawable/ic_bot" />
+
+        </android.support.constraint.ConstraintLayout>
 
         <rs.etf.ba150210d.soccer.util.EditTextBackEvent
             android:id="@+id/newGame_editText_leftName"

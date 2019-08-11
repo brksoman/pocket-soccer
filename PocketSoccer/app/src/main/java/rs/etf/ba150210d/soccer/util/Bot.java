@@ -32,7 +32,11 @@ public class Bot {
             public void run() {
                 Puck puck = mData.getClosestPuck(mSide);
                 PointF distance = puck.getDistance(mData.getBall());
-                puck.accelerate(42, 42);
+                float absDistance = (float) Math.sqrt(
+                        distance.x * distance.x + distance.y * distance.y);
+
+                puck.accelerate(42 * (distance.x / absDistance),
+                        42 * (distance.x / absDistance));
                 mViewModel.getMetadata().switchNextPlayer();
             }
         };

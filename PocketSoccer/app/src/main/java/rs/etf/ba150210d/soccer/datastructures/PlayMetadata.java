@@ -95,8 +95,8 @@ public class PlayMetadata {
         mScore.setId(
                 preferences.getLong("save_scoreId", 0));
 
-        mIsLeftBot = preferences.getBoolean("isLeftBot", false);
-        mIsRightBot = preferences.getBoolean("isRightBot", false);
+        mIsLeftBot = preferences.getBoolean("save_isLeftBot", false);
+        mIsRightBot = preferences.getBoolean("save_isRightBot", false);
 
         mLeftTeam = new Team(context, preferences.getInt("save_leftTeam", 0));
         mRightTeam = new Team(context, preferences.getInt("save_rightTeam", 0));

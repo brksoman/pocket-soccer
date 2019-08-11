@@ -28,7 +28,7 @@ public class Team extends ChoiceImage {
                 sb.append(mName.substring(fromIndex + 1));
                 break;
             } else {
-                sb.append(mName.substring(fromIndex + 1, spaceIndex - 1) + " ");
+                sb.append(mName.substring(fromIndex + 1, spaceIndex) + " ");
             }
             fromIndex = spaceIndex + 1;
         }

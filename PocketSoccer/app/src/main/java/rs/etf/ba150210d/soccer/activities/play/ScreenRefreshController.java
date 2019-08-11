@@ -47,6 +47,15 @@ public class ScreenRefreshController {
         startRegularAnimation();
     }
 
+    public void stop() {
+        if (mRegularTimer != null) {
+            mRegularTimer.cancel();
+        }
+        if (mScoreTimer != null) {
+            mScoreTimer.cancel();
+        }
+    }
+
     private void regularRefresh() {
         if (mData.updateData()) {
             mBouncePlayer.play();

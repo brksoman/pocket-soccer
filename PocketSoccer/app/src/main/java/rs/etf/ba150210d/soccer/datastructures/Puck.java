@@ -89,10 +89,6 @@ public class Puck {
         mCenter.offset(mVelocity.x, mVelocity.y);
     }
 
-    public Bitmap getImage() {
-        return mImage;
-    }
-
     public void draw(Canvas canvas, Paint paint) {
         paint.setColor(Color.WHITE);
         canvas.drawCircle(mCenter.x, mCenter.y, mRadius, paint);
@@ -201,9 +197,7 @@ public class Puck {
         }
     }
 
-    public void handleGoalpostHits(//List<PointF[]> leftGoalposts, List<PointF[]> rightGoalposts, EventRegister hitRegister) {
-            RectF[] goals, EventRegister hitRegister) {
-
+    public void handleGoalpostHits(RectF[] goals, EventRegister hitRegister) {
         for (RectF goal: goals) {
             /* Upper post hit from above */
             if (mVelocity.y > 0
@@ -249,49 +243,6 @@ public class Puck {
                 handlePointHit(new PointF(goal.left, goal.bottom), hitRegister);
             }
         }
-
-
-        /*for (PointF[] goalpost: leftGoalposts) {
-            if (mVelocity.y > 0
-                    && mCenter.y + mRadius >= goalpost[1].y
-                    && mCenter.y <= goalpost[1].y
-                    && mCenter.x >= goalpost[0].x
-                    && mCenter.x <= goalpost[1].x) {
-                mVelocity.y *= -1;
-                hitRegister.register();
-            } else
-            if (mVelocity.y < 0
-                    && mCenter.y - mRadius <= goalpost[1].y
-                    && mCenter.y >= goalpost[1].y
-                    && mCenter.x >= goalpost[0].x
-                    && mCenter.x <= goalpost[1].x) {
-                mVelocity.y *= -1;
-                hitRegister.register();
-            } else {
-                handlePointHit(goalpost[1], hitRegister);
-            }
-        }
-
-        for (PointF[] goalpost: rightGoalposts) {
-            if (mVelocity.y > 0
-                    && mCenter.y + mRadius >= goalpost[1].y
-                    && mCenter.y <= goalpost[1].y
-                    && mCenter.x <= goalpost[0].x
-                    && mCenter.x >= goalpost[1].x) {
-                mVelocity.y *= -1;
-                hitRegister.register();
-            } else
-            if (mVelocity.y < 0
-                    && mCenter.y - mRadius <= goalpost[1].y
-                    && mCenter.y >= goalpost[1].y
-                    && mCenter.x <= goalpost[0].x
-                    && mCenter.x >= goalpost[1].x) {
-                mVelocity.y *= -1;
-                hitRegister.register();
-            } else {
-                handlePointHit(goalpost[1], hitRegister);
-            }
-        }*/
     }
 
     private void handlePointHit(PointF point, EventRegister hitRegister) {
@@ -321,5 +272,11 @@ public class Puck {
                 hitRegister.register();
             }
         }
+    }
+
+    public PointF getDistance(Puck puck) {
+        return new PointF(
+                puck.getCenter().x - this.getCenter().x,
+                puck.getCenter().y - this.getCenter().y);
     }
 }

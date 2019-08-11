@@ -1,10 +1,12 @@
 package rs.etf.ba150210d.soccer.util;
 
+import android.graphics.PointF;
 import android.os.Handler;
 import android.os.Looper;
 
 import rs.etf.ba150210d.soccer.activities.play.PlayViewModel;
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
+import rs.etf.ba150210d.soccer.datastructures.Puck;
 
 public class Bot {
     private static final long THINK_MIN = 2000;
@@ -28,7 +30,10 @@ public class Bot {
         Runnable endAnimation = new Runnable() {
             @Override
             public void run() {
-                // TODO implement bot's move
+                Puck puck = mData.getClosestPuck(mSide);
+                PointF distance = puck.getDistance(mData.getBall());
+                puck.accelerate(42, 42);
+                mViewModel.getMetadata().switchNextPlayer();
             }
         };
 

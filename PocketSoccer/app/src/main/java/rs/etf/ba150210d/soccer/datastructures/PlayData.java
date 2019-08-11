@@ -96,6 +96,10 @@ public class PlayData {
                 mViewDims.x, mViewDims.y * GOALPOST_VERTICAL_POSITIONS[1]);
     }
 
+    public Puck getBall() {
+        return mBall;
+    }
+
     public void updateDims(int viewWidth, int viewHeight) {
         mViewDims.set(viewWidth, viewHeight);
         float radius = viewWidth * TEAM_SCREEN_RATIO;
@@ -217,5 +221,24 @@ public class PlayData {
 
     public void resetState() {
         updateDims(mViewDims.x, mViewDims.y);
+    }
+
+    public Puck getClosestPuck(int side) {
+        List<Puck> team = (side == PlayMetadata.LEFT_PLAYER) ? mLeftTeam : mRightTeam;
+
+        Puck minPuck = team.get(0);
+        float minDistance = mViewDims.x * mViewDims.y;
+
+        for (Puck puck: team) {
+            float distanceX = mBall.getCenter().x - puck.getCenter().x;
+            float distanceY = mBall.getCenter().y - puck.getCenter().y;
+
+            float distance = distanceX * distanceX + distanceY * distanceY;
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPuck = puck;
+            }
+        }
+        return minPuck;
     }
 }

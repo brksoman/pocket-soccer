@@ -6,9 +6,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
 import rs.etf.ba150210d.soccer.R;
+import rs.etf.ba150210d.soccer.util.FragmentOwner;
 import rs.etf.ba150210d.soccer.util.ImmersiveAppCompatActivity;
 
-public class SettingsActivity extends ImmersiveAppCompatActivity {
+public class SettingsActivity extends FragmentOwner {
 
     private MainSettingsFragment mMainSettingsFragment;
 
@@ -28,28 +29,13 @@ public class SettingsActivity extends ImmersiveAppCompatActivity {
     }
 
     @Override
-    public void switchActivity(int activityId) {
-        // No switching activity
-    }
-
-    @Override
-    public void switchFragment(int fragmentId) {
-        // No more fragments in this activity
-    }
-
-    @Override
-    public void goBack() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        boolean hasBack = fragmentManager.popBackStackImmediate();
-
-        if (!hasBack) {
-            finish();
-        }
+    protected int getFragmentContainerId() {
+        return R.id.settings_fragment;
     }
 
     @Override
     public ViewModel getViewModel() {
-        // No view model for this activity
+        /* No view model for this activity */
         return null;
     }
 }

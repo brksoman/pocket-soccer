@@ -12,11 +12,11 @@ import android.widget.Button;
 
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
-import rs.etf.ba150210d.soccer.util.FragmentOwnerInterface;
+import rs.etf.ba150210d.soccer.util.FragmentOwner;
 
 public class MainFragment extends Fragment {
 
-    private FragmentOwnerInterface mFragmentOwner;
+    private MainActivity mOwner;
     private MainViewModel mViewModel;
 
     private PlayMetadata mLoadedPlayMetadata = null;
@@ -38,22 +38,22 @@ public class MainFragment extends Fragment {
                 int id = v.getId();
                 switch (id) {
                     case R.id.main_button_newGame:
-                        mFragmentOwner.switchFragment(FragmentOwnerInterface.NEW_GAME_FRAGMENT);
+                        mOwner.switchFragment(FragmentOwner.NEW_GAME_FRAGMENT);
                         break;
 
                     case R.id.main_button_loadGame:
-                        mFragmentOwner.switchFragment(FragmentOwnerInterface.LOAD_GAME_FRAGMENT);
+                        mOwner.switchFragment(FragmentOwner.LOAD_GAME_FRAGMENT);
                         break;
 
                     case R.id.main_button_settings:
-                        mFragmentOwner.switchActivity(FragmentOwnerInterface.SETTINGS_ACTIVITY);
+                        mOwner.switchActivity(FragmentOwner.SETTINGS_ACTIVITY);
                         break;
 
                     case R.id.main_button_scores:
-                        mFragmentOwner.switchActivity(FragmentOwnerInterface.SCORE_ACTIVITY);
+                        mOwner.switchActivity(FragmentOwner.SCORE_ACTIVITY);
 
                     case R.id.main_fab_exit:
-                        mFragmentOwner.goBack();
+                        mOwner.goBack();
                         break;
 
                     // TODO implement rest of options
@@ -101,18 +101,17 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof FragmentOwnerInterface) {
-            mFragmentOwner = (FragmentOwnerInterface) context;
-            mViewModel = (MainViewModel) mFragmentOwner.getViewModel();
+        if (context instanceof MainActivity) {
+            mOwner = (MainActivity) context;
+            mViewModel = mOwner.getViewModel();
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement FragmentOwnerInterface");
+            throw new RuntimeException("Owner must be MainActivity");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mFragmentOwner = null;
+        mOwner = null;
     }
 }

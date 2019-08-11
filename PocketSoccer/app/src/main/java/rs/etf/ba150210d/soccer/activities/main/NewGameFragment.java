@@ -11,10 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +22,12 @@ import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.datastructures.Team;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
-import rs.etf.ba150210d.soccer.datastructures.Condition;
-import rs.etf.ba150210d.soccer.util.FragmentOwnerInterface;
 import rs.etf.ba150210d.soccer.util.EditTextBackEvent;
+import rs.etf.ba150210d.soccer.util.FragmentOwner;
 
 public class NewGameFragment extends Fragment {
 
-    private FragmentOwnerInterface mFragmentOwner;
+    private MainActivity mOwner;
     private MainViewModel mViewModel;
 
     private List<String> mTeamNames;
@@ -54,10 +49,10 @@ public class NewGameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_game, container, false);
 
         mEditTextLeftName = view.findViewById(R.id.newGame_editText_leftName);
-        mFragmentOwner.avoidUiWithEditText(mEditTextLeftName);
+        mOwner.avoidUiWithEditText(mEditTextLeftName);
 
         mEditTextRightName = view.findViewById(R.id.newGame_editText_rightName);
-        mFragmentOwner.avoidUiWithEditText(mEditTextRightName);
+        mOwner.avoidUiWithEditText(mEditTextRightName);
 
         initButtons(view);
 
@@ -92,7 +87,7 @@ public class NewGameFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFragmentOwner.goBack();
+                mOwner.goBack();
             }
         });
     }
@@ -142,8 +137,7 @@ public class NewGameFragment extends Fragment {
     }
 
     private void startGame() {
-        SharedPreferences preferences = getActivity().getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences preferences = mOwner.getPreferences();
         mPlayMetadata.loadSettings(getContext(), preferences);
 
         mViewModel.setNewlyInsertedPlayerPair(mPlayMetadata.getPlayerPair());
@@ -151,8 +145,8 @@ public class NewGameFragment extends Fragment {
             @Override
             public void onChanged(@Nullable PlayerPair playerPair) {
                 mPlayMetadata.rotateMaybe(playerPair);
-                ((MainActivity)mFragmentOwner).reportNew();
-                mFragmentOwner.switchActivity(FragmentOwnerInterface.PLAY_ACTIVITY);
+                mOwner.reportNew();
+                mOwner.switchActivity(FragmentOwner.PLAY_ACTIVITY);
             }
         });
     }
@@ -160,18 +154,17 @@ public class NewGameFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof FragmentOwnerInterface) {
-            mFragmentOwner = (FragmentOwnerInterface) context;
-            mViewModel = (MainViewModel) mFragmentOwner.getViewModel();
+        if (context instanceof MainActivity) {
+            mOwner = (MainActivity) context;
+            mViewModel = mOwner.getViewModel();
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement FragmentOwnerInterface");
+            throw new RuntimeException("Owner must be MainActivity!");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mFragmentOwner = null;
+        mOwner = null;
     }
 }

@@ -17,11 +17,10 @@ import android.widget.Toast;
 
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.datastructures.Condition;
-import rs.etf.ba150210d.soccer.util.FragmentOwnerInterface;
 
 public class MainSettingsFragment extends Fragment {
 
-    private FragmentOwnerInterface mFragmentOwner;
+    private SettingsActivity mOwner;
 
     private TextView mSpeedText;
     private SeekBar mSpeedSeekBar;
@@ -49,8 +48,7 @@ public class MainSettingsFragment extends Fragment {
         initButtons(view);
 
         Context context = getActivity();
-        SharedPreferences preferences = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences preferences = mOwner.getPreferences();
 
         initSpeed(view, preferences);
         initCondition(view, preferences);
@@ -67,14 +65,14 @@ public class MainSettingsFragment extends Fragment {
                 int id = v.getId();
                 switch (id) {
                     case R.id.settings_fab_back:
-                        mFragmentOwner.goBack();
+                        mOwner.goBack();
                         break;
 
                     case R.id.settings_fab_save:
                         Toast.makeText(getContext(), getString(
                                 R.string.settings_saved_message), Toast.LENGTH_SHORT).show();
                         saveState();
-                        mFragmentOwner.goBack();
+                        mOwner.goBack();
                 }
             }
         };
@@ -193,10 +191,8 @@ public class MainSettingsFragment extends Fragment {
     }
 
     private void saveState() {
-        SharedPreferences preferences = getActivity().getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mOwner.getPreferences().edit();
 
-        SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("speed", mSpeed);
         editor.putInt("conditionType", mCondition.getType());
         editor.putInt("conditionGoals", mConditionGoals);
@@ -209,17 +205,16 @@ public class MainSettingsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof FragmentOwnerInterface) {
-            mFragmentOwner = (FragmentOwnerInterface) context;
+        if (context instanceof SettingsActivity) {
+            mOwner = (SettingsActivity) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement FragmentOwnerInterface");
+            throw new RuntimeException("Owner must be SettingsActivity");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mFragmentOwner = null;
+        mOwner = null;
     }
 }

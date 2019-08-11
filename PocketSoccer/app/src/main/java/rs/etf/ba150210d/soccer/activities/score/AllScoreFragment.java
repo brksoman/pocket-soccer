@@ -17,11 +17,11 @@ import java.util.List;
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
 import rs.etf.ba150210d.soccer.model.entities.Score;
-import rs.etf.ba150210d.soccer.util.FragmentOwnerInterface;
+import rs.etf.ba150210d.soccer.util.FragmentOwner;
 
 public class AllScoreFragment extends Fragment {
 
-    private FragmentOwnerInterface mFragmentOwner;
+    private ScoreActivity mOwner;
     private ScoreViewModel mViewModel;
 
     private PlayerPair mSelectedPlayerPair;
@@ -66,7 +66,7 @@ public class AllScoreFragment extends Fragment {
             @Override
             public void onClick(PlayerPair playerPair) {
                 mSelectedPlayerPair = playerPair;
-                mFragmentOwner.switchFragment(FragmentOwnerInterface.PAIR_SCORE_FRAGMENT);
+                mOwner.switchFragment(FragmentOwner.PAIR_SCORE_FRAGMENT);
             }
         });
 
@@ -74,7 +74,7 @@ public class AllScoreFragment extends Fragment {
         backFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFragmentOwner.goBack();
+                mOwner.goBack();
             }
         });
 
@@ -88,18 +88,17 @@ public class AllScoreFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof FragmentOwnerInterface) {
-            mFragmentOwner = (FragmentOwnerInterface) context;
-            mViewModel = (ScoreViewModel) mFragmentOwner.getViewModel();
+        if (context instanceof ScoreActivity) {
+            mOwner = (ScoreActivity) context;
+            mViewModel = mOwner.getViewModel();
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement FragmentOwnerInterface");
+            throw new RuntimeException("Owner must be ScoreActivity");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mFragmentOwner = null;
+        mOwner = null;
     }
 }

@@ -10,9 +10,10 @@ import android.os.Bundle;
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.util.FragmentOwner;
 import rs.etf.ba150210d.soccer.util.ImmersiveAppCompatActivity;
 
-public class ScoreActivity extends ImmersiveAppCompatActivity {
+public class ScoreActivity extends FragmentOwner {
 
     private AllScoreFragment mAllScoreFragment;
     private PairScoreFragment mPairScoreFragment;
@@ -42,11 +43,6 @@ public class ScoreActivity extends ImmersiveAppCompatActivity {
     }
 
     @Override
-    public void switchActivity(int activityId) {
-        /* Cannot switch activity in score activity */
-    }
-
-    @Override
     public void switchFragment(int fragmentId) {
         switch (fragmentId) {
             case ALL_SCORE_FRAGMENT:
@@ -62,30 +58,12 @@ public class ScoreActivity extends ImmersiveAppCompatActivity {
     }
 
     @Override
-    public void goBack() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        boolean hasBack = fragmentManager.popBackStackImmediate();
-
-        if (!hasBack) {
-            finish();
-        }
+    protected int getFragmentContainerId() {
+        return R.id.score_fragment;
     }
 
     @Override
-    public ViewModel getViewModel() {
+    public ScoreViewModel getViewModel() {
         return mViewModel;
-    }
-
-    private void setFragment(Fragment fragment, boolean isChildFragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        if (isChildFragment) {
-            fragmentTransaction.replace(R.id.score_fragment, fragment);
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
-        } else {
-            fragmentTransaction.add(R.id.score_fragment, fragment);
-        }
-        fragmentTransaction.commit();
     }
 }

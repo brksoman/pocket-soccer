@@ -16,9 +16,10 @@ import rs.etf.ba150210d.soccer.activities.play.PlayActivity;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 import rs.etf.ba150210d.soccer.activities.score.ScoreActivity;
 import rs.etf.ba150210d.soccer.activities.settings.SettingsActivity;
+import rs.etf.ba150210d.soccer.util.FragmentOwner;
 import rs.etf.ba150210d.soccer.util.ImmersiveAppCompatActivity;
 
-public class MainActivity extends ImmersiveAppCompatActivity {
+public class MainActivity extends FragmentOwner {
 
     public static final int PLAY_REQUEST = 200;
 
@@ -50,9 +51,9 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     }
 
     private void initMetadata() {
-        SharedPreferences preferences = getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences preferences = getPreferences();
         //PlayMetadata.deleteSave(preferences);
+
         /* If saved game exists */
         if (preferences.getLong("save_playerPairId", -1L) != -1L) {
             mLoadedPlayMetadata = new PlayMetadata(this, preferences);
@@ -63,19 +64,10 @@ public class MainActivity extends ImmersiveAppCompatActivity {
         mNewGameFragment.setPlayMetadata(mSelectedPlayMetadata);
     }
 
-    private void setFragment(Fragment fragment, boolean isChildFragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        if (isChildFragment) {
-            fragmentTransaction.replace(R.id.main_fragment, fragment);
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
-        } else {
-            fragmentTransaction.add(R.id.main_fragment, fragment);
-        }
-        fragmentTransaction.commit();
+    @Override
+    protected int getFragmentContainerId() {
+        return R.id.main_fragment;
     }
-
 
     @Override
     public void switchActivity(int activityId) {
@@ -103,7 +95,6 @@ public class MainActivity extends ImmersiveAppCompatActivity {
                 } else {
                     mSelectedPlayMetadata.pack(intent);
                 }
-
                 startActivityForResult(intent, PLAY_REQUEST);
                 break;
         }
@@ -171,17 +162,13 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     }
 
     @Override
-    public void goBack() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        boolean hasBack = fragmentManager.popBackStackImmediate();
-
-        if (!hasBack) {
-            // TODO implement exit app
-        }
+    protected void exitActivity() {
+        super.exitActivity();
+        // TODO implement app exit
     }
 
     @Override
-    public ViewModel getViewModel() {
+    public MainViewModel getViewModel() {
         return mViewModel;
     }
 }

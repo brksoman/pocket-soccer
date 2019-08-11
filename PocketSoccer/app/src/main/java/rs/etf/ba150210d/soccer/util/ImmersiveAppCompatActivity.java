@@ -18,8 +18,7 @@ import java.lang.reflect.Field;
     fullscreen function. Also contains methods for forcing fullscreen on Spinners and EditTexts.
  */
 public abstract class ImmersiveAppCompatActivity
-        extends AppCompatActivity
-        implements FragmentOwnerInterface {
+        extends AppCompatActivity {
 
     private HideHandler mHideHandler;
 
@@ -53,7 +52,6 @@ public abstract class ImmersiveAppCompatActivity
     }
 
     private void setToImmersiveMode() {
-        // set to immersive
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -79,13 +77,6 @@ public abstract class ImmersiveAppCompatActivity
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        goBack();
-        super.onBackPressed();
-    }
-
-    @Override
     public void avoidUiWithSpinner(Spinner spinner) {
         if (mSpinnerHideHandler == null) {
             mSpinnerHideHandler = new SpinnerHideHandler();
@@ -93,7 +84,6 @@ public abstract class ImmersiveAppCompatActivity
         mSpinnerHideHandler.avoidUiWithSpinner(spinner);
     }
 
-    @Override
     public void avoidUiWithEditText(EditTextBackEvent editText) {
         if (mEditTextListener == null) {
             mEditTextListener = new EditTextBackEvent.EditTextImeBackListener() {

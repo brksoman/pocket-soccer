@@ -14,9 +14,10 @@ import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 import rs.etf.ba150210d.soccer.datastructures.Team;
+import rs.etf.ba150210d.soccer.util.FragmentOwner;
 import rs.etf.ba150210d.soccer.util.ImmersiveAppCompatActivity;
 
-public class PlayActivity extends ImmersiveAppCompatActivity implements ScreenRefreshController.ViewOwner {
+public class PlayActivity extends FragmentOwner implements ScreenRefreshController.ViewOwner {
 
     private PlayViewModel mViewModel;
 
@@ -68,26 +69,19 @@ public class PlayActivity extends ImmersiveAppCompatActivity implements ScreenRe
     }
 
     @Override
-    public void switchActivity(int activityId) { }
-    @Override
-    public void switchFragment(int fragmentId) { }
-
-    @Override
-    public void goBack() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        boolean hasBack = fragmentManager.popBackStackImmediate();
-
-        if (!hasBack) {
-            SharedPreferences preferences = getSharedPreferences(
-                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-            mViewModel.getMetadata().save(preferences);
-            setResult(RESULT_CANCELED);
-            finish();
-        }
+    protected int getFragmentContainerId() {
+        return 0;
     }
 
     @Override
-    public ViewModel getViewModel() {
+    protected void exitActivity() {
+        mViewModel.getMetadata().save(getPreferences());
+        setResult(RESULT_CANCELED);
+        super.exitActivity();
+    }
+
+    @Override
+    public PlayViewModel getViewModel() {
         return mViewModel;
     }
 
@@ -128,9 +122,7 @@ public class PlayActivity extends ImmersiveAppCompatActivity implements ScreenRe
             mLeftScoreView.setText(Integer.toString(points));
         }
 
-        SharedPreferences preferences = getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        PlayMetadata.deleteSave(preferences);
+        PlayMetadata.deleteSave(getPreferences());
     }
 
     @Override

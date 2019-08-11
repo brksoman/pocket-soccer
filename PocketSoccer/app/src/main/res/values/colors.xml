@@ -7,7 +7,7 @@
 
     <color name="colorText">#DDDDDD</color>
     <color name="colorTextHighlight">#FF7777</color>
-    <color name="colorTextOverField">#55DDDDDD</color>
+    <color name="colorTextOverField">#FFFFFF</color>
 
     <color name="colorNegative">#4422CC</color>
 

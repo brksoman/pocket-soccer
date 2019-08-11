@@ -78,13 +78,33 @@ public class LoadGameFragment extends Fragment {
             }
         }
 
-        FloatingActionButton loadButton = view.findViewById(R.id.loadGame_fab_load);
-        loadButton.setOnClickListener(mButtonOnClickListener);
-
-        FloatingActionButton backButton = view.findViewById(R.id.loadGame_fab_back);
-        backButton.setOnClickListener(mButtonOnClickListener);
+        initButtons(view);
 
         return view;
+    }
+
+    private void initButtons(View view) {
+        FloatingActionButton loadButton = view.findViewById(R.id.loadGame_fab_load);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) mFragmentOwner).reportLoad();
+                SharedPreferences preferences = getActivity().getSharedPreferences(
+                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                mPlayMetadata.setSpeed(preferences.getInt("speed", mPlayMetadata.getSpeed()));
+                mPlayMetadata.setField(new Field(getContext(),
+                        preferences.getInt("field", 0)));
+                mFragmentOwner.switchActivity(FragmentOwnerInterface.PLAY_ACTIVITY);
+            }
+        });
+
+        FloatingActionButton backButton = view.findViewById(R.id.loadGame_fab_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFragmentOwner.goBack();
+            }
+        });
     }
 
     public void setPlayMetadata(PlayMetadata playMetadata) {
@@ -108,25 +128,4 @@ public class LoadGameFragment extends Fragment {
         super.onDetach();
         mFragmentOwner = null;
     }
-
-    private View.OnClickListener mButtonOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int id = v.getId();
-            switch (id) {
-                case R.id.loadGame_fab_load:
-                    ((MainActivity) mFragmentOwner).reportLoad();
-                    SharedPreferences preferences = getActivity().getSharedPreferences(
-                            getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                    mPlayMetadata.setSpeed(preferences.getInt("speed", mPlayMetadata.getSpeed()));
-                    mPlayMetadata.setField(new Field(getContext(), preferences.getInt("field", 0)));
-                    mFragmentOwner.switchActivity(FragmentOwnerInterface.PLAY_ACTIVITY);
-                    break;
-
-                case R.id.loadGame_fab_back:
-                    mFragmentOwner.goBack();
-                    break;
-            }
-        }
-    };
 }

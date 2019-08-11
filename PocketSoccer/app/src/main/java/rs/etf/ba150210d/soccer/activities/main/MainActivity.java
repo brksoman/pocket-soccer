@@ -77,7 +77,6 @@ public class MainActivity extends ImmersiveAppCompatActivity {
     }
 
 
-    // FragmentOwnerInterface methods
     @Override
     public void switchActivity(int activityId) {
         Intent intent;

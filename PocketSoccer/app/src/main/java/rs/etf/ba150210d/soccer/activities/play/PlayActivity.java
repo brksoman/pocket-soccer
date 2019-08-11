@@ -81,7 +81,6 @@ public class PlayActivity extends ImmersiveAppCompatActivity implements ScreenRe
             SharedPreferences preferences = getSharedPreferences(
                     getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             mViewModel.getMetadata().save(preferences);
-            // TODO implement game exit
             setResult(RESULT_CANCELED);
             finish();
         }

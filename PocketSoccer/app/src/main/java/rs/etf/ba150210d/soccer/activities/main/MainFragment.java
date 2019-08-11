@@ -23,7 +23,7 @@ public class MainFragment extends Fragment {
     private Button mLoadGameButton;
 
     public MainFragment() {
-        // Required empty public constructor
+        /* Required empty public constructor */
     }
 
     @Override

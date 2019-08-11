@@ -27,7 +27,7 @@ public class AllScoreFragment extends Fragment {
     private PlayerPair mSelectedPlayerPair;
 
     public AllScoreFragment() {
-        // Required empty public constructor
+        /* Required empty public constructor */
     }
 
     @Override

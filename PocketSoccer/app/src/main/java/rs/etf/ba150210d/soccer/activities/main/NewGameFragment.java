@@ -65,7 +65,6 @@ public class NewGameFragment extends Fragment {
         mTeamNames = new ArrayList<>(Arrays.asList(teamNamesResource));
 
         initTeamPagers(view);
-        //initSpinners(view);
 
         return view;
     }
@@ -82,6 +81,8 @@ public class NewGameFragment extends Fragment {
                     Toast.makeText(getContext(), getString(
                             R.string.enter_player_name_message), Toast.LENGTH_SHORT).show();
                 } else {
+                    mPlayMetadata.setLeftPlayerName(leftName);
+                    mPlayMetadata.setRightPlayerName(rightName);
                     startGame();
                 }
             }
@@ -95,48 +96,6 @@ public class NewGameFragment extends Fragment {
             }
         });
     }
-
-    /*private void initSpinners(View view) {
-        Spinner leftSpinner = view.findViewById(R.id.newGame_spinner_left);
-        initSpinner(leftSpinner);
-
-        mPlayMetadata.setLeftTeamName(mTeamNames.get(0));
-        leftSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPlayMetadata.setLeftTeamName(mTeamNames.get(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
-
-        Spinner rightSpinner = view.findViewById(R.id.newGame_spinner_right);
-        initSpinner(rightSpinner);
-
-        mPlayMetadata.setRightTeamName(mTeamNames.get(0));
-        rightSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPlayMetadata.setRightTeamName(mTeamNames.get(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
-    }
-
-    private void initSpinner(Spinner spinner) {
-        SpinnerAdapter adapter = new ArrayAdapter<String>(
-                getContext(),
-                android.R.layout.simple_spinner_item,
-                mTeamNames);
-        ((ArrayAdapter) adapter).setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-        mFragmentOwner.avoidUiWithSpinner(spinner);
-    }*/
 
     private void initTeamPagers(View view) {
         mLeftTeamPager = view.findViewById(R.id.newGame_pager_left);
@@ -183,9 +142,6 @@ public class NewGameFragment extends Fragment {
     }
 
     private void startGame() {
-        mPlayMetadata.setLeftPlayerName(mEditTextLeftName.getText().toString());
-        mPlayMetadata.setRightPlayerName(mEditTextRightName.getText().toString());
-
         SharedPreferences preferences = getActivity().getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         mPlayMetadata.loadSettings(getContext(), preferences);

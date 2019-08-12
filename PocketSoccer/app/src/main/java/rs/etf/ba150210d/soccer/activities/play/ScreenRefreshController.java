@@ -16,6 +16,8 @@ public class ScreenRefreshController {
         void score(int playerSide);
         void win(int playerSide);
         void finishGame();
+
+        void informBots();
     }
 
     private static final long WIN_ANIMATION_DURATION = 2000;
@@ -50,6 +52,8 @@ public class ScreenRefreshController {
     private void startRegularAnimation() {
         mActivity.clearMessage();
         THREAD_HANDLER.removeCallbacks(mScoreRefreshTask);
+
+        mActivity.informBots();
         THREAD_HANDLER.post(mRegularRefreshTask);
     }
 

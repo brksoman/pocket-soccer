@@ -76,13 +76,7 @@ public class PlayController implements View.OnTouchListener {
                         mPuck = null;
                         mMetadata.switchNextPlayer();
 
-                        if (mMetadata.isCurrentBot()) {
-                            if (mMetadata.getNextPlayer() == PlayMetadata.LEFT_PLAYER) {
-                                leftBot.play();
-                            } else {
-                                rightBot.play();
-                            }
-                        }
+                        informBots();
                     }
                     break;
 
@@ -95,7 +89,25 @@ public class PlayController implements View.OnTouchListener {
         } else {
             /* Current player is a bot - ignore gestures */
         }
-
         return true;
+    }
+
+    public void informBots() {
+        if (mMetadata.isCurrentBot()) {
+            if (mMetadata.getNextPlayer() == PlayMetadata.LEFT_PLAYER) {
+                leftBot.play();
+            } else {
+                rightBot.play();
+            }
+        }
+    }
+
+    public void stopBots() {
+        if (leftBot != null) {
+            leftBot.cancel();
+        }
+        if (rightBot != null) {
+            rightBot.cancel();
+        }
     }
 }

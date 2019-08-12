@@ -27,20 +27,24 @@ public class Bot {
     public void play() {
         long thinkTime = (long)(THINK_MIN + (THINK_MAX - THINK_MIN) * Math.random());
 
-        Runnable endAnimation = new Runnable() {
-            @Override
-            public void run() {
-                Puck puck = mData.getClosestPuck(mSide);
-                PointF distance = puck.getDistance(mData.getBall());
-                float absDistance = (float) Math.sqrt(
-                        distance.x * distance.x + distance.y * distance.y);
-
-                puck.accelerate(42 * (distance.x / absDistance),
-                        42 * (distance.x / absDistance));
-                mViewModel.getMetadata().switchNextPlayer();
-            }
-        };
-
-        THREAD_HANDLER.postDelayed(endAnimation, thinkTime);
+        THREAD_HANDLER.postDelayed(mStrategy, thinkTime);
     }
+
+    public void cancel() {
+        THREAD_HANDLER.removeCallbacks(mStrategy);
+    }
+
+    private Runnable mStrategy = new Runnable() {
+        @Override
+        public void run() {
+            Puck puck = mData.getClosestPuck(mSide);
+            PointF distance = puck.getDistance(mData.getBall());
+            float absDistance = (float) Math.sqrt(
+                    distance.x * distance.x + distance.y * distance.y);
+
+            puck.accelerate(42 * (distance.x / absDistance),
+                    42 * (distance.y / absDistance));
+            mViewModel.getMetadata().switchNextPlayer();
+        }
+    };
 }

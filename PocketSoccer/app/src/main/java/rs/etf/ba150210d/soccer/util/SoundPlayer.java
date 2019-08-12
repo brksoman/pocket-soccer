@@ -30,6 +30,12 @@ public class SoundPlayer {
 
     public void play() {
         try {
+            if (mPlayer != null) {
+                mPlayer.stop();
+                mPlayer.release();
+                mPlayer = null;
+            }
+
             mPlayer = new MediaPlayer();
             mPlayer.setDataSource(mAsset.getFileDescriptor(), mAsset.getStartOffset(),
                     mAsset.getLength());

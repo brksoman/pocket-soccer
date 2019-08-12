@@ -84,41 +84,37 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
     @Override
     public void updateView() {
         int time = mViewModel.getMetadata().getElapsedTime();
-        mTimeView.setText(Long.toString(time / 60) + " : " + Long.toString(time % 60));
+
+        mTimeView.setText(getString(R.string.time_format, time / 60, time % 60));
         mImageView.invalidate();
     }
 
     @Override
     public void score(int playerSide) {
-        if (playerSide == PlayMetadata.LEFT_PLAYER) {
-            String name = mViewModel.getMetadata().getLeftPlayerName();
-            int points = mViewModel.getMetadata().getLeftPlayerPoints();
-            mMessageView.setText(getString(R.string.score_format, name));
-            mLeftScoreView.setText(Integer.toString(points));
-        } else {
-            String name = mViewModel.getMetadata().getRightPlayerName();
-            int points = mViewModel.getMetadata().getRightPlayerPoints();
-            mMessageView.setText(getString(R.string.score_format, name));
-            mRightScoreView.setText(Integer.toString(points));
-        }
+        mPlayController.stopBots();
+        showScore(playerSide, R.string.score_format);
     }
 
     @Override
     public void win(int playerSide) {
+        mPlayController.stopBots();
         mViewModel.insertScore();
+        showScore(playerSide, R.string.win_format);
+        PlayMetadata.deleteSave(getPreferences());
+    }
+
+    private void showScore(int playerSide, int messageId) {
         if (playerSide == PlayMetadata.LEFT_PLAYER) {
             String name = mViewModel.getMetadata().getLeftPlayerName();
             int points = mViewModel.getMetadata().getLeftPlayerPoints();
-            mMessageView.setText(getString(R.string.win_format, name));
+            mMessageView.setText(getString(messageId, name));
             mLeftScoreView.setText(Integer.toString(points));
         } else {
             String name = mViewModel.getMetadata().getRightPlayerName();
             int points = mViewModel.getMetadata().getRightPlayerPoints();
-            mMessageView.setText(getString(R.string.win_format, name));
+            mMessageView.setText(getString(messageId, name));
             mRightScoreView.setText(Integer.toString(points));
         }
-
-        PlayMetadata.deleteSave(getPreferences());
     }
 
     @Override
@@ -132,5 +128,10 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
     @Override
     public void clearMessage() {
         mMessageView.setText("");
+    }
+
+    @Override
+    public void informBots() {
+        mPlayController.informBots();
     }
 }

@@ -144,8 +144,7 @@ public class NewGameFragment extends Fragment {
     }
 
     private void startGame() {
-        SharedPreferences preferences = mOwner.getPreferences();
-        mPlayMetadata.loadSettings(getContext(), preferences);
+        mPlayMetadata.loadSettings(getContext(), mOwner.getPreferences());
 
         mPlayMetadata.setLeftTeam(new Team(getContext(), mLeftTeamPager.getCurrentItem()));
         mPlayMetadata.setRightTeam(new Team(getContext(), mRightTeamPager.getCurrentItem()));

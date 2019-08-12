@@ -6,7 +6,7 @@ import android.os.Looper;
 
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
-import rs.etf.ba150210d.soccer.util.SoundPlayer;
+import rs.etf.ba150210d.soccer.util.SoundManager;
 
 public class ScreenRefreshController {
 
@@ -24,8 +24,7 @@ public class ScreenRefreshController {
     private static final Handler THREAD_HANDLER = new Handler(Looper.getMainLooper());
 
     private PlayActivity mActivity;
-    private SoundPlayer mBouncePlayer;
-    private SoundPlayer mScorePlayer;
+    private SoundManager mSoundManager;
 
     private PlayViewModel mViewModel;
     private PlayMetadata mMetadata;
@@ -33,8 +32,7 @@ public class ScreenRefreshController {
 
     public ScreenRefreshController(final Activity activity, PlayViewModel viewModel) {
         mActivity = (PlayActivity) activity;
-        mBouncePlayer = new SoundPlayer(mActivity, "bounce");
-        mScorePlayer = new SoundPlayer(mActivity, "score");
+        mSoundManager = SoundManager.getInstance(mActivity);
 
         mViewModel = viewModel;
         mData = mViewModel.getData();
@@ -44,6 +42,7 @@ public class ScreenRefreshController {
     }
 
     public void stop() {
+        mSoundManager.release();
         THREAD_HANDLER.removeCallbacks(mRegularRefreshTask);
         THREAD_HANDLER.removeCallbacks(mScoreRefreshTask);
         THREAD_HANDLER.removeCallbacks(mContinueTask);
@@ -75,13 +74,13 @@ public class ScreenRefreshController {
             THREAD_HANDLER.postDelayed(this, 20);
 
             if (mData.updateData()) {
-                mBouncePlayer.play();
+                mSoundManager.playBounce();
             }
             mMetadata.elapseTime();
 
             int scorer = mData.checkScoring();
             if (scorer != PlayMetadata.NO_PLAYER) {
-                mScorePlayer.play();
+                mSoundManager.playCrowd();
                 mMetadata.scorePlayer(scorer);
 
                 int winner = mMetadata.checkWin();

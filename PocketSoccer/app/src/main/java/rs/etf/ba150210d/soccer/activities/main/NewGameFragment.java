@@ -38,10 +38,12 @@ public class NewGameFragment extends Fragment {
     private EditTextBackEvent mEditTextLeftName;
     private ViewPager mLeftTeamPager;
     private TextView mLeftTeamName;
+    private CheckBox mIsLeftBot;
 
     private EditTextBackEvent mEditTextRightName;
     private ViewPager mRightTeamPager;
     private TextView mRightTeamName;
+    private CheckBox mIsRightBot;
 
     public NewGameFragment() { /* Required empty public constructor */ }
 
@@ -78,8 +80,6 @@ public class NewGameFragment extends Fragment {
                     Toast.makeText(getContext(), getString(
                             R.string.enter_player_name_message), Toast.LENGTH_SHORT).show();
                 } else {
-                    mPlayMetadata.setLeftPlayerName(leftName);
-                    mPlayMetadata.setRightPlayerName(rightName);
                     startGame();
                 }
             }
@@ -93,21 +93,8 @@ public class NewGameFragment extends Fragment {
             }
         });
 
-        CheckBox isLeftBot = view.findViewById(R.id.newGame_choice_leftBot);
-        isLeftBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mPlayMetadata.setIsLeftBot(isChecked);
-            }
-        });
-
-        CheckBox isRightBot = view.findViewById(R.id.newGame_choice_rightBot);
-        isRightBot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mPlayMetadata.setIsRightBot(isChecked);
-            }
-        });
+        mIsLeftBot = view.findViewById(R.id.newGame_choice_leftBot);
+        mIsRightBot = view.findViewById(R.id.newGame_choice_rightBot);
     }
 
     private void initTeamPagers(View view) {
@@ -117,14 +104,12 @@ public class NewGameFragment extends Fragment {
         mLeftTeamName = view.findViewById(R.id.newGame_textView_leftTeamName);
         Team leftTeam = new Team(getContext(), mLeftTeamPager.getCurrentItem());
         mLeftTeamName.setText(leftTeam.getName());
-        mPlayMetadata.setLeftTeam(leftTeam);
 
         mLeftTeamPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {
                 Team team = new Team(getContext(), i);
                 mLeftTeamName.setText(team.getName());
-                mPlayMetadata.setLeftTeam(team);
             }
 
             @Override
@@ -139,14 +124,12 @@ public class NewGameFragment extends Fragment {
         mRightTeamName = view.findViewById(R.id.newGame_textView_rightTeamName);
         Team rightTeam = new Team(getContext(), mRightTeamPager.getCurrentItem());
         mRightTeamName.setText(rightTeam.getName());
-        mPlayMetadata.setRightTeam(rightTeam);
 
         mRightTeamPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {
                 Team team = new Team(getContext(), i);
                 mRightTeamName.setText(team.getName());
-                mPlayMetadata.setRightTeam(team);
             }
 
             @Override
@@ -163,6 +146,15 @@ public class NewGameFragment extends Fragment {
     private void startGame() {
         SharedPreferences preferences = mOwner.getPreferences();
         mPlayMetadata.loadSettings(getContext(), preferences);
+
+        mPlayMetadata.setLeftTeam(new Team(getContext(), mLeftTeamPager.getCurrentItem()));
+        mPlayMetadata.setRightTeam(new Team(getContext(), mRightTeamPager.getCurrentItem()));
+
+        mPlayMetadata.setIsLeftBot(mIsLeftBot.isChecked());
+        mPlayMetadata.setIsRightBot(mIsRightBot.isChecked());
+
+        mPlayMetadata.setLeftPlayerName(mEditTextLeftName.getText().toString());
+        mPlayMetadata.setRightPlayerName(mEditTextRightName.getText().toString());
 
         mViewModel.setNewlyInsertedPlayerPair(mPlayMetadata.getPlayerPair());
         mViewModel.getNewlyInsertedPlayerPair().observe(this, new Observer<PlayerPair>() {

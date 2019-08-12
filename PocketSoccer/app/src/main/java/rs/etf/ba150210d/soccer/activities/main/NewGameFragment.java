@@ -115,7 +115,10 @@ public class NewGameFragment extends Fragment {
         mLeftTeamPager.setAdapter(new TeamPagerAdapter(getContext()));
 
         mLeftTeamName = view.findViewById(R.id.newGame_textView_leftTeamName);
-        mLeftTeamName.setText(new Team(getContext(), mLeftTeamPager.getCurrentItem()).getName());
+        Team leftTeam = new Team(getContext(), mLeftTeamPager.getCurrentItem());
+        mLeftTeamName.setText(leftTeam.getName());
+        mPlayMetadata.setLeftTeam(leftTeam);
+
         mLeftTeamPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {
@@ -134,7 +137,10 @@ public class NewGameFragment extends Fragment {
         mRightTeamPager.setAdapter(new TeamPagerAdapter(getContext()));
 
         mRightTeamName = view.findViewById(R.id.newGame_textView_rightTeamName);
-        mRightTeamName.setText(new Team(getContext(), mRightTeamPager.getCurrentItem()).getName());
+        Team rightTeam = new Team(getContext(), mRightTeamPager.getCurrentItem());
+        mRightTeamName.setText(rightTeam.getName());
+        mPlayMetadata.setRightTeam(rightTeam);
+
         mRightTeamPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {

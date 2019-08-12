@@ -28,6 +28,14 @@ public class MyRepository {
         new InsertPlayerPairAsync(mPlayerPairDao).execute(playerPair);
     }
 
+    public void deletePlayerPair(PlayerPair playerPair) {
+        new DeletePlayerPairAsync(mPlayerPairDao).execute(playerPair);
+    }
+
+    public void deleteAll() {
+        new DeleteAllAsync(mPlayerPairDao).execute();
+    }
+
     public void insertScore(Score score) {
         new InsertScoreAsync(mScoreDao).execute(score);
     }
@@ -133,6 +141,34 @@ public class MyRepository {
                 id = mPlayerPairDao.insert(playerPairs[0]);
             }
             return mPlayerPairDao.findPlayerPairById(id);
+        }
+    }
+
+    private static class DeletePlayerPairAsync extends AsyncTask<PlayerPair, Void, Void> {
+        private PlayerPairDao mPlayerPairDao;
+
+        public DeletePlayerPairAsync(PlayerPairDao playerPairDao) {
+            mPlayerPairDao = playerPairDao;
+        }
+
+        @Override
+        protected Void doInBackground(PlayerPair... playerPairs) {
+            mPlayerPairDao.delete(playerPairs[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllAsync extends AsyncTask<Void, Void, Void> {
+        private PlayerPairDao mPlayerPairDao;
+
+        public DeleteAllAsync(PlayerPairDao playerPairDao) {
+            mPlayerPairDao = playerPairDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mPlayerPairDao.deleteAll();
+            return null;
         }
     }
 }

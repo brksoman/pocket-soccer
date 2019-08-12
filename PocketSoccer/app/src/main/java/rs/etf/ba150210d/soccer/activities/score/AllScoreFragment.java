@@ -78,6 +78,22 @@ public class AllScoreFragment extends Fragment {
             }
         });
 
+        FloatingActionButton deleteFab = view.findViewById(R.id.allScore_fab_delete);
+        deleteFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.deleteAll();
+                mViewModel.getAllPlayerPairs().observe(AllScoreFragment.this,
+                        new Observer<List<PlayerPair>>() {
+                    @Override
+                    public void onChanged(@Nullable List<PlayerPair> playerPairs) {
+                        adapter.setPlayerPairs(playerPairs);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
         return view;
     }
 

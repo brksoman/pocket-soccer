@@ -69,7 +69,6 @@ public abstract class FragmentOwner extends ImmersiveAppCompatActivity {
     @Override
     public void onBackPressed() {
         goBack();
-        super.onBackPressed();
     }
 
     public SharedPreferences getPreferences() {

@@ -64,6 +64,15 @@ public class PairScoreFragment extends Fragment {
             }
         });
 
+        FloatingActionButton deleteFab = view.findViewById(R.id.pairScore_fab_delete);
+        deleteFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.deletePlayerPair(mSelectedPlayerPair);
+                mOwner.goBack();
+            }
+        });
+
         return view;
     }
 

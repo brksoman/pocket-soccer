@@ -51,6 +51,7 @@ public class MainFragment extends Fragment {
 
                     case R.id.main_button_scores:
                         mOwner.switchActivity(FragmentOwner.SCORE_ACTIVITY);
+                        break;
 
                     case R.id.main_fab_exit:
                         mOwner.goBack();

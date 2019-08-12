@@ -28,6 +28,15 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/allScore_fab_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toStartOf="@id/allScore_fab_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_delete" />
+
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/allScore_fab_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

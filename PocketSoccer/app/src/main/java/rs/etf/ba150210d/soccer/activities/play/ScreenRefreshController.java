@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
 import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 import rs.etf.ba150210d.soccer.util.SoundPlayer;
@@ -32,9 +29,6 @@ public class ScreenRefreshController {
     private PlayMetadata mMetadata;
     private PlayData mData;
 
-    Timer mRegularTimer = new Timer();
-    Timer mScoreTimer = new Timer();
-
     public ScreenRefreshController(final Activity activity, PlayViewModel viewModel) {
         mActivity = (PlayActivity) activity;
         mBouncePlayer = new SoundPlayer(mActivity, "bounce");
@@ -48,107 +42,79 @@ public class ScreenRefreshController {
     }
 
     public void stop() {
-        if (mRegularTimer != null) {
-            mRegularTimer.cancel();
-        }
-        if (mScoreTimer != null) {
-            mScoreTimer.cancel();
-        }
-    }
-
-    private void regularRefresh() {
-        if (mData.updateData()) {
-            mBouncePlayer.play();
-        }
-        mMetadata.elapseTime();
-
-        int scorer = mData.checkScoring();
-        if (scorer != PlayMetadata.NO_PLAYER) {
-            mScorePlayer.play();
-            mMetadata.scorePlayer(scorer);
-
-            int winner = mMetadata.checkWin();
-            if (winner != PlayMetadata.NO_PLAYER) {
-                mActivity.win(scorer);
-                startWinningAnimation();
-            } else {
-                mActivity.score(scorer);
-                startScoringAnimation();
-            }
-        }
-        mActivity.updateView();
-    }
-
-    private void scoringRefresh() {
-        mData.updateData();
-        mActivity.updateView();
+        THREAD_HANDLER.removeCallbacks(mRegularRefreshTask);
+        THREAD_HANDLER.removeCallbacks(mScoreRefreshTask);
+        THREAD_HANDLER.removeCallbacks(mContinueTask);
     }
 
     private void startRegularAnimation() {
         mActivity.clearMessage();
-        mScoreTimer.cancel();
-        mRegularTimer = new Timer();
-        mRegularTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        regularRefresh();
-                    }
-                });
-            }
-        }, 20, 20);
+        THREAD_HANDLER.removeCallbacks(mScoreRefreshTask);
+        THREAD_HANDLER.post(mRegularRefreshTask);
     }
 
     private void startScoringAnimation() {
-        mRegularTimer.cancel();
-        mScoreTimer = new Timer();
-        mScoreTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        scoringRefresh();
-                    }
-                });
-            }
-        }, 20, 20);
-
-        Runnable endAnimation = new Runnable() {
-            @Override
-            public void run() {
-                mData.resetState();
-                startRegularAnimation();
-            }
-        };
-
-        THREAD_HANDLER.postDelayed(endAnimation, WIN_ANIMATION_DURATION);
+        THREAD_HANDLER.removeCallbacks(mRegularRefreshTask);
+        THREAD_HANDLER.post(mScoreRefreshTask);
+        THREAD_HANDLER.postDelayed(mContinueTask, WIN_ANIMATION_DURATION);
     }
 
     private void startWinningAnimation() {
-        mRegularTimer.cancel();
-        mScoreTimer = new Timer();
-        mScoreTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        scoringRefresh();
-                    }
-                });
-            }
-        }, 20, 20);
-
-        Runnable endAnimation = new Runnable() {
-            @Override
-            public void run() {
-                mActivity.finishGame();
-            }
-        };
-
-        THREAD_HANDLER.postDelayed(endAnimation, WIN_ANIMATION_DURATION);
+        THREAD_HANDLER.removeCallbacks(mRegularRefreshTask);
+        THREAD_HANDLER.post(mScoreRefreshTask);
+        THREAD_HANDLER.postDelayed(mExitTask, WIN_ANIMATION_DURATION);
     }
+
+    private Runnable mRegularRefreshTask = new Runnable() {
+        @Override
+        public void run() {
+            THREAD_HANDLER.postDelayed(this, 20);
+
+            if (mData.updateData()) {
+                mBouncePlayer.play();
+            }
+            mMetadata.elapseTime();
+
+            int scorer = mData.checkScoring();
+            if (scorer != PlayMetadata.NO_PLAYER) {
+                mScorePlayer.play();
+                mMetadata.scorePlayer(scorer);
+
+                int winner = mMetadata.checkWin();
+                if (winner != PlayMetadata.NO_PLAYER) {
+                    mActivity.win(scorer);
+                    startWinningAnimation();
+                } else {
+                    mActivity.score(scorer);
+                    startScoringAnimation();
+                }
+            }
+            mActivity.updateView();
+        }
+    };
+
+    private Runnable mScoreRefreshTask = new Runnable() {
+        @Override
+        public void run() {
+            THREAD_HANDLER.postDelayed(this, 20);
+
+            mData.updateData();
+            mActivity.updateView();
+        }
+    };
+
+    private Runnable mContinueTask = new Runnable() {
+        @Override
+        public void run() {
+            mData.resetState();
+            startRegularAnimation();
+        }
+    };
+
+    private Runnable mExitTask = new Runnable() {
+        @Override
+        public void run() {
+            mActivity.finishGame();
+        }
+    };
 }

@@ -42,4 +42,12 @@ public class ScoreViewModel extends AndroidViewModel {
     public LiveData<List<Score>> getScoresOfSelectedPair() {
         return mScoresOfSelectedPair;
     }
+
+    public void deletePlayerPair(PlayerPair playerPair) {
+        mRepository.deletePlayerPair(playerPair);
+    }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
 }

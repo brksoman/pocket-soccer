@@ -71,6 +71,7 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
     @Override
     protected void exitActivity() {
         mViewModel.getMetadata().save(getPreferences());
+        mScreenRefreshController.stop();
         setResult(RESULT_CANCELED);
         super.exitActivity();
     }
@@ -114,7 +115,7 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
             String name = mViewModel.getMetadata().getRightPlayerName();
             int points = mViewModel.getMetadata().getRightPlayerPoints();
             mMessageView.setText(getString(R.string.win_format, name));
-            mLeftScoreView.setText(Integer.toString(points));
+            mRightScoreView.setText(Integer.toString(points));
         }
 
         PlayMetadata.deleteSave(getPreferences());

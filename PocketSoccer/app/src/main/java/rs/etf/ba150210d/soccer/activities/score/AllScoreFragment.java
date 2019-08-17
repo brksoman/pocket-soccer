@@ -40,7 +40,7 @@ public class AllScoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_score, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.allScore_recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.allScore_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         final ScoreViewAdapter adapter = new ScoreViewAdapter();

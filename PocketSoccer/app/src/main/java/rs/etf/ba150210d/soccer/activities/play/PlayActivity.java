@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import rs.etf.ba150210d.soccer.R;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 import rs.etf.ba150210d.soccer.datastructures.Team;
 import rs.etf.ba150210d.soccer.util.FragmentOwner;
 
@@ -30,13 +30,13 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        mLeftScoreView = findViewById(R.id.play_leftScore);
-        mRightScoreView = findViewById(R.id.play_rightScore);
-        mTimeView = findViewById(R.id.play_time);
-        mMessageView = findViewById(R.id.play_message);
+        mLeftScoreView = findViewById(R.id.play_text_leftScore);
+        mRightScoreView = findViewById(R.id.play_text_rightScore);
+        mTimeView = findViewById(R.id.play_text_time);
+        mMessageView = findViewById(R.id.play_text_message);
 
         mViewModel = ViewModelProviders.of(this).get(PlayViewModel.class);
-        mViewModel.setMetadata(new PlayMetadata(this, getIntent()));
+        mViewModel.setMetadata(new GameMetadata(this, getIntent()));
 
         Team leftTeam = mViewModel.getMetadata().getLeftTeam();
         Team rightTeam = mViewModel.getMetadata().getRightTeam();
@@ -46,7 +46,7 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
                 BitmapFactory.decodeResource(getResources(), R.drawable.ball)));
         mViewModel.getData().setSpeed(mViewModel.getMetadata().getSpeed());
 
-        mImageView = findViewById(R.id.play_imageView);
+        mImageView = findViewById(R.id.play_image);
         mImageView.setData(mViewModel.getData());
         mImageView.setBackground(mViewModel.getMetadata().getField().getImage());
 
@@ -68,6 +68,7 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
         return 0;
     }
 
+    /** Exit the game before ending. */
     @Override
     protected void exitActivity() {
         mViewModel.getMetadata().save(getPreferences());
@@ -100,11 +101,11 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
         mPlayController.stopBots();
         mViewModel.insertScore();
         showScore(playerSide, R.string.win_format);
-        PlayMetadata.deleteSave(getPreferences());
+        GameMetadata.deleteSave(getPreferences());
     }
 
     private void showScore(int playerSide, int messageId) {
-        if (playerSide == PlayMetadata.LEFT_PLAYER) {
+        if (playerSide == GameMetadata.LEFT_PLAYER) {
             String name = mViewModel.getMetadata().getLeftPlayerName();
             int points = mViewModel.getMetadata().getLeftPlayerPoints();
             mMessageView.setText(getString(messageId, name));
@@ -117,6 +118,7 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
         }
     }
 
+    /** Pack the result into an intent and exit activity. */
     @Override
     public void finishGame() {
         Intent data = new Intent();

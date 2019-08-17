@@ -13,6 +13,11 @@ import java.util.List;
 
 import rs.etf.ba150210d.soccer.util.EventRegister;
 
+/**
+ * Abstraction of a spherical object on the field - either a team member, or the ball.
+ * Includes the logic for crashing into lines, points, and each other.
+ */
+
 public class Puck {
     private static final float[] SLOWDOWN_COEFFICIENTS = new float[] {
             0.999f, 0.998f, 0.997f, 0.996f, 0.995f,
@@ -98,7 +103,6 @@ public class Puck {
                     (int)(2 * mRadius), (int)(2 * mRadius), false);
             canvas.drawBitmap(scaledImage, mCenter.x - mRadius,
                     mCenter.y - mRadius, paint);
-
         }
     }
 
@@ -169,7 +173,7 @@ public class Puck {
         }
 
         if (deltaVelocities.size() == 0) {
-            // No collisions
+            /* No collisions */
             return this;
         } else {
             hitRegister.register();

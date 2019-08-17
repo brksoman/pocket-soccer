@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import rs.etf.ba150210d.soccer.R;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.util.FragmentOwner;
 
 public class MainFragment extends Fragment {
@@ -19,7 +19,7 @@ public class MainFragment extends Fragment {
     private MainActivity mOwner;
     private MainViewModel mViewModel;
 
-    private PlayMetadata mLoadedPlayMetadata = null;
+    private GameMetadata mLoadedGameMetadata = null;
     private Button mLoadGameButton;
 
     public MainFragment() {
@@ -30,7 +30,6 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
 
         View.OnClickListener buttonListener = new View.OnClickListener() {
             @Override
@@ -56,8 +55,6 @@ public class MainFragment extends Fragment {
                     case R.id.main_fab_exit:
                         mOwner.goBack();
                         break;
-
-                    // TODO implement rest of options
                 }
             }
         };
@@ -77,7 +74,7 @@ public class MainFragment extends Fragment {
         FloatingActionButton exitButton = view.findViewById(R.id.main_fab_exit);
         exitButton.setOnClickListener(buttonListener);
 
-        if (mLoadedPlayMetadata == null) {
+        if (mLoadedGameMetadata == null) {
             mLoadGameButton.setClickable(false);
         } else {
             mLoadGameButton.setClickable(true);
@@ -86,10 +83,10 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    public void setLoadedPlayMetadata(PlayMetadata playMetadata) {
-        mLoadedPlayMetadata = playMetadata;
+    public void setLoadGameMetadata(GameMetadata gameMetadata) {
+        mLoadedGameMetadata = gameMetadata;
         if (mLoadGameButton != null) {
-            if (mLoadedPlayMetadata == null) {
+            if (mLoadedGameMetadata == null) {
                 mLoadGameButton.setClickable(false);
                 mLoadGameButton.setBackgroundColor(Color.DKGRAY);
                 mLoadGameButton.setTextColor(Color.WHITE);

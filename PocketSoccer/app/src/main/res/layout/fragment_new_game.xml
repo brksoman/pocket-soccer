@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/newGame_textView_title"
+            android:id="@+id/newGame_label_title"
             style="@style/BigText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,21 +20,21 @@
             android:text="@string/choose_teams" />
 
         <TextView
-            android:id="@+id/newGame_textView_left"
+            android:id="@+id/newGame_label_left"
             style="@style/HighlightBigText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newGame_textView_title"
-            app:layout_constraintEnd_toStartOf="@id/newGame_textView_right"
+            app:layout_constraintTop_toBottomOf="@id/newGame_label_title"
+            app:layout_constraintEnd_toStartOf="@id/newGame_label_right"
             android:text="@string/left_player" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/newGame_textView_left"
-            app:layout_constraintEnd_toStartOf="@id/newGame_textView_left"
-            app:layout_constraintBottom_toBottomOf="@id/newGame_textView_left">
+            app:layout_constraintTop_toTopOf="@id/newGame_label_left"
+            app:layout_constraintEnd_toStartOf="@id/newGame_label_left"
+            app:layout_constraintBottom_toBottomOf="@id/newGame_label_left">
 
             <CheckBox
                 android:id="@+id/newGame_choice_leftBot"
@@ -58,21 +58,21 @@
         </android.support.constraint.ConstraintLayout>
 
         <TextView
-            android:id="@+id/newGame_textView_right"
+            android:id="@+id/newGame_label_right"
             style="@style/HighlightBigText"
             android:layout_margin="@dimen/small_margin"
-            app:layout_constraintStart_toEndOf="@id/newGame_textView_left"
-            app:layout_constraintTop_toBottomOf="@id/newGame_textView_title"
+            app:layout_constraintStart_toEndOf="@id/newGame_label_left"
+            app:layout_constraintTop_toBottomOf="@id/newGame_label_title"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/right_player" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/newGame_textView_right"
-            app:layout_constraintTop_toTopOf="@id/newGame_textView_right"
+            app:layout_constraintStart_toEndOf="@id/newGame_label_right"
+            app:layout_constraintTop_toTopOf="@id/newGame_label_right"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/newGame_textView_right">
+            app:layout_constraintBottom_toBottomOf="@id/newGame_label_right">
 
             <CheckBox
                 android:id="@+id/newGame_choice_rightBot"
@@ -96,33 +96,33 @@
         </android.support.constraint.ConstraintLayout>
 
         <rs.etf.ba150210d.soccer.util.EditTextBackEvent
-            android:id="@+id/newGame_editText_leftName"
+            android:id="@+id/newGame_editText_leftPlayerName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newGame_textView_left"
-            app:layout_constraintEnd_toStartOf="@id/newGame_editText_rightName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_label_left"
+            app:layout_constraintEnd_toStartOf="@id/newGame_editText_rightPlayerName"
             android:textColor="@color/colorText"
             android:imeOptions="flagNoExtractUi" />
 
         <rs.etf.ba150210d.soccer.util.EditTextBackEvent
-            android:id="@+id/newGame_editText_rightName"
+            android:id="@+id/newGame_editText_rightPlayerName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
-            app:layout_constraintStart_toEndOf="@id/newGame_editText_leftName"
-            app:layout_constraintTop_toBottomOf="@id/newGame_textView_right"
+            app:layout_constraintStart_toEndOf="@id/newGame_editText_leftPlayerName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_label_right"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/colorText"
             android:imeOptions="flagNoExtractUi" />
 
         <TextView
-            android:id="@+id/newGame_textView_leftTeamName"
+            android:id="@+id/newGame_text_leftTeamName"
             style="@style/TeamNameText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newGame_editText_leftName"
-            app:layout_constraintEnd_toEndOf="@id/newGame_editText_leftName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_editText_leftPlayerName"
+            app:layout_constraintEnd_toEndOf="@id/newGame_editText_leftPlayerName"
             android:text="Serbia" />
 
         <android.support.v4.view.ViewPager
@@ -131,15 +131,15 @@
             android:layout_height="0dp"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newGame_textView_leftTeamName"
-            app:layout_constraintEnd_toEndOf="@id/newGame_editText_leftName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_text_leftTeamName"
+            app:layout_constraintEnd_toEndOf="@id/newGame_editText_leftPlayerName"
             app:layout_constraintBottom_toTopOf="@id/newGame_fab_accept" />
 
         <TextView
-            android:id="@+id/newGame_textView_rightTeamName"
+            android:id="@+id/newGame_text_rightTeamName"
             style="@style/TeamNameText"
-            app:layout_constraintStart_toStartOf="@id/newGame_editText_rightName"
-            app:layout_constraintTop_toBottomOf="@id/newGame_editText_rightName"
+            app:layout_constraintStart_toStartOf="@id/newGame_editText_rightPlayerName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_editText_rightPlayerName"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="Italy" />
 
@@ -148,8 +148,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/medium_margin"
-            app:layout_constraintStart_toStartOf="@id/newGame_editText_rightName"
-            app:layout_constraintTop_toBottomOf="@id/newGame_textView_rightTeamName"
+            app:layout_constraintStart_toStartOf="@id/newGame_editText_rightPlayerName"
+            app:layout_constraintTop_toBottomOf="@id/newGame_text_rightTeamName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/newGame_fab_accept" />
 

@@ -54,9 +54,9 @@ public class PairScoreViewAdapter extends RecyclerView.Adapter<PairScoreViewAdap
         public PairScoreHolder(@NonNull View itemView) {
             super(itemView);
 
-            mPoints1 = itemView.findViewById(R.id.pairScoreHolder_points1);
-            mPoints2 = itemView.findViewById(R.id.pairScoreHolder_points2);
-            mDate = itemView.findViewById(R.id.pairScoreHolder_date);
+            mPoints1 = itemView.findViewById(R.id.pairScoreHolder_text_points1);
+            mPoints2 = itemView.findViewById(R.id.pairScoreHolder_text_points2);
+            mDate = itemView.findViewById(R.id.pairScoreHolder_text_date);
         }
 
         public void setData(Score score) {

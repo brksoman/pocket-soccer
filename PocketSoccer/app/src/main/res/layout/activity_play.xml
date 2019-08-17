@@ -7,12 +7,12 @@
     tools:context=".activities.play.PlayActivity">
 
     <rs.etf.ba150210d.soccer.activities.play.PlayImageView
-        android:id="@+id/play_imageView"
+        android:id="@+id/play_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/play_time"
+        android:id="@+id/play_text_time"
         style="@style/PlayText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,21 +20,21 @@
         android:text="0 : 0" />
 
     <TextView
-        android:id="@+id/play_leftScore"
+        android:id="@+id/play_text_leftScore"
         style="@style/PlayText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="0" />
 
     <TextView
-        android:id="@+id/play_rightScore"
+        android:id="@+id/play_text_rightScore"
         style="@style/PlayText"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="0" />
 
     <TextView
-        android:id="@+id/play_message"
+        android:id="@+id/play_text_message"
         style="@style/ScorePlayText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

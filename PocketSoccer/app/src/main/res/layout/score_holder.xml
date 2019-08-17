@@ -12,45 +12,45 @@
         android:layout_height="wrap_content">
 
         <android.support.constraint.Guideline
-            android:id="@+id/scoreHolder_guideline"
+            android:id="@+id/scoreHolder_verticalHalf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
         <TextView
-            android:id="@+id/scoreHolder_player1_name"
+            android:id="@+id/scoreHolder_text_name1"
             style="@style/NegativeText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/scoreHolder_player1_wins"
+            app:layout_constraintEnd_toStartOf="@id/scoreHolder_text_wins1"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Name1" />
+            android:text="Dje" />
 
         <TextView
-            android:id="@+id/scoreHolder_player2_name"
+            android:id="@+id/scoreHolder_text_name2"
             style="@style/NegativeText"
-            app:layout_constraintStart_toEndOf="@id/scoreHolder_player2_wins"
+            app:layout_constraintStart_toEndOf="@id/scoreHolder_text_wins2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Name2" />
+            android:text="Zaburee" />
 
         <TextView
-            android:id="@+id/scoreHolder_player1_wins"
+            android:id="@+id/scoreHolder_text_wins1"
             style="@style/SmallNegativeText"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/scoreHolder_guideline"
+            app:layout_constraintEnd_toStartOf="@id/scoreHolder_verticalHalf"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Wins1" />
+            android:text="5" />
 
         <TextView
-            android:id="@+id/scoreHolder_player2_wins"
+            android:id="@+id/scoreHolder_text_wins2"
             style="@style/SmallNegativeText"
-            app:layout_constraintStart_toEndOf="@id/scoreHolder_guideline"
+            app:layout_constraintStart_toEndOf="@id/scoreHolder_verticalHalf"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Wins1" />
+            android:text="0" />
 
     </android.support.constraint.ConstraintLayout>
 

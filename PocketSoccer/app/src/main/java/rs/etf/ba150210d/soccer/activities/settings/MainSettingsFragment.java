@@ -2,7 +2,6 @@ package rs.etf.ba150210d.soccer.activities.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -36,7 +35,7 @@ public class MainSettingsFragment extends Fragment {
     private int mConditionTime;
 
     public MainSettingsFragment() {
-        // Required empty public constructor
+        /* Required empty public constructor */
     }
 
     @Override
@@ -59,33 +58,29 @@ public class MainSettingsFragment extends Fragment {
     }
 
     private void initButtons(View view) {
-        FloatingActionButton.OnClickListener fabListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = v.getId();
-                switch (id) {
-                    case R.id.settings_fab_back:
-                        mOwner.goBack();
-                        break;
-
-                    case R.id.settings_fab_save:
-                        Toast.makeText(getContext(), getString(
-                                R.string.settings_saved_message), Toast.LENGTH_SHORT).show();
-                        saveState();
-                        mOwner.goBack();
-                }
-            }
-        };
 
         FloatingActionButton backButton = view.findViewById(R.id.settings_fab_back);
-        backButton.setOnClickListener(fabListener);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOwner.goBack();
+            }
+        });
 
         FloatingActionButton saveButton = view.findViewById(R.id.settings_fab_save);
-        saveButton.setOnClickListener(fabListener);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), getString(
+                        R.string.settings_saved_message), Toast.LENGTH_SHORT).show();
+                saveState();
+                mOwner.goBack();
+            }
+        });
     }
 
     private void initSpeed(View view, SharedPreferences preferences) {
-        mSpeedText = view.findViewById(R.id.settings_textView_speed);
+        mSpeedText = view.findViewById(R.id.settings_text_speed);
         mSpeedSeekBar = view.findViewById(R.id.settings_seekBar_speed);
 
         mSpeed = preferences.getInt("speed", 0);
@@ -108,8 +103,8 @@ public class MainSettingsFragment extends Fragment {
     }
 
     private void initCondition(View view, SharedPreferences preferences) {
-        mConditionTypeText = view.findViewById(R.id.settings_textView_conditionType);
-        mConditionText = view.findViewById(R.id.settings_textView_condition);
+        mConditionTypeText = view.findViewById(R.id.settings_text_conditionType);
+        mConditionText = view.findViewById(R.id.settings_text_condition);
         mConditionSeekBar = view.findViewById(R.id.settings_seekBar_condition);
 
         int conditionType = preferences.getInt("conditionType", Condition.CONDITION_GOALS);
@@ -143,7 +138,7 @@ public class MainSettingsFragment extends Fragment {
     }
 
     private void initRadioButtons(View view, SharedPreferences preferences) {
-        RadioGroup radioGroup = view.findViewById(R.id.settings_radioGroup_conditionChoice);
+        RadioGroup radioGroup = view.findViewById(R.id.settings_radioGroup_condition);
 
         if (mCondition.getType() == Condition.CONDITION_GOALS) {
             radioGroup.check(R.id.settings_radioButton_goals);

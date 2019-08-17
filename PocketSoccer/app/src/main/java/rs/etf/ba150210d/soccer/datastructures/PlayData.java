@@ -211,11 +211,11 @@ public class PlayData {
     public int checkScoring() {
         PointF ballCenter = mBall.getCenter();
         if (mLeftGoal.contains(ballCenter.x, ballCenter.y)) {
-            return PlayMetadata.RIGHT_PLAYER;
+            return GameMetadata.RIGHT_PLAYER;
         } else if (mRightGoal.contains(ballCenter.x, ballCenter.y)) {
-            return PlayMetadata.LEFT_PLAYER;
+            return GameMetadata.LEFT_PLAYER;
         } else {
-            return PlayMetadata.NO_PLAYER;
+            return GameMetadata.NO_PLAYER;
         }
     }
 
@@ -224,7 +224,7 @@ public class PlayData {
     }
 
     public Puck getClosestPuck(int side) {
-        List<Puck> team = (side == PlayMetadata.LEFT_PLAYER) ? mLeftTeam : mRightTeam;
+        List<Puck> team = (side == GameMetadata.LEFT_PLAYER) ? mLeftTeam : mRightTeam;
 
         Puck minPuck = team.get(0);
         float minDistance = mViewDims.x * mViewDims.y;

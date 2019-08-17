@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.model.MyRepository;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
 import rs.etf.ba150210d.soccer.model.entities.Score;
@@ -16,7 +16,7 @@ public class PlayViewModel extends AndroidViewModel {
     private MyRepository mRepository;
     private LiveData<PlayerPair> mPlayerPairById = null;
 
-    private PlayMetadata mMetadata = null;
+    private GameMetadata mMetadata = null;
     private PlayData mData = null;
 
     public PlayViewModel(@NonNull Application application) {
@@ -41,7 +41,7 @@ public class PlayViewModel extends AndroidViewModel {
         }
     }
 
-    public void setMetadata(PlayMetadata metadata) {
+    public void setMetadata(GameMetadata metadata) {
         mMetadata = metadata;
     }
 
@@ -49,7 +49,7 @@ public class PlayViewModel extends AndroidViewModel {
         mData = data;
     }
 
-    public PlayMetadata getMetadata() {
+    public GameMetadata getMetadata() {
         return mMetadata;
     }
 

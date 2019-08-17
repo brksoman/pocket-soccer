@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.datastructures.Puck;
 import rs.etf.ba150210d.soccer.util.Bot;
 
@@ -13,29 +13,32 @@ public class PlayController implements View.OnTouchListener {
 
     private static final float ACC_SCREEN_RATIO = 0.5f;
     private static final float[] MAX_ACCELERATIONS = new float[] {
-            15, 18, 21, 24, 27, 30, 33, 36, 39, 42
+            16, 20, 24, 28, 32, 36, 40, 44, 48, 52
     };
 
     private PlayViewModel mViewModel;
-    private PlayMetadata mMetadata;
+    private GameMetadata mMetadata;
     private PlayData mData;
+
     private Puck mPuck;
 
     private PointF mAcc = new PointF();
+    private float mMaxAcc;
 
-    private Bot leftBot = null;
-    private Bot rightBot = null;
+    private Bot mLeftBot = null;
+    private Bot mRightBot = null;
 
     public PlayController(PlayViewModel viewModel) {
         mViewModel = viewModel;
         mMetadata = mViewModel.getMetadata();
         mData = mViewModel.getData();
+        mMaxAcc = MAX_ACCELERATIONS[mMetadata.getSpeed()];
 
         if (mMetadata.isLeftBot()) {
-            leftBot = new Bot(mViewModel, PlayMetadata.LEFT_PLAYER);
+            mLeftBot = new Bot(mViewModel, mMaxAcc, GameMetadata.LEFT_PLAYER);
         }
         if (mMetadata.isRightBot()) {
-            rightBot = new Bot(mViewModel, PlayMetadata.RIGHT_PLAYER);
+            mRightBot = new Bot(mViewModel, mMaxAcc, GameMetadata.RIGHT_PLAYER);
         }
     }
 
@@ -43,10 +46,11 @@ public class PlayController implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
 
         if (!mMetadata.isCurrentBot()) {
+            /* Ignore gestures if bot is playing */
             switch (event.getAction()) {
 
                 case MotionEvent.ACTION_DOWN:
-                    if (mMetadata.getNextPlayer() == PlayMetadata.LEFT_PLAYER) {
+                    if (mMetadata.getNextPlayer() == GameMetadata.LEFT_PLAYER) {
                         mPuck = mData.getLeftTeamPressedPuck(event.getX(), event.getY());
                     } else {
                         mPuck = mData.getRightTeamPressedPuck(event.getX(), event.getY());
@@ -65,12 +69,12 @@ public class PlayController implements View.OnTouchListener {
 
                         if (length <= maxLength) {
                             mAcc.set(
-                                    MAX_ACCELERATIONS[mMetadata.getSpeed()] * (mAcc.x / maxLength),
-                                    MAX_ACCELERATIONS[mMetadata.getSpeed()] * (mAcc.y / maxLength));
+                                    mMaxAcc * (mAcc.x / maxLength),
+                                    mMaxAcc * (mAcc.y / maxLength));
                         } else {
                             mAcc.set(
-                                    MAX_ACCELERATIONS[mMetadata.getSpeed()] * (mAcc.x / length),
-                                    MAX_ACCELERATIONS[mMetadata.getSpeed()] * (mAcc.y / length));
+                                    mMaxAcc * (mAcc.x / length),
+                                    mMaxAcc * (mAcc.y / length));
                         }
                         mPuck.accelerate(mAcc);
                         mPuck = null;
@@ -86,28 +90,28 @@ public class PlayController implements View.OnTouchListener {
                     break;
             }
 
-        } else {
-            /* Current player is a bot - ignore gestures */
         }
         return true;
     }
 
+    /** Tell bots to check if it is their turn, and to play if it is. */
     public void informBots() {
         if (mMetadata.isCurrentBot()) {
-            if (mMetadata.getNextPlayer() == PlayMetadata.LEFT_PLAYER) {
-                leftBot.play();
+            if (mMetadata.getNextPlayer() == GameMetadata.LEFT_PLAYER) {
+                mLeftBot.play();
             } else {
-                rightBot.play();
+                mRightBot.play();
             }
         }
     }
 
+    /** Stop the turn of any of the bots. */
     public void stopBots() {
-        if (leftBot != null) {
-            leftBot.cancel();
+        if (mLeftBot != null) {
+            mLeftBot.cancel();
         }
-        if (rightBot != null) {
-            rightBot.cancel();
+        if (mRightBot != null) {
+            mRightBot.cancel();
         }
     }
 }

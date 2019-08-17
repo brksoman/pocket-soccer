@@ -12,30 +12,30 @@
         android:layout_height="match_parent">
 
         <android.support.constraint.Guideline
-            android:id="@+id/pairScoreHolder_guideline"
+            android:id="@+id/pairScoreHolder_verticalHalf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
         <TextView
-            android:id="@+id/pairScoreHolder_points1"
+            android:id="@+id/pairScoreHolder_text_points1"
             style="@style/NegativeText"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/pairScoreHolder_guideline"
+            app:layout_constraintEnd_toStartOf="@id/pairScoreHolder_verticalHalf"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Points1" />
+            android:text="5" />
 
         <TextView
-            android:id="@+id/pairScoreHolder_points2"
+            android:id="@+id/pairScoreHolder_text_points2"
             style="@style/NegativeText"
-            app:layout_constraintStart_toEndOf="@id/pairScoreHolder_guideline"
+            app:layout_constraintStart_toEndOf="@id/pairScoreHolder_verticalHalf"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Points2" />
+            android:text="3" />
 
         <TextView
-            android:id="@+id/pairScoreHolder_date"
+            android:id="@+id/pairScoreHolder_text_date"
             style="@style/SmallNegativeText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

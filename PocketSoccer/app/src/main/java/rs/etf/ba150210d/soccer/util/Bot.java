@@ -11,39 +11,45 @@ import rs.etf.ba150210d.soccer.datastructures.Puck;
 public class Bot {
     private static final long THINK_MIN = 2000;
     private static final long THINK_MAX = 4000;
-    private static final Handler THREAD_HANDLER = new Handler(Looper.getMainLooper());
+    private static final Handler sThreadHandler = new Handler(Looper.getMainLooper());
 
     private PlayViewModel mViewModel;
     private int mSide;
     private PlayData mData;
+    private float mMaxAcc;
 
-    public Bot(PlayViewModel viewModel, int side) {
+    public Bot(PlayViewModel viewModel, float maxAcc, int side) {
         mViewModel = viewModel;
+        mMaxAcc = maxAcc;
         mSide = side;
         mData = mViewModel.getData();
-
     }
 
+    /** Start 'thinking', then deploy strategy. */
     public void play() {
         long thinkTime = (long)(THINK_MIN + (THINK_MAX - THINK_MIN) * Math.random());
 
-        THREAD_HANDLER.postDelayed(mStrategy, thinkTime);
+        sThreadHandler.postDelayed(mStrategy, thinkTime);
     }
 
+    /** Stop 'thinking' */
     public void cancel() {
-        THREAD_HANDLER.removeCallbacks(mStrategy);
+        sThreadHandler.removeCallbacks(mStrategy);
     }
 
     private Runnable mStrategy = new Runnable() {
         @Override
         public void run() {
+            // TODO implement better strategy
+
             Puck puck = mData.getClosestPuck(mSide);
             PointF distance = puck.getDistance(mData.getBall());
             float absDistance = (float) Math.sqrt(
                     distance.x * distance.x + distance.y * distance.y);
 
-            puck.accelerate(42 * (distance.x / absDistance),
-                    42 * (distance.y / absDistance));
+            puck.accelerate(
+                    mMaxAcc * (distance.x / absDistance),
+                    mMaxAcc * (distance.y / absDistance));
             mViewModel.getMetadata().switchNextPlayer();
         }
     };

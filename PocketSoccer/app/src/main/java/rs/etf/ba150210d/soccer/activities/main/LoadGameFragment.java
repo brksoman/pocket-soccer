@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import rs.etf.ba150210d.soccer.R;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.datastructures.Condition;
 import rs.etf.ba150210d.soccer.datastructures.Field;
 import rs.etf.ba150210d.soccer.util.FragmentOwner;
@@ -22,7 +22,7 @@ public class LoadGameFragment extends Fragment {
     private MainActivity mOwner;
     private MainViewModel mViewModel;
 
-    private PlayMetadata mPlayMetadata = null;
+    private GameMetadata mGameMetadata = null;
 
     public LoadGameFragment() {
         /* Required empty public constructor */
@@ -33,8 +33,8 @@ public class LoadGameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_load_game, container, false);
 
-        if (mPlayMetadata != null) {
-            displayMetadata(view);
+        if (mGameMetadata != null) {
+            displayGameMetadata(view);
         }
 
         initButtons(view);
@@ -43,15 +43,17 @@ public class LoadGameFragment extends Fragment {
     }
 
     private void initButtons(View view) {
-        FloatingActionButton loadButton = view.findViewById(R.id.loadGame_fab_load);
-        loadButton.setOnClickListener(new View.OnClickListener() {
+
+        FloatingActionButton acceptButton = view.findViewById(R.id.loadGame_fab_accept);
+        acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOwner.reportLoad();
-                SharedPreferences preferences = getActivity().getSharedPreferences(
-                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                mPlayMetadata.setSpeed(preferences.getInt("speed", mPlayMetadata.getSpeed()));
-                mPlayMetadata.setField(new Field(getContext(),
+                SharedPreferences preferences = mOwner.getPreferences();
+
+                mGameMetadata.setSpeed(
+                        preferences.getInt("speed", mGameMetadata.getSpeed()));
+                mGameMetadata.setField(new Field(getContext(),
                         preferences.getInt("field", 0)));
                 mOwner.switchActivity(FragmentOwner.PLAY_ACTIVITY);
             }
@@ -66,39 +68,40 @@ public class LoadGameFragment extends Fragment {
         });
     }
 
-    private void displayMetadata(View view) {
-        TextView leftPlayer = view.findViewById(R.id.loadGame_leftPlayer);
-        leftPlayer.setText(mPlayMetadata.getLeftPlayerName());
+    private void displayGameMetadata(View view) {
 
-        TextView rightPlayer = view.findViewById(R.id.loadGame_rightPlayer);
-        rightPlayer.setText(mPlayMetadata.getRightPlayerName());
+        TextView leftPlayer = view.findViewById(R.id.loadGame_text_leftPlayerName);
+        leftPlayer.setText(mGameMetadata.getLeftPlayerName());
 
-        TextView leftPoints = view.findViewById(R.id.loadGame_leftPoints);
-        leftPoints.setText(Integer.toString(mPlayMetadata.getLeftPlayerPoints()));
+        TextView rightPlayer = view.findViewById(R.id.loadGame_text_rightPlayerName);
+        rightPlayer.setText(mGameMetadata.getRightPlayerName());
 
-        TextView rightPoints = view.findViewById(R.id.loadGame_rightPoints);
-        rightPoints.setText(Integer.toString(mPlayMetadata.getRightPlayerPoints()));
+        TextView leftPoints = view.findViewById(R.id.loadGame_text_leftPoints);
+        leftPoints.setText(Integer.toString(mGameMetadata.getLeftPlayerPoints()));
 
-        TextView leftTeam = view.findViewById(R.id.loadGame_leftTeamName);
-        leftTeam.setText(mPlayMetadata.getLeftTeam().getName());
+        TextView rightPoints = view.findViewById(R.id.loadGame_text_rightPoints);
+        rightPoints.setText(Integer.toString(mGameMetadata.getRightPlayerPoints()));
 
-        TextView rightTeam = view.findViewById(R.id.loadGame_rightTeamName);
-        rightTeam.setText(mPlayMetadata.getRightTeam().getName());
+        TextView leftTeam = view.findViewById(R.id.loadGame_text_leftTeamName);
+        leftTeam.setText(mGameMetadata.getLeftTeam().getName());
 
-        ImageView leftTeamFlag = view.findViewById(R.id.loadGame_leftTeamFlag);
-        leftTeamFlag.setImageResource(mPlayMetadata.getLeftTeam().getId());
+        TextView rightTeam = view.findViewById(R.id.loadGame_text_rightTeamName);
+        rightTeam.setText(mGameMetadata.getRightTeam().getName());
 
-        ImageView rightTeamFlag = view.findViewById(R.id.loadGame_rightTeamFlag);
-        rightTeamFlag.setImageResource(mPlayMetadata.getRightTeam().getId());
+        ImageView leftTeamFlag = view.findViewById(R.id.loadGame_image_leftTeamFlag);
+        leftTeamFlag.setImageResource(mGameMetadata.getLeftTeam().getId());
 
-        TextView elapsedTime = view.findViewById(R.id.loadGame_elapsedTime);
+        ImageView rightTeamFlag = view.findViewById(R.id.loadGame_image_rightTeamFlag);
+        rightTeamFlag.setImageResource(mGameMetadata.getRightTeam().getId());
+
+        TextView elapsedTime = view.findViewById(R.id.loadGame_text_elapsedTime);
         String elapsedTimeString = getString(R.string.time_format,
-                mPlayMetadata.getElapsedTime() / 60,
-                mPlayMetadata.getElapsedTime() % 60);
+                mGameMetadata.getElapsedTime() / 60,
+                mGameMetadata.getElapsedTime() % 60);
         elapsedTime.setText(elapsedTimeString);
 
-        TextView conditionTextView = view.findViewById(R.id.loadGame_condition);
-        Condition condition = mPlayMetadata.getCondition();
+        TextView conditionTextView = view.findViewById(R.id.loadGame_text_condition);
+        Condition condition = mGameMetadata.getCondition();
 
         if (condition.getType() == Condition.CONDITION_GOALS) {
             String conditionString = getString(
@@ -111,10 +114,10 @@ public class LoadGameFragment extends Fragment {
         }
     }
 
-    public void setPlayMetadata(PlayMetadata playMetadata) {
-        mPlayMetadata = playMetadata;
-        if (mPlayMetadata != null && isAdded()) {
-            displayMetadata(getView());
+    public void setGameMetadata(GameMetadata gameMetadata) {
+        mGameMetadata = gameMetadata;
+        if (mGameMetadata != null && isAdded()) {
+            displayGameMetadata(getView());
         }
     }
 

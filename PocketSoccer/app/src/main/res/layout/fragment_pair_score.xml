@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/pairScore_vs"
+            android:id="@+id/pairScore_label_vs"
             style="@style/HighlightPlayerNameText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -19,25 +19,25 @@
             android:text="@string/vs" />
 
         <TextView
-            android:id="@+id/pairScore_name1"
+            android:id="@+id/pairScore_text_name1"
             style="@style/PlayerNameText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/pairScore_vs" />
+            app:layout_constraintEnd_toStartOf="@id/pairScore_label_vs" />
 
         <TextView
-            android:id="@+id/pairScore_name2"
+            android:id="@+id/pairScore_text_name2"
             style="@style/HighlightPlayerNameText"
-            app:layout_constraintStart_toEndOf="@id/pairScore_vs"
+            app:layout_constraintStart_toEndOf="@id/pairScore_label_vs"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/pairScore_recyclerView"
+            android:id="@+id/pairScore_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pairScore_name1"
+            app:layout_constraintTop_toBottomOf="@id/pairScore_text_name1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 

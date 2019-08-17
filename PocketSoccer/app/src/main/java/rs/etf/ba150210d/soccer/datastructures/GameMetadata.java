@@ -13,7 +13,7 @@ import rs.etf.ba150210d.soccer.model.entities.Score;
     shared preferences), as well as packing and unpacking the metadata to and from an Intent object.
  */
 
-public class PlayMetadata {
+public class GameMetadata {
     public static final int UNDEFINED_PLAYER = -1;
     public static final int NO_PLAYER = 0;
     public static final int LEFT_PLAYER = 1;
@@ -38,13 +38,13 @@ public class PlayMetadata {
 
     private int mNextPlayer = LEFT_PLAYER;
 
-    public PlayMetadata(Context context) {
+    public GameMetadata(Context context) {
         mPlayerPair = new PlayerPair("", "");
         mScore = new Score(-1, NO_PLAYER, 0, 0, 0);
         mCondition = new Condition(context);
     }
 
-    public PlayMetadata(Context context, Intent intent) {
+    public GameMetadata(Context context, Intent intent) {
         mPlayerPair = new PlayerPair(
                 intent.getStringExtra("player1Name"),
                 intent.getStringExtra("player2Name"));
@@ -80,7 +80,7 @@ public class PlayMetadata {
         mField = new Field(context, intent.getIntExtra("field", 0));
     }
 
-    public PlayMetadata(Context context, SharedPreferences preferences) {
+    public GameMetadata(Context context, SharedPreferences preferences) {
         mPlayerPair = new PlayerPair(
                 preferences.getString("save_player1Name", ""),
                 preferences.getString("save_player2Name", ""));

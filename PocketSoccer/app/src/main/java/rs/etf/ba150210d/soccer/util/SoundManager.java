@@ -17,6 +17,7 @@ import rs.etf.ba150210d.soccer.R;
 
 public class SoundManager {
     private static SoundManager instance = null;
+    private static final int MAX_STREAMS = 5;
 
     private SoundPool mPool;
 
@@ -39,7 +40,6 @@ public class SoundManager {
 
         mBounceId = mPool.load(context, R.raw.bounce, 1);
         mCrowdId = mPool.load(context, R.raw.crowd, 1);
-
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -50,13 +50,13 @@ public class SoundManager {
                 .build();
         mPool = new SoundPool.Builder()
                 .setAudioAttributes(attributes)
-                .setMaxStreams(5)
+                .setMaxStreams(MAX_STREAMS)
                 .build();
     }
 
     @SuppressWarnings("deprecation")
     private void createDeprecatedSoundPool(){
-        mPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        mPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
     }
 
     public void playBounce() {

@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
 
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 import rs.etf.ba150210d.soccer.util.SoundManager;
 
 public class ScreenRefreshController {
@@ -20,58 +20,58 @@ public class ScreenRefreshController {
         void informBots();
     }
 
-    private static final long WIN_ANIMATION_DURATION = 2000;
-    private static final Handler THREAD_HANDLER = new Handler(Looper.getMainLooper());
+    private static final long CELEBRATION_DURATION = 2000;
+    private static final Handler sThreadHandler = new Handler(Looper.getMainLooper());
 
     private PlayActivity mActivity;
+
     private SoundManager mSoundManager;
 
-    private PlayViewModel mViewModel;
-    private PlayMetadata mMetadata;
+    private GameMetadata mMetadata;
     private PlayData mData;
 
     public ScreenRefreshController(final Activity activity, PlayViewModel viewModel) {
         mActivity = (PlayActivity) activity;
         mSoundManager = SoundManager.getInstance(mActivity);
 
-        mViewModel = viewModel;
-        mData = mViewModel.getData();
-        mMetadata = mViewModel.getMetadata();
+        mData = viewModel.getData();
+        mMetadata = viewModel.getMetadata();
 
         startRegularAnimation();
     }
 
+    /** Freeze game and release SoundManager */
     public void stop() {
         mSoundManager.release();
-        THREAD_HANDLER.removeCallbacks(mRegularRefreshTask);
-        THREAD_HANDLER.removeCallbacks(mScoreRefreshTask);
-        THREAD_HANDLER.removeCallbacks(mContinueTask);
+        sThreadHandler.removeCallbacks(mRegularRefreshTask);
+        sThreadHandler.removeCallbacks(mScoreRefreshTask);
+        sThreadHandler.removeCallbacks(mContinueTask);
     }
 
     private void startRegularAnimation() {
         mActivity.clearMessage();
-        THREAD_HANDLER.removeCallbacks(mScoreRefreshTask);
+        sThreadHandler.removeCallbacks(mScoreRefreshTask);
 
         mActivity.informBots();
-        THREAD_HANDLER.post(mRegularRefreshTask);
+        sThreadHandler.post(mRegularRefreshTask);
     }
 
     private void startScoringAnimation() {
-        THREAD_HANDLER.removeCallbacks(mRegularRefreshTask);
-        THREAD_HANDLER.post(mScoreRefreshTask);
-        THREAD_HANDLER.postDelayed(mContinueTask, WIN_ANIMATION_DURATION);
+        sThreadHandler.removeCallbacks(mRegularRefreshTask);
+        sThreadHandler.post(mScoreRefreshTask);
+        sThreadHandler.postDelayed(mContinueTask, CELEBRATION_DURATION);
     }
 
     private void startWinningAnimation() {
-        THREAD_HANDLER.removeCallbacks(mRegularRefreshTask);
-        THREAD_HANDLER.post(mScoreRefreshTask);
-        THREAD_HANDLER.postDelayed(mExitTask, WIN_ANIMATION_DURATION);
+        sThreadHandler.removeCallbacks(mRegularRefreshTask);
+        sThreadHandler.post(mScoreRefreshTask);
+        sThreadHandler.postDelayed(mExitTask, CELEBRATION_DURATION);
     }
 
     private Runnable mRegularRefreshTask = new Runnable() {
         @Override
         public void run() {
-            THREAD_HANDLER.postDelayed(this, 20);
+            sThreadHandler.postDelayed(this, 20);
 
             if (mData.updateData()) {
                 mSoundManager.playBounce();
@@ -79,12 +79,12 @@ public class ScreenRefreshController {
             mMetadata.elapseTime();
 
             int scorer = mData.checkScoring();
-            if (scorer != PlayMetadata.NO_PLAYER) {
+            if (scorer != GameMetadata.NO_PLAYER) {
                 mSoundManager.playCrowd();
                 mMetadata.scorePlayer(scorer);
 
                 int winner = mMetadata.checkWin();
-                if (winner != PlayMetadata.NO_PLAYER) {
+                if (winner != GameMetadata.NO_PLAYER) {
                     mActivity.win(scorer);
                     startWinningAnimation();
                 } else {
@@ -99,7 +99,7 @@ public class ScreenRefreshController {
     private Runnable mScoreRefreshTask = new Runnable() {
         @Override
         public void run() {
-            THREAD_HANDLER.postDelayed(this, 20);
+            sThreadHandler.postDelayed(this, 20);
 
             mData.updateData();
             mActivity.updateView();

@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/settings_textView_field"
+            android:id="@+id/settings_label_field"
             style="@style/RegularText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -23,9 +23,9 @@
             android:layout_height="0dp"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_textView_field"
+            app:layout_constraintTop_toBottomOf="@id/settings_label_field"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/settings_radioGroup_conditionChoice" />
+            app:layout_constraintBottom_toTopOf="@id/settings_radioGroup_condition" />
 
         <android.support.constraint.Guideline
             android:id="@+id/settings_verticalHalf"
@@ -42,7 +42,7 @@
             android:text="@string/speed"/>
 
         <TextView
-            android:id="@+id/settings_textView_speed"
+            android:id="@+id/settings_text_speed"
             style="@style/RegularText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="@id/settings_seekBar_speed"
@@ -63,13 +63,13 @@
             android:theme="@style/Base.Widget.AppCompat.SeekBar.Discrete" />
 
         <RadioGroup
-            android:id="@+id/settings_radioGroup_conditionChoice"
+            android:id="@+id/settings_radioGroup_condition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toEndOf="@id/settings_verticalHalf"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/settings_textView_conditionType">
+            app:layout_constraintBottom_toTopOf="@id/settings_text_conditionType">
 
             <RadioButton
                 android:id="@+id/settings_radioButton_goals"
@@ -90,7 +90,7 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/settings_textView_conditionType"
+            android:id="@+id/settings_text_conditionType"
             style="@style/RegularText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="@id/settings_seekBar_condition"
@@ -98,7 +98,7 @@
             android:text="Goals:" />
 
         <TextView
-            android:id="@+id/settings_textView_condition"
+            android:id="@+id/settings_text_condition"
             style="@style/RegularText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="@id/settings_seekBar_condition"

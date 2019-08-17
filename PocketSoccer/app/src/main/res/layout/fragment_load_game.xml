@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView android:id="@+id/loadGame_title"
+        <TextView android:id="@+id/loadGame_label_title"
             style="@style/BigText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +29,7 @@
             android:layout_margin="@dimen/medium_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/loadGame_title">
+            app:layout_constraintTop_toBottomOf="@id/loadGame_label_title">
 
             <android.support.constraint.Guideline
                 android:id="@+id/loadGame_players_verticalHalf"
@@ -38,20 +38,20 @@
                 app:layout_constraintGuide_percent="0.5"
                 android:orientation="vertical" />
 
-            <TextView android:id="@+id/loadGame_vs"
+            <TextView android:id="@+id/loadGame_label_vs"
                 style="@style/HighlightPlayerNameText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/vs" />
 
-            <TextView android:id="@+id/loadGame_leftPlayer"
+            <TextView android:id="@+id/loadGame_text_leftPlayerName"
                 style="@style/PlayerNameText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/loadGame_players_verticalHalf" />
 
-            <TextView android:id="@+id/loadGame_rightPlayer"
+            <TextView android:id="@+id/loadGame_text_rightPlayerName"
                 style="@style/PlayerNameText"
                 app:layout_constraintStart_toEndOf="@id/loadGame_players_verticalHalf"
                 app:layout_constraintTop_toTopOf="parent"
@@ -73,45 +73,45 @@
                 app:layout_constraintGuide_percent="0.5"
                 android:orientation="vertical" />
 
-            <TextView android:id="@+id/loadGame_leftPoints"
+            <TextView android:id="@+id/loadGame_text_leftPoints"
                 style="@style/RegularText"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/loadGame_score_horizontalHalf" />
 
-            <TextView android:id="@+id/loadGame_rightPoints"
+            <TextView android:id="@+id/loadGame_text_rightPoints"
                 style="@style/RegularText"
                 app:layout_constraintStart_toEndOf="@id/loadGame_score_horizontalHalf"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView android:id="@+id/loadGame_leftTeamName"
+            <TextView android:id="@+id/loadGame_text_leftTeamName"
                 style="@style/TeamNameText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/loadGame_leftPoints" />
+                app:layout_constraintEnd_toStartOf="@id/loadGame_text_leftPoints" />
 
-            <TextView android:id="@+id/loadGame_rightTeamName"
+            <TextView android:id="@+id/loadGame_text_rightTeamName"
                 style="@style/TeamNameText"
-                app:layout_constraintStart_toEndOf="@id/loadGame_rightPoints"
+                app:layout_constraintStart_toEndOf="@id/loadGame_text_rightPoints"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
-                android:id="@+id/loadGame_leftTeamFlag"
+                android:id="@+id/loadGame_image_leftTeamFlag"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/small_margin"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/loadGame_leftTeamName"
+                app:layout_constraintEnd_toStartOf="@id/loadGame_text_leftTeamName"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:scaleType="fitEnd"
                 android:src="@drawable/cyprus" />
 
             <ImageView
-                android:id="@+id/loadGame_rightTeamFlag"
+                android:id="@+id/loadGame_image_rightTeamFlag"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/small_margin"
-                app:layout_constraintStart_toEndOf="@id/loadGame_rightTeamName"
+                app:layout_constraintStart_toEndOf="@id/loadGame_text_rightTeamName"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:scaleType="fitStart"
@@ -133,13 +133,13 @@
                 app:layout_constraintGuide_percent="0.5"
                 android:orientation="vertical" />
 
-            <TextView android:id="@+id/loadGame_elapsedTimeTitle"
+            <TextView android:id="@+id/loadGame_label_elapsedTime"
                 style="@style/RegularText"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/loadGame_time_verticalHalf"
                 android:text="@string/elapsed_time" />
 
-            <TextView android:id="@+id/loadGame_elapsedTime"
+            <TextView android:id="@+id/loadGame_text_elapsedTime"
                 style="@style/RegularText"
                 app:layout_constraintStart_toEndOf="@id/loadGame_time_verticalHalf"
                 app:layout_constraintTop_toTopOf="parent"
@@ -161,7 +161,7 @@
                 app:layout_constraintGuide_percent="0.5"
                 android:orientation="vertical" />
 
-            <TextView android:id="@+id/loadGame_condition"
+            <TextView android:id="@+id/loadGame_text_condition"
                 style="@style/RegularText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -171,14 +171,14 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/loadGame_fab_load"
+            android:id="@+id/loadGame_fab_accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_done"/>
+            android:src="@drawable/ic_done" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/loadGame_fab_back"

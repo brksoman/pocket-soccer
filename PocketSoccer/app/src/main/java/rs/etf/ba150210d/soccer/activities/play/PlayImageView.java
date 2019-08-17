@@ -1,16 +1,12 @@
 package rs.etf.ba150210d.soccer.activities.play;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.datastructures.PlayData;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 
 public class PlayImageView extends AppCompatImageView {
 
@@ -34,10 +30,6 @@ public class PlayImageView extends AppCompatImageView {
 
     private void init() {
         mPaint = new Paint();
-    }
-
-    public PlayData getData() {
-        return mData;
     }
 
     public void setData(PlayData data) {

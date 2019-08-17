@@ -1,17 +1,12 @@
 package rs.etf.ba150210d.soccer.activities.score;
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
 import rs.etf.ba150210d.soccer.R;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
 import rs.etf.ba150210d.soccer.util.FragmentOwner;
-import rs.etf.ba150210d.soccer.util.ImmersiveAppCompatActivity;
 
 public class ScoreActivity extends FragmentOwner {
 
@@ -34,7 +29,7 @@ public class ScoreActivity extends FragmentOwner {
         setFragment(mAllScoreFragment, false);
 
         if (getIntent().getBooleanExtra("isEndgame", false)) {
-            PlayMetadata metadata = new PlayMetadata(this, getIntent());
+            GameMetadata metadata = new GameMetadata(this, getIntent());
             PlayerPair playerPair = metadata.getPlayerPair();
 
             mPairScoreFragment.setSelectedPlayerPair(playerPair);

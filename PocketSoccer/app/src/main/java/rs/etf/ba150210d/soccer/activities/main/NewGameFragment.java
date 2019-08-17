@@ -2,7 +2,6 @@ package rs.etf.ba150210d.soccer.activities.main;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -12,18 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.datastructures.Team;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.util.EditTextBackEvent;
 import rs.etf.ba150210d.soccer.util.FragmentOwner;
 
@@ -32,8 +26,7 @@ public class NewGameFragment extends Fragment {
     private MainActivity mOwner;
     private MainViewModel mViewModel;
 
-    private List<String> mTeamNames;
-    private PlayMetadata mPlayMetadata;
+    private GameMetadata mGameMetadata;
 
     private EditTextBackEvent mEditTextLeftName;
     private ViewPager mLeftTeamPager;
@@ -45,23 +38,22 @@ public class NewGameFragment extends Fragment {
     private TextView mRightTeamName;
     private CheckBox mIsRightBot;
 
-    public NewGameFragment() { /* Required empty public constructor */ }
+    public NewGameFragment() {
+        /* Required empty public constructor */
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_game, container, false);
 
-        mEditTextLeftName = view.findViewById(R.id.newGame_editText_leftName);
+        mEditTextLeftName = view.findViewById(R.id.newGame_editText_leftPlayerName);
         mOwner.avoidUiWithEditText(mEditTextLeftName);
 
-        mEditTextRightName = view.findViewById(R.id.newGame_editText_rightName);
+        mEditTextRightName = view.findViewById(R.id.newGame_editText_rightPlayerName);
         mOwner.avoidUiWithEditText(mEditTextRightName);
 
         initButtons(view);
-
-        String[] teamNamesResource = getResources().getStringArray(R.array.country_names);
-        mTeamNames = new ArrayList<>(Arrays.asList(teamNamesResource));
 
         initTeamPagers(view);
 
@@ -101,7 +93,7 @@ public class NewGameFragment extends Fragment {
         mLeftTeamPager = view.findViewById(R.id.newGame_pager_left);
         mLeftTeamPager.setAdapter(new TeamPagerAdapter(getContext()));
 
-        mLeftTeamName = view.findViewById(R.id.newGame_textView_leftTeamName);
+        mLeftTeamName = view.findViewById(R.id.newGame_text_leftTeamName);
         Team leftTeam = new Team(getContext(), mLeftTeamPager.getCurrentItem());
         mLeftTeamName.setText(leftTeam.getName());
 
@@ -121,7 +113,7 @@ public class NewGameFragment extends Fragment {
         mRightTeamPager = view.findViewById(R.id.newGame_pager_right);
         mRightTeamPager.setAdapter(new TeamPagerAdapter(getContext()));
 
-        mRightTeamName = view.findViewById(R.id.newGame_textView_rightTeamName);
+        mRightTeamName = view.findViewById(R.id.newGame_text_rightTeamName);
         Team rightTeam = new Team(getContext(), mRightTeamPager.getCurrentItem());
         mRightTeamName.setText(rightTeam.getName());
 
@@ -139,27 +131,27 @@ public class NewGameFragment extends Fragment {
         });
     }
 
-    public void setPlayMetadata(PlayMetadata playMetadata) {
-        mPlayMetadata = playMetadata;
+    public void setGameMetadata(GameMetadata gameMetadata) {
+        mGameMetadata = gameMetadata;
     }
 
     private void startGame() {
-        mPlayMetadata.loadSettings(getContext(), mOwner.getPreferences());
+        mGameMetadata.loadSettings(getContext(), mOwner.getPreferences());
 
-        mPlayMetadata.setLeftTeam(new Team(getContext(), mLeftTeamPager.getCurrentItem()));
-        mPlayMetadata.setRightTeam(new Team(getContext(), mRightTeamPager.getCurrentItem()));
+        mGameMetadata.setLeftTeam(new Team(getContext(), mLeftTeamPager.getCurrentItem()));
+        mGameMetadata.setRightTeam(new Team(getContext(), mRightTeamPager.getCurrentItem()));
 
-        mPlayMetadata.setIsLeftBot(mIsLeftBot.isChecked());
-        mPlayMetadata.setIsRightBot(mIsRightBot.isChecked());
+        mGameMetadata.setIsLeftBot(mIsLeftBot.isChecked());
+        mGameMetadata.setIsRightBot(mIsRightBot.isChecked());
 
-        mPlayMetadata.setLeftPlayerName(mEditTextLeftName.getText().toString());
-        mPlayMetadata.setRightPlayerName(mEditTextRightName.getText().toString());
+        mGameMetadata.setLeftPlayerName(mEditTextLeftName.getText().toString());
+        mGameMetadata.setRightPlayerName(mEditTextRightName.getText().toString());
 
-        mViewModel.setNewlyInsertedPlayerPair(mPlayMetadata.getPlayerPair());
+        mViewModel.setNewlyInsertedPlayerPair(mGameMetadata.getPlayerPair());
         mViewModel.getNewlyInsertedPlayerPair().observe(this, new Observer<PlayerPair>() {
             @Override
             public void onChanged(@Nullable PlayerPair playerPair) {
-                mPlayMetadata.rotateMaybe(playerPair);
+                mGameMetadata.rotateMaybe(playerPair);
                 mOwner.reportNew();
                 mOwner.switchActivity(FragmentOwner.PLAY_ACTIVITY);
             }

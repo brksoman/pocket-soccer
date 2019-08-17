@@ -4,7 +4,7 @@ import android.content.Context;
 
 import rs.etf.ba150210d.soccer.R;
 
-/*
+/**
     A class which describes the condition for winning a match - either by scoring a set number of
     goals, or if the set amount of time passes.
  */

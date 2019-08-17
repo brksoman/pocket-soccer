@@ -77,10 +77,10 @@ public class ScoreViewAdapter extends RecyclerView.Adapter<ScoreViewAdapter.Scor
         public ScoreHolder(@NonNull View itemView) {
             super(itemView);
 
-            mPlayer1Name = itemView.findViewById(R.id.scoreHolder_player1_name);
-            mPlayer2Name = itemView.findViewById(R.id.scoreHolder_player2_name);
-            mPlayer1Wins = itemView.findViewById(R.id.scoreHolder_player1_wins);
-            mPlayer2Wins = itemView.findViewById(R.id.scoreHolder_player2_wins);
+            mPlayer1Name = itemView.findViewById(R.id.scoreHolder_text_name1);
+            mPlayer2Name = itemView.findViewById(R.id.scoreHolder_text_name2);
+            mPlayer1Wins = itemView.findViewById(R.id.scoreHolder_text_wins1);
+            mPlayer2Wins = itemView.findViewById(R.id.scoreHolder_text_wins2);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

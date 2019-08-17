@@ -1,23 +1,18 @@
 package rs.etf.ba150210d.soccer.activities.main;
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.activities.play.PlayActivity;
-import rs.etf.ba150210d.soccer.datastructures.PlayMetadata;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 import rs.etf.ba150210d.soccer.activities.score.ScoreActivity;
 import rs.etf.ba150210d.soccer.activities.settings.SettingsActivity;
 import rs.etf.ba150210d.soccer.util.FragmentOwner;
-import rs.etf.ba150210d.soccer.util.ImmersiveAppCompatActivity;
 
 public class MainActivity extends FragmentOwner {
 
@@ -29,10 +24,10 @@ public class MainActivity extends FragmentOwner {
 
     private MainViewModel mViewModel;
 
-    private PlayMetadata mSelectedPlayMetadata = null;
-    private PlayMetadata mLoadedPlayMetadata = null;
+    private GameMetadata mNewGameMetadata = null;
+    private GameMetadata mLoadGameMetadata = null;
 
-    private boolean mIsLoaded = false;
+    private boolean mIsLoad = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +41,23 @@ public class MainActivity extends FragmentOwner {
         mNewGameFragment = new NewGameFragment();
         mLoadGameFragment = new LoadGameFragment();
 
-        initMetadata();
+        initGameMetadata();
+
         setFragment(mMainFragment, false);
     }
 
-    private void initMetadata() {
+    private void initGameMetadata() {
         SharedPreferences preferences = getPreferences();
-        //PlayMetadata.deleteSave(preferences);
+        //GameMetadata.deleteSave(preferences);
 
         /* If saved game exists */
         if (preferences.getLong("save_playerPairId", -1L) != -1L) {
-            mLoadedPlayMetadata = new PlayMetadata(this, preferences);
-            mLoadGameFragment.setPlayMetadata(mLoadedPlayMetadata);
-            mMainFragment.setLoadedPlayMetadata(mLoadedPlayMetadata);
+            mLoadGameMetadata = new GameMetadata(this, preferences);
+            mLoadGameFragment.setGameMetadata(mLoadGameMetadata);
+            mMainFragment.setLoadGameMetadata(mLoadGameMetadata);
         }
-        mSelectedPlayMetadata = new PlayMetadata(this);
-        mNewGameFragment.setPlayMetadata(mSelectedPlayMetadata);
+        mNewGameMetadata = new GameMetadata(this);
+        mNewGameFragment.setGameMetadata(mNewGameMetadata);
     }
 
     @Override
@@ -75,7 +71,7 @@ public class MainActivity extends FragmentOwner {
 
         switch (activityId) {
             case MAIN_ACTIVITY:
-                // Already in this activity
+                /* Already in this activity */
                 break;
 
             case SCORE_ACTIVITY:
@@ -90,10 +86,10 @@ public class MainActivity extends FragmentOwner {
 
             case PLAY_ACTIVITY:
                 intent = new Intent(this, PlayActivity.class);
-                if (mIsLoaded) {
-                    mLoadedPlayMetadata.pack(intent);
+                if (mIsLoad) {
+                    mLoadGameMetadata.pack(intent);
                 } else {
-                    mSelectedPlayMetadata.pack(intent);
+                    mNewGameMetadata.pack(intent);
                 }
                 startActivityForResult(intent, PLAY_REQUEST);
                 break;
@@ -107,12 +103,12 @@ public class MainActivity extends FragmentOwner {
         if (requestCode == PLAY_REQUEST) {
             /* Game was played but not finished, display new saved game in the 'load game' menu */
             if (resultCode == RESULT_CANCELED) {
-                initMetadata();
+                initGameMetadata();
             }
             /* Game was played and finished, go to the 'scores' menu and display the specific score */
             if (resultCode == RESULT_OK) {
                 cleanFragments();
-                PlayMetadata metadata = new PlayMetadata(this, data);
+                GameMetadata metadata = new GameMetadata(this, data);
 
                 Intent intent = new Intent(this, ScoreActivity.class);
                 metadata.pack(intent);
@@ -124,10 +120,10 @@ public class MainActivity extends FragmentOwner {
     }
 
     private void cleanFragments() {
-        mLoadedPlayMetadata = null;
-        mLoadGameFragment.setPlayMetadata(null);
-        mSelectedPlayMetadata = new PlayMetadata(this);
-        mNewGameFragment.setPlayMetadata(mSelectedPlayMetadata);
+        mLoadGameMetadata = null;
+        mLoadGameFragment.setGameMetadata(null);
+        mNewGameMetadata = new GameMetadata(this);
+        mNewGameFragment.setGameMetadata(mNewGameMetadata);
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(0);
@@ -137,11 +133,11 @@ public class MainActivity extends FragmentOwner {
     }
 
     public void reportLoad() {
-        mIsLoaded = true;
+        mIsLoad = true;
     }
 
     public void reportNew() {
-        mIsLoaded = false;
+        mIsLoad = false;
     }
 
     @Override
@@ -159,12 +155,6 @@ public class MainActivity extends FragmentOwner {
                 setFragment(mLoadGameFragment, true);
                 break;
         }
-    }
-
-    @Override
-    protected void exitActivity() {
-        super.exitActivity();
-        // TODO implement app exit
     }
 
     @Override

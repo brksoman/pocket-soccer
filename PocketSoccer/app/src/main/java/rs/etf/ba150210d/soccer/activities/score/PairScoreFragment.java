@@ -27,7 +27,7 @@ public class PairScoreFragment extends Fragment {
     private PlayerPair mSelectedPlayerPair;
 
     public PairScoreFragment() {
-        // Required empty public constructor
+        /* Required empty public constructor */
     }
 
     @Override
@@ -37,13 +37,13 @@ public class PairScoreFragment extends Fragment {
 
         mViewModel.setSelectedPair(mSelectedPlayerPair);
 
-        TextView name1 = view.findViewById(R.id.pairScore_name1);
+        TextView name1 = view.findViewById(R.id.pairScore_text_name1);
         name1.setText(mSelectedPlayerPair.getName1());
 
-        TextView name2 = view.findViewById(R.id.pairScore_name2);
+        TextView name2 = view.findViewById(R.id.pairScore_text_name2);
         name2.setText(mSelectedPlayerPair.getName2());
 
-        RecyclerView recyclerView = view.findViewById(R.id.pairScore_recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.pairScore_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         final PairScoreViewAdapter adapter = new PairScoreViewAdapter();

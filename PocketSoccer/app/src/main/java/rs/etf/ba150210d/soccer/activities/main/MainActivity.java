@@ -70,9 +70,6 @@ public class MainActivity extends FragmentOwner {
         Intent intent;
 
         switch (activityId) {
-            case MAIN_ACTIVITY:
-                /* Already in this activity */
-                break;
 
             case SCORE_ACTIVITY:
                 intent = new Intent(this, ScoreActivity.class);

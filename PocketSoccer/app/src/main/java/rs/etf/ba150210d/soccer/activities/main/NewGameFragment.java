@@ -29,13 +29,15 @@ public class NewGameFragment extends Fragment {
     private GameMetadata mGameMetadata;
 
     private EditTextBackEvent mEditTextLeftName;
-    private ViewPager mLeftTeamPager;
-    private TextView mLeftTeamName;
-    private CheckBox mIsLeftBot;
-
     private EditTextBackEvent mEditTextRightName;
+
+    private ViewPager mLeftTeamPager;
     private ViewPager mRightTeamPager;
+
+    private TextView mLeftTeamName;
     private TextView mRightTeamName;
+
+    private CheckBox mIsLeftBot;
     private CheckBox mIsRightBot;
 
     public NewGameFragment() {

@@ -27,16 +27,27 @@ public class GameMetadata {
 
     private Team mLeftTeam;
     private Team mRightTeam;
+
     private boolean mIsSameOrder = true;
 
     private long mCurrentTime = 0;
     private long mElapsedTime = 0;
 
     private Condition mCondition;
+
     private int mSpeed;
+
     private Field mField;
 
     private int mNextPlayer = LEFT_PLAYER;
+
+    public static int otherSide(int side) {
+        if (side == UNDEFINED_PLAYER || side == NO_PLAYER) {
+            return side;
+        } else {
+            return side == LEFT_PLAYER ? RIGHT_PLAYER : LEFT_PLAYER;
+        }
+    }
 
     public GameMetadata(Context context) {
         mPlayerPair = new PlayerPair("", "");

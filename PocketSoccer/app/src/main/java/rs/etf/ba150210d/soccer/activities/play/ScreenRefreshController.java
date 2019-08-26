@@ -82,7 +82,7 @@ public class ScreenRefreshController {
             if (scorer != GameMetadata.NO_PLAYER) {
                 mSoundManager.playCrowd();
                 mMetadata.scorePlayer(scorer);
-
+                mData.setNextPlayer(GameMetadata.otherSide(scorer));
                 int winner = mMetadata.checkWin();
                 if (winner != GameMetadata.NO_PLAYER) {
                     mActivity.win(scorer);

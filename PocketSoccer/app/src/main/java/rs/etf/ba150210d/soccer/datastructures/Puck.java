@@ -116,6 +116,7 @@ public class Puck {
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(mRadius * STROKE_THICKNESS);
                 canvas.drawCircle(mCenter.x, mCenter.y, mRadius, paint);
+                paint.setStyle(Paint.Style.FILL);
             }
         }
     }

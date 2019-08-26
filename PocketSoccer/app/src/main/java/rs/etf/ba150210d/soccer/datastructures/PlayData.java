@@ -245,13 +245,19 @@ public class PlayData {
     }
 
     public void switchNextPlayer() {
-        boolean isLeft = !mLeftTeam.get(0).isTurn();
+        int side = mLeftTeam.get(0).isTurn()
+                ? GameMetadata.RIGHT_PLAYER
+                : GameMetadata.LEFT_PLAYER;
 
+        setNextPlayer(side);
+    }
+
+    public void setNextPlayer(int playerSide) {
         for (Puck puck: mLeftTeam) {
-            puck.setTurn(isLeft);
+            puck.setTurn(playerSide == GameMetadata.LEFT_PLAYER);
         }
         for (Puck puck: mRightTeam) {
-            puck.setTurn(!isLeft);
+            puck.setTurn(playerSide == GameMetadata.RIGHT_PLAYER);
         }
     }
 }

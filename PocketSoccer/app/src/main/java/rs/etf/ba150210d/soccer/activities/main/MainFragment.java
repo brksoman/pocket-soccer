@@ -19,7 +19,7 @@ public class MainFragment extends Fragment {
     private MainActivity mOwner;
     private MainViewModel mViewModel;
 
-    private GameMetadata mLoadedGameMetadata = null;
+    private GameMetadata mLoadGameMetadata = null;
     private Button mLoadGameButton;
 
     public MainFragment() {
@@ -74,7 +74,7 @@ public class MainFragment extends Fragment {
         FloatingActionButton exitButton = view.findViewById(R.id.main_fab_exit);
         exitButton.setOnClickListener(buttonListener);
 
-        if (mLoadedGameMetadata == null) {
+        if (mLoadGameMetadata == null) {
             mLoadGameButton.setClickable(false);
         } else {
             mLoadGameButton.setClickable(true);
@@ -84,12 +84,10 @@ public class MainFragment extends Fragment {
     }
 
     public void setLoadGameMetadata(GameMetadata gameMetadata) {
-        mLoadedGameMetadata = gameMetadata;
+        mLoadGameMetadata = gameMetadata;
         if (mLoadGameButton != null) {
-            if (mLoadedGameMetadata == null) {
+            if (mLoadGameMetadata == null) {
                 mLoadGameButton.setClickable(false);
-                mLoadGameButton.setBackgroundColor(Color.DKGRAY);
-                mLoadGameButton.setTextColor(Color.WHITE);
             } else {
                 mLoadGameButton.setClickable(true);
             }

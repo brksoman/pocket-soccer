@@ -50,7 +50,7 @@ public class Bot {
             puck.accelerate(
                     mMaxAcc * (distance.x / absDistance),
                     mMaxAcc * (distance.y / absDistance));
-            mViewModel.getMetadata().switchNextPlayer();
+            mViewModel.switchNextPlayer();
         }
     };
 }

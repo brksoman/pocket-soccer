@@ -23,23 +23,22 @@ public class Puck {
             0.999f, 0.998f, 0.997f, 0.996f, 0.995f,
             0.994f, 0.993f, 0.992f, 0.991f, 0.99f
     };
+    private static final float STROKE_THICKNESS = 0.15f;
+
+    private float mRadius;
 
     private PointF mCenter;
-    private float mRadius;
     private PointF mVelocity = new PointF(0, 0);
 
     private Bitmap mImage;
 
-    private Puck() {
-        mCenter = new PointF(0, 0);
-        mRadius = 0;
-        mImage = null;
-    }
+    private boolean mIsTurn;
 
-    public Puck(PointF center, float radius, Bitmap image) {
+    public Puck(PointF center, float radius, Bitmap image, boolean isTurn) {
         mCenter = center;
         mRadius = radius;
         mImage = image;
+        mIsTurn = isTurn;
     }
 
     public Puck(Puck puck) {
@@ -47,6 +46,7 @@ public class Puck {
         mRadius = puck.mRadius;
         mVelocity = new PointF(puck.mVelocity.x, puck.mVelocity.y);
         mImage = puck.mImage;
+        mIsTurn = puck.mIsTurn;
     }
 
     public PointF getCenter() {
@@ -94,6 +94,14 @@ public class Puck {
         mCenter.offset(mVelocity.x, mVelocity.y);
     }
 
+    public boolean isTurn() {
+        return mIsTurn;
+    }
+
+    public void setTurn(boolean isTurn) {
+        mIsTurn = isTurn;
+    }
+
     public void draw(Canvas canvas, Paint paint) {
         paint.setColor(Color.WHITE);
         canvas.drawCircle(mCenter.x, mCenter.y, mRadius, paint);
@@ -103,6 +111,12 @@ public class Puck {
                     (int)(2 * mRadius), (int)(2 * mRadius), false);
             canvas.drawBitmap(scaledImage, mCenter.x - mRadius,
                     mCenter.y - mRadius, paint);
+
+            if (mIsTurn) {
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(mRadius * STROKE_THICKNESS);
+                canvas.drawCircle(mCenter.x, mCenter.y, mRadius, paint);
+            }
         }
     }
 

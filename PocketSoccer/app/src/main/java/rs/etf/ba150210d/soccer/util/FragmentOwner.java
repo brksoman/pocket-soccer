@@ -10,10 +10,10 @@ import android.widget.Spinner;
 
 import rs.etf.ba150210d.soccer.R;
 
-/*
-    Interface through which fragments interact with each other. The activity which contains the
-    fragments is supposed to implement this interface. The fragments then communicate with each
-    other through the activity using this interface.
+/**
+ * Abstract class through which fragments interact with each other, and with their activity. The
+ * activity which contains the fragments is supposed to implement this abstract class. The fragments
+ * then communicate with each other through the activity using this interface.
  */
 public abstract class FragmentOwner extends ImmersiveAppCompatActivity {
     public static final int MAIN_FRAGMENT = 1;

@@ -13,9 +13,9 @@ import android.widget.Spinner;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 
-/*
-    Abstract extension of AppCompatActivity which contains all the necessary additions for
-    fullscreen function. Also contains methods for forcing fullscreen on Spinners and EditTexts.
+/**
+ * Abstract extension of AppCompatActivity which contains all the necessary additions for fullscreen
+ * function. Also contains methods for forcing fullscreen on Spinners and EditTexts.
  */
 public abstract class ImmersiveAppCompatActivity
         extends AppCompatActivity {

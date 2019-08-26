@@ -1,7 +1,6 @@
 package rs.etf.ba150210d.soccer.datastructures;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 
 import rs.etf.ba150210d.soccer.R;
 

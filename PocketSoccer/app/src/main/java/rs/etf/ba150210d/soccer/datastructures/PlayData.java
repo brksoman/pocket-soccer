@@ -13,9 +13,9 @@ import java.util.List;
 
 import rs.etf.ba150210d.soccer.util.EventRegister;
 
-/*
-    Contains all objects on the screen, along with methods for initializing and updating the states
-    of the objects.
+/**
+ * Contains all objects on the screen, along with methods for initializing and updating the states
+ * of the objects.
  */
 
 public class PlayData {
@@ -63,7 +63,7 @@ public class PlayData {
                     mViewDims.x * PUCK_LOCATIONS[i].x,
                     mViewDims.y * (PUCK_LOCATIONS[i].y));
 
-            Puck teamPuck = new Puck(center, radius, leftFlag);
+            Puck teamPuck = new Puck(center, radius, leftFlag, true);
             mLeftTeam.add(i, teamPuck);
         }
 
@@ -73,14 +73,14 @@ public class PlayData {
                     mViewDims.x * (1 - PUCK_LOCATIONS[i].x),
                     mViewDims.y * PUCK_LOCATIONS[i].y);
 
-            Puck teamPuck = new Puck(center, radius, rightFlag);
+            Puck teamPuck = new Puck(center, radius, rightFlag, false);
             mRightTeam.add(i, teamPuck);
         }
 
         /* Ball initialization */
         PointF ballCenter = new PointF(mViewDims.x * 0.5f, mViewDims.y * 0.5f);
         float ballRadius = mViewDims.x * BALL_SCREEN_RATIO;
-        mBall = new Puck(ballCenter, ballRadius, ballIcon);
+        mBall = new Puck(ballCenter, ballRadius, ballIcon, false);
 
         mAllPucks.addAll(mLeftTeam);
         mAllPucks.addAll(mRightTeam);
@@ -111,6 +111,7 @@ public class PlayData {
                     viewHeight * (PUCK_LOCATIONS[i].y));
             puck.setRadius(radius);
             puck.setVelocity(0, 0);
+            puck.setTurn(true);
         }
 
         for (int i = 0; i < TEAM_SIZE; ++i) {
@@ -120,6 +121,7 @@ public class PlayData {
                     viewHeight * PUCK_LOCATIONS[i].y);
             puck.setRadius(radius);
             puck.setVelocity(0, 0);
+            puck.setTurn(false);
         }
 
         mBall.getCenter().set(
@@ -240,5 +242,16 @@ public class PlayData {
             }
         }
         return minPuck;
+    }
+
+    public void switchNextPlayer() {
+        boolean isLeft = !mLeftTeam.get(0).isTurn();
+
+        for (Puck puck: mLeftTeam) {
+            puck.setTurn(isLeft);
+        }
+        for (Puck puck: mRightTeam) {
+            puck.setTurn(!isLeft);
+        }
     }
 }

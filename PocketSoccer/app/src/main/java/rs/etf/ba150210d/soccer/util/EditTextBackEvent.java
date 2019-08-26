@@ -5,10 +5,10 @@ import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 
-/*
-    Regular EditText has problems with fullscreen apps - when editing the text the fullscreen
-    gets disabled, and it stays that way after editing. This class is made to force fullscreen
-    onto EditText fields.
+/**
+ * Regular EditText has problems with fullscreen apps - when editing the text the fullscreen gets
+ * disabled, and it stays that way after editing. This class is made to force fullscreen onto
+ * EditText fields.
  */
 public class EditTextBackEvent extends AppCompatEditText {
 

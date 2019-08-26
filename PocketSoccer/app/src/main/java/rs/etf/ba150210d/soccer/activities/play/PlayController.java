@@ -78,7 +78,7 @@ public class PlayController implements View.OnTouchListener {
                         }
                         mPuck.accelerate(mAcc);
                         mPuck = null;
-                        mMetadata.switchNextPlayer();
+                        mViewModel.switchNextPlayer();
 
                         informBots();
                     }

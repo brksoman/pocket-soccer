@@ -56,4 +56,9 @@ public class PlayViewModel extends AndroidViewModel {
     public PlayData getData() {
         return mData;
     }
+
+    public void switchNextPlayer() {
+        mMetadata.switchNextPlayer();
+        mData.switchNextPlayer();
+    }
 }

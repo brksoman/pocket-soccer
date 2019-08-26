@@ -1,7 +1,7 @@
 package rs.etf.ba150210d.soccer.util;
 
-/*
-    Generic class for registering events. Like a mutable boolean.
+/**
+ * Generic class for registering events. Like a mutable boolean.
  */
 public class EventRegister {
     private boolean isRegistered;

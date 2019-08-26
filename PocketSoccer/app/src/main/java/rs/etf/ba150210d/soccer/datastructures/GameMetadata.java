@@ -7,10 +7,10 @@ import android.content.SharedPreferences;
 import rs.etf.ba150210d.soccer.model.entities.PlayerPair;
 import rs.etf.ba150210d.soccer.model.entities.Score;
 
-/*
-    Class containing info such as player names, team names, win condition, elapsed time, whose turn
-    is next, etc. Also implements loading and saving the metadata for a saved game (from and to
-    shared preferences), as well as packing and unpacking the metadata to and from an Intent object.
+/**
+ * Class containing info such as player names, team names, win condition, elapsed time, whose turn
+ * is next, etc. Also implements loading and saving the metadata for a saved game (from and to
+ * shared preferences), as well as packing and unpacking the metadata to and from an Intent object.
  */
 
 public class GameMetadata {

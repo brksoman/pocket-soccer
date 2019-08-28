@@ -134,6 +134,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/ic_save" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/settings_fab_restoreDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toStartOf="@id/settings_fab_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_restore" />
+
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

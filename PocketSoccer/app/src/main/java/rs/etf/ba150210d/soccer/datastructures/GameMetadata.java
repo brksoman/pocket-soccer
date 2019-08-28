@@ -111,6 +111,7 @@ public class GameMetadata {
 
         mLeftTeam = new Team(context, preferences.getInt("save_leftTeam", 0));
         mRightTeam = new Team(context, preferences.getInt("save_rightTeam", 0));
+
         mIsSameOrder = preferences.getBoolean("save_isSameOrder", true);
 
         mElapsedTime = preferences.getLong("save_elapsedTime", 0);
@@ -120,10 +121,12 @@ public class GameMetadata {
                 preferences.getInt("save_conditionType", Condition.CONDITION_GOALS));
         mCondition.setValue(
                 preferences.getInt("save_conditionValue", 0));
-        mSpeed = preferences.getInt("speed", 0);
+
+        mSpeed = getSettingsAttribute(preferences, "speed");
+
         mNextPlayer = preferences.getInt("save_nextPlayer", LEFT_PLAYER);
 
-        int fieldIndex = preferences.getInt("field", 0);
+        int fieldIndex = getSettingsAttribute(preferences, "field");
         mField = new Field(context, fieldIndex);
     }
 
@@ -142,14 +145,16 @@ public class GameMetadata {
 
         intent.putExtra("leftTeam", mLeftTeam.getIndex());
         intent.putExtra("rightTeam", mRightTeam.getIndex());
-        intent.putExtra("isSameOrder", mIsSameOrder);
 
+        intent.putExtra("isSameOrder", mIsSameOrder);
 
         intent.putExtra("elapsedTime", mElapsedTime);
 
         intent.putExtra("conditionType", mCondition.getType());
         intent.putExtra("conditionValue", mCondition.getValue());
+
         intent.putExtra("speed", mSpeed);
+
         intent.putExtra("field", mField.getIndex());
 
         intent.putExtra("nextPlayer", mNextPlayer);
@@ -214,16 +219,17 @@ public class GameMetadata {
     }
 
     public void loadSettings(Context context, SharedPreferences preferences) {
-        mCondition.setType(
-                preferences.getInt("conditionType", Condition.CONDITION_GOALS));
+        mCondition.setType(getSettingsAttribute(preferences, "conditionType"));
 
         if (mCondition.getType() == Condition.CONDITION_GOALS) {
-            mCondition.setValue(preferences.getInt("conditionGoals", 0));
+            mCondition.setValue(getSettingsAttribute(preferences, "conditionGoals"));
         } else {
-            mCondition.setValue(preferences.getInt("conditionTime", 0));
+            mCondition.setValue(getSettingsAttribute(preferences, "conditionTime"));
         }
-        mSpeed = preferences.getInt("speed", 0);
-        mField = new Field(context, preferences.getInt("field", 0));
+
+        mSpeed = getSettingsAttribute(preferences, "speed");
+
+        mField = new Field(context, getSettingsAttribute(preferences, "field"));
     }
 
     public void rotateMaybe(PlayerPair playerPair) {
@@ -437,5 +443,41 @@ public class GameMetadata {
 
     public void setField(Field field) {
         mField = field;
+    }
+
+    public static int getSettingsAttribute(SharedPreferences preferences, String name) {
+        int attribute = preferences.getInt(name, -1);
+
+        if (attribute != -1) {
+            return attribute;
+        } else {
+            return preferences.getInt("default_" + name, 0);
+        }
+    }
+
+    public static void generateDefaultSettings(SharedPreferences preferences) {
+        if (preferences.getInt("default_speed", -1) == -1) {
+            SharedPreferences.Editor editor = preferences.edit();
+
+            editor.putInt("default_speed", 3);
+            editor.putInt("default_field", 0);
+            editor.putInt("default_conditionType", Condition.CONDITION_GOALS);
+            editor.putInt("default_conditionGoals", 5);
+            editor.putInt("default_conditionTime", 120);
+
+            editor.apply();
+        }
+    }
+
+    public static void restoreDefaultSettings(SharedPreferences preferences) {
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.remove("speed");
+        editor.remove("field");
+        editor.remove("conditionType");
+        editor.remove("conditionGoals");
+        editor.remove("conditionTime");
+
+        editor.apply();
     }
 }

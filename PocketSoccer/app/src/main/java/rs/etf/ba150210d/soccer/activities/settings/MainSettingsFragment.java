@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.datastructures.Condition;
+import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
 
 public class MainSettingsFragment extends Fragment {
 
@@ -77,13 +78,24 @@ public class MainSettingsFragment extends Fragment {
                 mOwner.goBack();
             }
         });
+
+        FloatingActionButton restoreButton = view.findViewById(R.id.settings_fab_restoreDefault);
+        restoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), R.string.settings_restored_message,
+                        Toast.LENGTH_SHORT).show();
+                GameMetadata.restoreDefaultSettings(mOwner.getPreferences());
+                mOwner.goBack();
+            }
+        });
     }
 
     private void initSpeed(View view, SharedPreferences preferences) {
         mSpeedText = view.findViewById(R.id.settings_text_speed);
         mSpeedSeekBar = view.findViewById(R.id.settings_seekBar_speed);
 
-        mSpeed = preferences.getInt("speed", 0);
+        mSpeed = GameMetadata.getSettingsAttribute(preferences, "speed");
 
         mSpeedText.setText(Integer.toString(mSpeed + 1));
         mSpeedSeekBar.setProgress(mSpeed);
@@ -107,9 +119,9 @@ public class MainSettingsFragment extends Fragment {
         mConditionText = view.findViewById(R.id.settings_text_condition);
         mConditionSeekBar = view.findViewById(R.id.settings_seekBar_condition);
 
-        int conditionType = preferences.getInt("conditionType", Condition.CONDITION_GOALS);
-        mConditionGoals = preferences.getInt("conditionGoals", 0);
-        mConditionTime = preferences.getInt("conditionTime", 0);
+        int conditionType = GameMetadata.getSettingsAttribute(preferences, "conditionType");
+        mConditionGoals = GameMetadata.getSettingsAttribute(preferences, "conditionGoals");
+        mConditionTime = GameMetadata.getSettingsAttribute(preferences, "conditionTime");
 
         mCondition = new Condition(getContext());
         updateConditionType(conditionType);
@@ -165,7 +177,7 @@ public class MainSettingsFragment extends Fragment {
     private void initFieldPager(View view, SharedPreferences preferences) {
         mFieldPager = view.findViewById(R.id.settings_pager_field);
         mFieldPager.setAdapter(new FieldPagerAdapter(getContext()));
-        mFieldPager.setCurrentItem(preferences.getInt("field", 0));
+        mFieldPager.setCurrentItem(GameMetadata.getSettingsAttribute(preferences, "field"));
     }
 
     private void updateConditionType(int conditionType) {

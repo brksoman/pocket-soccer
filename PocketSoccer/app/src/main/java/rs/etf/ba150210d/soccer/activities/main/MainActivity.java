@@ -35,6 +35,8 @@ public class MainActivity extends FragmentOwner {
 
         setContentView(R.layout.activity_main);
 
+        GameMetadata.generateDefaultSettings(getPreferences());
+
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         mMainFragment = new MainFragment();

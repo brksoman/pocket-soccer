@@ -36,6 +36,7 @@
     <string name="goals">Goals</string>
     <string name="time">Time</string>
     <string name="settings_saved_message">Settings saved</string>
+    <string name="settings_restored_message">Default settings restored</string>
 
     // Play messages
 

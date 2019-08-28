@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import rs.etf.ba150210d.soccer.R;
 import rs.etf.ba150210d.soccer.datastructures.GameMetadata;
@@ -41,7 +42,12 @@ public class MainFragment extends Fragment {
                         break;
 
                     case R.id.main_button_loadGame:
-                        mOwner.switchFragment(FragmentOwner.LOAD_GAME_FRAGMENT);
+                        if (mLoadGameMetadata == null) {
+                            Toast.makeText(getContext(), R.string.no_saved_message,
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            mOwner.switchFragment(FragmentOwner.LOAD_GAME_FRAGMENT);
+                        }
                         break;
 
                     case R.id.main_button_settings:
@@ -74,11 +80,11 @@ public class MainFragment extends Fragment {
         FloatingActionButton exitButton = view.findViewById(R.id.main_fab_exit);
         exitButton.setOnClickListener(buttonListener);
 
-        if (mLoadGameMetadata == null) {
+        /*if (mLoadGameMetadata == null) {
             mLoadGameButton.setClickable(false);
         } else {
             mLoadGameButton.setClickable(true);
-        }
+        }*/
 
         return view;
     }
@@ -86,11 +92,11 @@ public class MainFragment extends Fragment {
     public void setLoadGameMetadata(GameMetadata gameMetadata) {
         mLoadGameMetadata = gameMetadata;
         if (mLoadGameButton != null) {
-            if (mLoadGameMetadata == null) {
+            /*if (mLoadGameMetadata == null) {
                 mLoadGameButton.setClickable(false);
             } else {
                 mLoadGameButton.setClickable(true);
-            }
+            }*/
         }
     }
 

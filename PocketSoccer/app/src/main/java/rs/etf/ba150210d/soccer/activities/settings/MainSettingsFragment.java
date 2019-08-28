@@ -183,8 +183,7 @@ public class MainSettingsFragment extends Fragment {
     private void updateConditionType(int conditionType) {
         mCondition.setType(conditionType);
 
-        mCondition.setAppropriateValue(
-                mConditionGoals, mConditionTime);
+        mCondition.setAppropriateValue(mConditionGoals, mConditionTime);
 
         mConditionText.setText(Integer.toString(mCondition.getValue()));
         mConditionSeekBar.setMax(mCondition.getNormalizedMax());

@@ -83,16 +83,18 @@ public class ScreenRefreshController {
             if (scorer != GameMetadata.NO_PLAYER) {
                 mSoundManager.playCrowd();
                 mMetadata.scorePlayer(scorer);
+            }
 
-                int winner = mMetadata.checkWin();
-                if (winner != GameMetadata.NO_PLAYER) {
-                    mActivity.win(winner);
-                    startWinningAnimation();
-                } else {
+            int winner = mMetadata.checkWin();
+
+            if (winner != GameMetadata.NO_PLAYER) {
+                mActivity.win(winner);
+                startWinningAnimation();
+            } else if (scorer != GameMetadata.NO_PLAYER) {
                     mActivity.score(winner);
                     startScoringAnimation();
-                }
             }
+
             mActivity.updateView();
         }
     };

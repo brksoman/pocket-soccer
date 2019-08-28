@@ -36,7 +36,7 @@ public interface ScoreDao {
             "AND (s.winner <> -1)")
     LiveData<List<Score>> findScoresByPlayerPairNames(String name1, String name2);
 
-    @Query("SELECT * FROM score WHERE players_id = :id AND winner <> -1")
+    @Query("SELECT * FROM score WHERE players_id = :id")
     LiveData<List<Score>> findScoresByPlayerPairId(long id);
 
     @Query("SELECT * FROM score WHERE winner = -1 LIMIT 1")

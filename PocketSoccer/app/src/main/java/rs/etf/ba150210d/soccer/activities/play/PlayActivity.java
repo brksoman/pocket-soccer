@@ -100,7 +100,12 @@ public class PlayActivity extends FragmentOwner implements ScreenRefreshControll
     public void win(int playerSide) {
         mPlayController.stopBots();
         mViewModel.insertScore();
-        showScore(playerSide, R.string.win_format);
+
+        if (playerSide != GameMetadata.UNDEFINED_PLAYER) {
+            showScore(playerSide, R.string.win_format);
+        } else {
+            mMessageView.setText(R.string.draw_message);
+        }
         GameMetadata.deleteSave(getPreferences());
     }
 

@@ -252,7 +252,7 @@ public class GameMetadata {
                 return NO_PLAYER;
             }
         } else {
-            if (mElapsedTime >= mCondition.getValue()) {
+            if ((mElapsedTime / 1000) >= mCondition.getValue()) {
                 if (mScore.getPlayer1Points() > mScore.getPlayer2Points()) {
                     mScore.setWinner(1);
                     return mIsSameOrder ? LEFT_PLAYER : RIGHT_PLAYER;

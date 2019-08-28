@@ -42,6 +42,7 @@
 
     <string name="score_format">%s scored!</string>
     <string name="win_format">%s won!</string>
+    <string name="draw_message">Draw!</string>
 
     // Asset uri-s
 

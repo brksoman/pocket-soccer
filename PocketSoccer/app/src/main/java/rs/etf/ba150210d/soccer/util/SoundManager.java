@@ -69,5 +69,9 @@ public class SoundManager {
 
     public void release() {
         mPool.release();
+
+        if (this == instance) {
+            instance = null;
+        }
     }
 }

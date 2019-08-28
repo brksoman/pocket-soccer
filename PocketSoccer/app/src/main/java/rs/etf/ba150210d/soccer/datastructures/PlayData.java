@@ -111,7 +111,6 @@ public class PlayData {
                     viewHeight * (PUCK_LOCATIONS[i].y));
             puck.setRadius(radius);
             puck.setVelocity(0, 0);
-            puck.setTurn(true);
         }
 
         for (int i = 0; i < TEAM_SIZE; ++i) {
@@ -121,7 +120,6 @@ public class PlayData {
                     viewHeight * PUCK_LOCATIONS[i].y);
             puck.setRadius(radius);
             puck.setVelocity(0, 0);
-            puck.setTurn(false);
         }
 
         mBall.getCenter().set(
@@ -242,14 +240,6 @@ public class PlayData {
             }
         }
         return minPuck;
-    }
-
-    public void switchNextPlayer() {
-        int side = mLeftTeam.get(0).isTurn()
-                ? GameMetadata.RIGHT_PLAYER
-                : GameMetadata.LEFT_PLAYER;
-
-        setNextPlayer(side);
     }
 
     public void setNextPlayer(int playerSide) {

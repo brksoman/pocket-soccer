@@ -30,8 +30,6 @@ public class ScreenRefreshController {
     private GameMetadata mMetadata;
     private PlayData mData;
 
-    private int mScorer;
-
     public ScreenRefreshController(final Activity activity, PlayViewModel viewModel) {
         mActivity = (PlayActivity) activity;
         mSoundManager = SoundManager.getInstance(mActivity);
@@ -54,6 +52,7 @@ public class ScreenRefreshController {
         mActivity.clearMessage();
         sThreadHandler.removeCallbacks(mScoreRefreshTask);
 
+        mData.setNextPlayer(mMetadata.getNextPlayer());
         mActivity.informBots();
         sThreadHandler.post(mRegularRefreshTask);
     }
@@ -80,17 +79,17 @@ public class ScreenRefreshController {
             }
             mMetadata.elapseTime();
 
-            mScorer = mData.checkScoring();
-            if (mScorer != GameMetadata.NO_PLAYER) {
+            int scorer = mData.checkScoring();
+            if (scorer != GameMetadata.NO_PLAYER) {
                 mSoundManager.playCrowd();
-                mMetadata.scorePlayer(mScorer);
+                mMetadata.scorePlayer(scorer);
 
                 int winner = mMetadata.checkWin();
                 if (winner != GameMetadata.NO_PLAYER) {
-                    mActivity.win(mScorer);
+                    mActivity.win(winner);
                     startWinningAnimation();
                 } else {
-                    mActivity.score(mScorer);
+                    mActivity.score(winner);
                     startScoringAnimation();
                 }
             }
@@ -112,7 +111,6 @@ public class ScreenRefreshController {
         @Override
         public void run() {
             mData.resetState();
-            mData.setNextPlayer(GameMetadata.otherSide(mScorer));
             startRegularAnimation();
         }
     };
